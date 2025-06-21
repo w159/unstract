@@ -47,26 +47,26 @@ fix_mac_docker_dns() {
 # Setup environment files
 setup_env_files() {
     print_status "Setting up environment files..."
-    
+
     # Backend env
     if [ ! -f backend/.env ]; then
         cp backend/sample.env backend/.env
         print_status "Created backend/.env from sample"
     fi
-    
+
     # Frontend env
     if [ ! -f frontend/.env ]; then
         cp frontend/sample.env frontend/.env
         print_status "Created frontend/.env from sample"
     fi
-    
+
     # Docker env files
     for service in platform-service prompt-service runner tool-sidecar x2text-service; do
         if [ ! -f $service/.env ]; then
             cp $service/sample.env $service/.env 2>/dev/null || print_warning "No sample.env for $service"
         fi
     done
-    
+
     # Generate secure keys
     if grep -q "GENERATE-A-SECURE-KEY" backend/.env; then
         print_status "Generating secure keys..."
@@ -105,13 +105,13 @@ with open(env_file, 'w') as f:
 # Fix Docker networking issues
 fix_docker_networking() {
     print_status "Checking Docker networking..."
-    
+
     # Ensure network exists
     docker network inspect unstract-network >/dev/null 2>&1 || {
         print_status "Creating unstract-network..."
         docker network create unstract-network
     }
-    
+
     # Clean up any conflicting containers
     docker ps -a --format '{{.Names}}' | grep -E '^unstract-' | while read container; do
         if docker ps --format '{{.Names}}' | grep -q "^$container$"; then
@@ -126,7 +126,7 @@ fix_docker_networking() {
 setup_directories() {
     print_status "Creating required directories..."
     mkdir -p workflow_data logs data
-    
+
     # Set permissions for Docker volumes
     if [ -d workflow_data ]; then
         chmod -R 777 workflow_data
@@ -136,19 +136,19 @@ setup_directories() {
 # Check prerequisites
 check_prerequisites() {
     print_status "Checking prerequisites..."
-    
+
     # Check Docker
     if ! command -v docker &> /dev/null; then
         print_error "Docker is not installed. Please install Docker first."
         exit 1
     fi
-    
+
     # Check Docker Compose
     if ! docker compose version &> /dev/null; then
         print_error "Docker Compose is not installed or not in PATH."
         exit 1
     fi
-    
+
     # Check Python (for key generation)
     if ! command -v python3 &> /dev/null; then
         print_warning "Python 3 not found. Cannot generate secure keys automatically."
@@ -159,17 +159,17 @@ check_prerequisites() {
 main() {
     echo "=== Unstract Environment Setup ==="
     echo
-    
+
     check_prerequisites
-    
+
     if is_macos; then
         fix_mac_docker_dns
     fi
-    
+
     setup_env_files
     fix_docker_networking
     setup_directories
-    
+
     print_status "Environment setup complete!"
     echo
     echo "To start Unstract, run:"
