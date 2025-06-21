@@ -1,7 +1,7 @@
-import { useAxiosPrivate } from '../hooks/useAxiosPrivate';
-import { useAlertStore } from '../store/alert-store';
-import { useSessionStore } from '../store/session-store';
-import { useExceptionHandler } from '../hooks/useExceptionHandler';
+import { useAxiosPrivate } from "../hooks/useAxiosPrivate";
+import { useAlertStore } from "../store/alert-store";
+import { useSessionStore } from "../store/session-store";
+import { useExceptionHandler } from "../hooks/useExceptionHandler";
 
 /**
  * Centralized API service to reduce code duplication
@@ -30,8 +30,8 @@ class ApiService {
    */
   async request(config) {
     const defaultHeaders = {
-      'X-CSRFToken': this.sessionDetails?.csrfToken,
-      'Content-Type': 'application/json',
+      "X-CSRFToken": this.sessionDetails?.csrfToken,
+      "Content-Type": "application/json",
     };
 
     const requestConfig = {
@@ -48,9 +48,11 @@ class ApiService {
     } catch (error) {
       // Handle error based on configuration
       if (config.customErrorMessage) {
-        this.setAlertDetails(this.handleException(error, config.customErrorMessage));
+        this.setAlertDetails(
+          this.handleException(error, config.customErrorMessage)
+        );
       } else if (config.silentError) {
-        console.error('API Error:', error);
+        console.error("API Error:", error);
       } else {
         this.setAlertDetails(this.handleException(error));
       }
@@ -63,7 +65,7 @@ class ApiService {
    */
   async get(url, config = {}) {
     return this.request({
-      method: 'GET',
+      method: "GET",
       url,
       ...config,
     });
@@ -74,7 +76,7 @@ class ApiService {
    */
   async post(url, data, config = {}) {
     return this.request({
-      method: 'POST',
+      method: "POST",
       url,
       data,
       ...config,
@@ -86,7 +88,7 @@ class ApiService {
    */
   async put(url, data, config = {}) {
     return this.request({
-      method: 'PUT',
+      method: "PUT",
       url,
       data,
       ...config,
@@ -98,7 +100,7 @@ class ApiService {
    */
   async delete(url, data, config = {}) {
     return this.request({
-      method: 'DELETE',
+      method: "DELETE",
       url,
       data,
       ...config,
@@ -129,7 +131,12 @@ export function useApiService() {
   const handleException = useExceptionHandler();
 
   const apiService = new ApiService();
-  apiService.initialize(axiosPrivate, sessionDetails, setAlertDetails, handleException);
+  apiService.initialize(
+    axiosPrivate,
+    sessionDetails,
+    setAlertDetails,
+    handleException
+  );
 
   return apiService;
 }
@@ -159,7 +166,7 @@ export const ApiUtils = {
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) => {
       if (Array.isArray(value)) {
-        value.forEach(item => formData.append(key, item));
+        value.forEach((item) => formData.append(key, item));
       } else if (value !== undefined && value !== null) {
         formData.append(key, value);
       }

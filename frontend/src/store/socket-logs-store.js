@@ -47,7 +47,7 @@ const useSocketLogsStore = create((setState, getState) => ({
           data: { log: JSON.stringify(newLog) },
         };
         axios(requestOptions).catch((err) => {
-          console.error('Failed to post log:', err);
+          console.error("Failed to post log:", err);
         });
       }
     });

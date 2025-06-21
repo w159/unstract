@@ -3,24 +3,27 @@ import { useSessionStore } from "../../../store/session-store.js";
 
 let options = {};
 
-function inputService() {
-  const axiosPrivate = useAxiosPrivate();
-  const { sessionDetails } = useSessionStore();
-  const path = `/api/v1/unstract/${sessionDetails.orgId.replaceAll('"', "")}`;
+function useInputService() {
+	const axiosPrivate = useAxiosPrivate();
+	const { sessionDetails } = useSessionStore();
+	const path = `/api/v1/unstract/${sessionDetails.orgId.replaceAll(
+		'"',
+		""
+	)}`;
 
-  return {
-    getFileList: (storageId, filePath = "/") => {
-      options = {
-        url: `${path}/file`,
-        method: "GET",
-        params: {
-          connector_id: storageId,
-          path: filePath,
-        },
-      };
-      return axiosPrivate(options);
-    },
-  };
+	return {
+		getFileList: (storageId, filePath = "/") => {
+			options = {
+				url: `${path}/file`,
+				method: "GET",
+				params: {
+					connector_id: storageId,
+					path: filePath,
+				},
+			};
+			return axiosPrivate(options);
+		},
+	};
 }
 
-export { inputService };
+export { useInputService };

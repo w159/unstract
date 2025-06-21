@@ -12,63 +12,74 @@ import { SpinnerLoader } from "../../widgets/spinner-loader/SpinnerLoader.jsx";
 import { useExceptionHandler } from "../../../hooks/useExceptionHandler.jsx";
 
 function ProjectHelper() {
-  const { id } = useParams();
-  const { sessionDetails } = useSessionStore();
-  const { updateWorkflow, setDefaultWorkflowState } = useWorkflowStore();
-  const { cleanUpToolSettings } = useToolSettingsStore();
-  const { setAlertDetails } = useAlertStore();
-  const axiosPrivate = useAxiosPrivate();
-  const [isWfLoading, setWfLoading] = useState(true);
-  const navigate = useNavigate();
-  const handleException = useExceptionHandler();
+	const { id } = useParams();
+	const { sessionDetails } = useSessionStore();
+	const { updateWorkflow, setDefaultWorkflowState } = useWorkflowStore();
+	const { cleanUpToolSettings } = useToolSettingsStore();
+	const { setAlertDetails } = useAlertStore();
+	const axiosPrivate = useAxiosPrivate();
+	const [isWfLoading, setWfLoading] = useState(true);
+	const navigate = useNavigate();
+	const handleException = useExceptionHandler();
 
-  useEffect(() => {
-    return () => {
-      cleanUpToolSettings();
-      setDefaultWorkflowState();
-    };
-  }, []);
+	useEffect(() => {
+		return () => {
+			cleanUpToolSettings();
+			setDefaultWorkflowState();
+		};
+	}, [cleanUpToolSettings, setDefaultWorkflowState]);
 
-  useEffect(() => {
-    const workflowState = {
-      projectId: id,
-      isLoading: false,
-    };
-    updateWorkflow(workflowState);
+	useEffect(() => {
+		const workflowState = {
+			projectId: id,
+			isLoading: false,
+		};
+		updateWorkflow(workflowState);
 
-    const requestOptions = {
-      method: "GET",
-      url: `/api/v1/unstract/${sessionDetails?.orgId}/workflow/${id}/`,
-    };
-    setWfLoading(true);
-    axiosPrivate(requestOptions)
-      .then((res) => {
-        const data = res?.data;
-        workflowState["prompt"] = data?.prompt_text;
-        workflowState["details"] = data;
-        workflowState["status"] = workflowStatus.generated;
-        workflowState["isLoading"] = false;
-        workflowState["projectName"] = data.workflow_name;
-        updateWorkflow(workflowState);
-      })
-      .catch((err) => {
-        setAlertDetails(handleException(err, "Failed to load the workflow"));
-        navigate(`/${sessionDetails?.orgName}/workflows`);
-      })
-      .finally(() => {
-        setWfLoading(false);
-      });
-  }, [id]);
+		const requestOptions = {
+			method: "GET",
+			url: `/api/v1/unstract/${sessionDetails?.orgId}/workflow/${id}/`,
+		};
+		setWfLoading(true);
+		axiosPrivate(requestOptions)
+			.then((res) => {
+				const data = res?.data;
+				workflowState["prompt"] = data?.prompt_text;
+				workflowState["details"] = data;
+				workflowState["status"] = workflowStatus.generated;
+				workflowState["isLoading"] = false;
+				workflowState["projectName"] = data.workflow_name;
+				updateWorkflow(workflowState);
+			})
+			.catch((err) => {
+				setAlertDetails(
+					handleException(err, "Failed to load the workflow")
+				);
+				navigate(`/${sessionDetails?.orgName}/workflows`);
+			})
+			.finally(() => {
+				setWfLoading(false);
+			});
+	}, [
+		id,
+		axiosPrivate,
+		handleException,
+		navigate,
+		sessionDetails?.orgId,
+		sessionDetails?.orgName,
+		setAlertDetails,
+		updateWorkflow,
+	]);
 
-  if (isWfLoading) {
-    return <SpinnerLoader />;
-  }
+	if (isWfLoading) {
+		return <SpinnerLoader />;
+	}
 
-  return (
-    <MenuLayout>
-      <Outlet />
-    </MenuLayout>
-  );
+	return (
+		<MenuLayout>
+			<Outlet />
+		</MenuLayout>
+	);
 }
 
 export { ProjectHelper };

@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from "react";
 
 /**
  * Custom hook for managing async operations with loading, error, and data states
@@ -64,7 +64,7 @@ export function useAsyncState(initialData = null) {
 export function useMultipleAsyncStates(stateNames = []) {
   const states = {};
 
-  stateNames.forEach(name => {
+  stateNames.forEach((name) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const asyncState = useAsyncState();
     states[name] = asyncState;

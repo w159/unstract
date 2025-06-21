@@ -37,11 +37,11 @@ export const useToolIdeState = (shareId) => {
     // Settings modal
     openSettings,
     setOpenSettings,
-    
+
     // Login modal
     loginModalOpen,
     setLoginModalOpen,
-    
+
     // Share modals
     openShareLink,
     setOpenShareLink,
@@ -49,7 +49,7 @@ export const useToolIdeState = (shareId) => {
     setOpenShareConfirmation,
     openShareModal,
     setOpenShareModal,
-    
+
     // Clone modal
     openCloneModal,
     setOpenCloneModal,
