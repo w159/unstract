@@ -202,7 +202,6 @@ function Actions({ statusBarMsg, initializeWfComp, stepLoader }) {
       body["execution_action"] = wfExecutionTypes[executionAction];
 
       handleWfExecutionApi(body)
-        .then(() => {})
         .catch((err) => {
           setAlertDetails(handleException(err));
         });

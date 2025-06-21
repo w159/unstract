@@ -23,10 +23,13 @@ def log_exceptions(e: HTTPException) -> None:
     if hasattr(e, "code"):
         code = e.code or code
 
+    # Sanitize URL to avoid logging sensitive query parameters
+    safe_url = request.path  # Only log the path, not query params
+    
     if code >= 500:
-        message = f"{request.method} {request.url} {code}\n\n{str(e)}\n\n````{traceback.format_exc()}````"
+        message = f"{request.method} {safe_url} {code}\n\n{str(e)}\n\n````{traceback.format_exc()}````"
     else:
-        message = f"{request.method} {request.url} {code} {str(e)}"
+        message = f"{request.method} {safe_url} {code} {str(e)}"
 
     # Avoids circular import errors while initializing app context
     from flask import current_app as app

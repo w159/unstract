@@ -179,6 +179,9 @@ class LogProcessor:
         elif isinstance(emitted_at, (int, float)):
             # Already a UNIX timestamp
             return float(emitted_at)
+        else:
+            # Fallback to current timestamp for unexpected types
+            return datetime.now(UTC).timestamp()
 
     def get_valid_log_message(self, log_message: str) -> dict[str, Any] | None:
         """Get a valid log message from the log message.
@@ -289,6 +292,18 @@ def main():
         )
 
     # Create and run log processor
+    # Type assertions are safe here because we validated all required params above
+    assert redis_host is not None
+    assert redis_port is not None
+    assert redis_user is not None
+    assert redis_password is not None
+    assert messaging_channel is not None
+    assert tool_instance_id is not None
+    assert execution_id is not None
+    assert organization_id is not None
+    assert file_execution_id is not None
+    assert container_name is not None
+    
     processor = LogProcessor(
         log_path=log_path,
         redis_host=redis_host,

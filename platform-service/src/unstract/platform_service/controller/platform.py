@@ -411,7 +411,8 @@ def cache() -> Any:
                 password=Env.REDIS_PASSWORD,
             )
             redis_key = f"{account_id}:{key}"
-            app.logger.info(f"Getting cached data for key: {redis_key}")
+            # Log only the action, not the potentially sensitive key
+            app.logger.info("Getting cached data from Redis")
             value = r.get(redis_key)
             r.close()
             if value is None:
@@ -430,7 +431,8 @@ def cache() -> Any:
                 password=Env.REDIS_PASSWORD,
             )
             redis_key = f"{account_id}:{key}"
-            app.logger.info(f"Deleting cached data for key: {redis_key}")
+            # Log only the action, not the potentially sensitive key
+            app.logger.info("Deleting cached data from Redis")
             r.delete(redis_key)
             r.close()
             return "OK", 200

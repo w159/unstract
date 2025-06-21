@@ -12,6 +12,7 @@ from social_django.strategy import DjangoStrategy
 
 from connector_auth_v2.constants import SocialAuthConstants
 from connector_auth_v2.pipeline.google import GoogleAuthHelper
+from utils.encryption import encryption_service
 
 logger = logging.getLogger(__name__)
 
@@ -19,10 +20,13 @@ logger = logging.getLogger(__name__)
 class ConnectorAuthManager(models.Manager):
     def get_queryset(self) -> QuerySet:
         queryset = super().get_queryset()
-        # TODO PAN-83: Decrypt here
-        # for obj in queryset:
-        #     logger.info(f"Decrypting extra_data: {obj.extra_data}")
-
+        # Decrypt sensitive data in extra_data field
+        for obj in queryset:
+            if obj.extra_data:
+                try:
+                    obj.extra_data = encryption_service.decrypt_dict(obj.extra_data)
+                except Exception as e:
+                    logger.error(f"Failed to decrypt extra_data for {obj.id}: {e}")
         return queryset
 
 
@@ -52,8 +56,13 @@ class ConnectorAuth(AbstractUserSocialAuth):
         return f"ConnectorAuth(provider: {self.provider}, uid: {self.uid})"
 
     def save(self, *args: Any, **kwargs: Any) -> Any:
-        # TODO PAN-83: Encrypt here
-        # logger.info(f"Encrypting extra_data: {self.extra_data}")
+        # Encrypt sensitive data before saving
+        if self.extra_data:
+            try:
+                self.extra_data = encryption_service.encrypt_dict(self.extra_data)
+            except Exception as e:
+                logger.error(f"Failed to encrypt extra_data: {e}")
+                raise
         return super().save(*args, **kwargs)
 
     def set_extra_data(self, extra_data=None):  # type: ignore

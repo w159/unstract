@@ -7,6 +7,7 @@ from account_v2.organization import OrganizationService
 from django.db import IntegrityError
 from tenant_account_v2.constants import ErrorMessage, PlatformServiceConstants
 from utils.user_context import UserContext
+from utils.encryption import encryption_service
 
 from platform_settings_v2.exceptions import (
     ActiveKeyNotFound,
@@ -57,11 +58,14 @@ class PlatformAuthenticationService:
         if not organization:
             raise InternalServiceError("No valid organization provided")
         try:
-            # TODO : Add encryption to Platform keys
-            # id is added here to avoid passing of keys in transactions.
+            # Generate new platform key
+            new_key = str(uuid.uuid4())
+            # Encrypt the key before storing
+            encrypted_key = encryption_service.encrypt(new_key)
+            
             platform_key: PlatformKey = PlatformKey(
                 id=str(uuid.uuid4()),
-                key=str(uuid.uuid4()),
+                key=encrypted_key,
                 is_active=is_active,
                 organization=organization,
                 key_name=key_name,
@@ -72,7 +76,8 @@ class PlatformAuthenticationService:
             result: dict[str, Any] = {}
             result[PlatformServiceConstants.ID] = platform_key.id
             result[PlatformServiceConstants.KEY_NAME] = platform_key.key_name
-            result[PlatformServiceConstants.KEY] = platform_key.key
+            # Return the unencrypted key to the user (only time they see it)
+            result[PlatformServiceConstants.KEY] = new_key
 
             logger.info(f"platform_key is generated for {organization.id}")
             return result
@@ -122,12 +127,15 @@ class PlatformAuthenticationService:
         try:
             result: dict[str, Any] = {}
             platform_key: PlatformKey = PlatformKey.objects.get(pk=id)
-            platform_key.key = str(uuid.uuid4())
+            # Generate new key and encrypt it
+            new_key = str(uuid.uuid4())
+            platform_key.key = encryption_service.encrypt(new_key)
             platform_key.modified_by = user
             platform_key.save()
             result[PlatformServiceConstants.ID] = platform_key.id
             result[PlatformServiceConstants.KEY_NAME] = platform_key.key_name
-            result[PlatformServiceConstants.KEY] = platform_key.key
+            # Return the unencrypted key
+            result[PlatformServiceConstants.KEY] = new_key
 
             logger.info(f"platform_key {id} is updated by user {user.id}")
             return result

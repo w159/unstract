@@ -197,10 +197,7 @@ function Pipelines({ type }) {
     };
 
     return axiosPrivate(requestOptions)
-      .then((res) => res)
-      .catch((err) => {
-        throw err;
-      });
+      .then((res) => res);
   };
 
   const handleEnablePipeline = (value, id) => {
@@ -226,8 +223,7 @@ function Pipelines({ type }) {
       })
       .catch((err) => {
         setAlertDetails(handleException(err));
-      })
-      .finally(() => {});
+      });
   };
 
   const deletePipeline = () => {
@@ -261,10 +257,7 @@ function Pipelines({ type }) {
       },
     };
     return axiosPrivate(requestOptions)
-      .then((res) => res)
-      .catch((err) => {
-        throw err;
-      });
+      .then((res) => res);
   };
 
   const clearCache = () => {

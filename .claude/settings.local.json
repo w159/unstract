@@ -10,7 +10,8 @@
       "Bash(ls:*)",
       "Bash(chmod:*)",
       "Bash(cat:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(find:*)"
     ],
     "deny": []
   }

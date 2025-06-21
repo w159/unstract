@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
 import { useExceptionHandler } from "../../../hooks/useExceptionHandler";
@@ -13,40 +13,18 @@ import { ToolsMain } from "../tools-main/ToolsMain";
 import "./ToolIde.css";
 import usePostHogEvents from "../../../hooks/usePostHogEvents.js";
 import { PageTitle } from "../../widgets/page-title/PageTitle.jsx";
+import { useToolIdeState, loadPlugins } from "../../../hooks/useToolIdeState";
 
-let OnboardMessagesModal;
-let PromptShareModal;
-let PromptShareLink;
-let CloneTitle;
-let HeaderPublic;
-let slides;
-try {
-  OnboardMessagesModal =
-    require("../../../plugins/onboarding-messages/OnboardMessagesModal.jsx").OnboardMessagesModal;
-  slides =
-    require("../../../plugins/onboarding-messages/prompt-slides.jsx").PromptSlides;
-} catch (err) {
-  OnboardMessagesModal = null;
-  slides = [];
-}
-try {
-  PromptShareModal =
-    require("../../../plugins/prompt-studio-public-share/public-share-modal/PromptShareModal.jsx").PromptShareModal;
-  PromptShareLink =
-    require("../../../plugins/prompt-studio-public-share/public-link-modal/PromptShareLink.jsx").PromptShareLink;
-  HeaderPublic =
-    require("../../../plugins/prompt-studio-public-share/header-public/HeaderPublic.jsx").HeaderPublic;
-} catch (err) {
-  // Do nothing if plugins are not loaded.
-}
-try {
-  CloneTitle =
-    require("../../../plugins/prompt-studio-clone/clone-title-modal/CloneTitle.jsx").CloneTitle;
-} catch (err) {
-  // Do nothing if plugins are not loaded.
-}
+// Load plugins once at module level
+const {
+  OnboardMessagesModal,
+  slides,
+  PromptShareModal,
+  PromptShareLink,
+  HeaderPublic,
+  CloneTitle,
+} = loadPlugins();
 function ToolIde() {
-  const [openSettings, setOpenSettings] = useState(false);
   const {
     details,
     updateCustomTool,
@@ -63,31 +41,23 @@ function ToolIde() {
   const { setAlertDetails } = useAlertStore();
   const axiosPrivate = useAxiosPrivate();
   const handleException = useExceptionHandler();
-  const [loginModalOpen, setLoginModalOpen] = useState(true);
   const { setPostHogCustomEvent } = usePostHogEvents();
-  const [openShareLink, setOpenShareLink] = useState(false);
-  const [openShareConfirmation, setOpenShareConfirmation] = useState(false);
-  const [openShareModal, setOpenShareModal] = useState(false);
-  const [openCloneModal, setOpenCloneModal] = useState(false);
-
-  useEffect(() => {
-    if (openShareModal) {
-      if (shareId) {
-        setOpenShareConfirmation(false);
-        setOpenShareLink(true);
-      } else {
-        setOpenShareConfirmation(true);
-        setOpenShareLink(false);
-      }
-    }
-  }, [shareId, openShareModal]);
-
-  useEffect(() => {
-    if (!openShareModal) {
-      setOpenShareConfirmation(false);
-      setOpenShareLink(false);
-    }
-  }, [openShareModal]);
+  
+  // Use custom hook for state management
+  const {
+    openSettings,
+    setOpenSettings,
+    loginModalOpen,
+    setLoginModalOpen,
+    openShareLink,
+    setOpenShareLink,
+    openShareConfirmation,
+    setOpenShareConfirmation,
+    openShareModal,
+    setOpenShareModal,
+    openCloneModal,
+    setOpenCloneModal,
+  } = useToolIdeState(shareId);
 
   const generateIndex = async (doc) => {
     const docId = doc?.document_id;
@@ -151,47 +121,43 @@ function ToolIde() {
       data: body,
     };
 
-    return axiosPrivate(requestOptions)
-      .then((res) => {
-        return res;
-      })
-      .catch((err) => {
-        throw err;
-      });
+    return axiosPrivate(requestOptions);
   };
 
-  const handleDocChange = (doc) => {
+  const validateDocChange = () => {
     if (isMultiPassExtractLoading) {
       setAlertDetails({
         type: "error",
         content: "Please wait for the run to complete",
       });
-      return;
+      return false;
     }
+    return true;
+  };
+
+  const updateDocumentSelection = async (doc, prevSelectedDoc) => {
+    const body = { output: doc?.document_id };
+    
+    try {
+      const res = await handleUpdateTool(body);
+      const updatedToolData = res?.data;
+      updateCustomTool({ details: updatedToolData });
+    } catch (err) {
+      // Revert on error
+      updateCustomTool({ selectedDoc: prevSelectedDoc });
+      setAlertDetails(handleException(err, "Failed to select the document"));
+    }
+  };
+
+  const handleDocChange = (doc) => {
+    if (!validateDocChange()) return;
 
     const prevSelectedDoc = selectedDoc;
-    const data = {
-      selectedDoc: doc,
-    };
-    updateCustomTool(data);
-    if (isPublicSource) {
-      return;
+    updateCustomTool({ selectedDoc: doc });
+    
+    if (!isPublicSource) {
+      updateDocumentSelection(doc, prevSelectedDoc);
     }
-    const body = {
-      output: doc?.document_id,
-    };
-    handleUpdateTool(body)
-      .then((res) => {
-        const updatedToolData = res?.data;
-        updateCustomTool({ details: updatedToolData });
-      })
-      .catch((err) => {
-        const revertSelectedDoc = {
-          selectedDoc: prevSelectedDoc,
-        };
-        updateCustomTool(revertSelectedDoc);
-        setAlertDetails(handleException(err, "Failed to select the document"));
-      });
   };
 
   return (
