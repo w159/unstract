@@ -50,11 +50,19 @@ Automate critical business processes that involve complex documents with a human
 - Docker Compose (if you need to install it separately)
 - Git
 
-Next, either download a release or clone this repo and do the following:
+Next, either download a release or clone this repo and run:
 
-✅ `./run-platform.sh`
-✅ Now visit [http://frontend.unstract.localhost](http://frontend.unstract.localhost) in your browser
-✅ Use username and password `unstract` to login
+✅ `./quick-start.sh`
+
+This single command will:
+- Set up all environment files
+- Verify your system is ready
+- Start all services
+- Provide you with access information
+
+Once services are running (30-60 seconds), visit [http://frontend.unstract.localhost](http://frontend.unstract.localhost) in your browser and use username/password `unstract` to login.
+
+For manual setup or troubleshooting, see [DOCKER-SETUP-GUIDE.md](DOCKER-SETUP-GUIDE.md)
 
 That's all there is to it!
 
