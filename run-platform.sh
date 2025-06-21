@@ -253,10 +253,16 @@ build_services() {
 
   if [ "$opt_build_local" = true ]; then
     echo -e "$blue_text""Building""$default_text"" docker images ""$blue_text""$opt_version""$default_text"" locally."
-    VERSION=$opt_version $docker_compose_cmd -f "$script_dir/docker/docker-compose.build.yaml" build || {
-      echo -e "$red_text""Failed to build docker images.""$default_text"
-      exit 1
-    }
+
+    local services_to_build=("frontend" "backend" "runner" "tool-sidecar" "tool-structure" "platform-service" "prompt-service" "x2text-service")
+
+    for service in "${services_to_build[@]}"; do
+      echo -e "$blue_text""Building $service""$default_text"" docker image ""$blue_text""$opt_version""$default_text"" locally."
+      VERSION=$opt_version $docker_compose_cmd -f "$script_dir/docker/docker-compose.build.yaml" build "$service" || {
+        echo -e "$red_text""Failed to build $service docker image.""$default_text"
+        exit 1
+      }
+    done
   elif [ "$first_setup" = true ] || [ "$opt_update" = true ]; then
     echo -e "$blue_text""Pulling""$default_text"" docker images tag ""$blue_text""$opt_version""$default_text""."
     # Try again on a slow network.
