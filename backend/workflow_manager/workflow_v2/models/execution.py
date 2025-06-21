@@ -169,12 +169,12 @@ class WorkflowExecution(BaseModel):
         try:
             return APIDeployment.objects.get(id=self.pipeline_id).display_name
         except ObjectDoesNotExist:
-            pass
+            logger.debug(f"APIDeployment not found for pipeline_id: {self.pipeline_id}")
 
         try:
             return Pipeline.objects.get(id=self.pipeline_id).pipeline_name
         except ObjectDoesNotExist:
-            pass
+            logger.debug(f"Pipeline not found for pipeline_id: {self.pipeline_id}")
 
         return None
 

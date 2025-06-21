@@ -29,8 +29,6 @@ class PlatformAuthHelper:
         if not auth_controller.is_admin_by_role(member.role):
             logger.error("User is not having right access to perform this operation.")
             raise UserForbidden()
-        else:
-            pass
 
     @staticmethod
     def validate_token_count(organization: Organization) -> None:
@@ -48,5 +46,3 @@ class PlatformAuthHelper:
                 f"organization ID {organization.id}."
             )
             raise KeyCountExceeded()
-        else:
-            pass

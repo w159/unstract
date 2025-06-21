@@ -345,7 +345,11 @@ DATABASES = {
         "ATOMIC_REQUESTS": ATOMIC_REQUESTS,
         "OPTIONS": {
             "application_name": os.environ.get("APPLICATION_NAME", ""),
+            "connect_timeout": 10,
+            "options": "-c statement_timeout=300000",  # 5 minutes
         },
+        "CONN_MAX_AGE": 600,  # 10 minutes
+        "CONN_HEALTH_CHECKS": True,
     }
 }
 
