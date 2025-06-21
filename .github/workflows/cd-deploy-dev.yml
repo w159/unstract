@@ -1,0 +1,17 @@
+name: CD - Deploy to Development
+
+on:
+  push:
+    branches: [develop]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/cd-deploy.yml
+    with:
+      environment: dev
+      image-tag: ${{ github.sha }}
+    secrets:
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      ACR_LOGIN_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}
+      KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_DEV }}

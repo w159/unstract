@@ -1,0 +1,132 @@
+name: CD - Deploy to Azure
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+        description: 'Environment to deploy to (dev, staging, prod)'
+      image-tag:
+        required: true
+        type: string
+        description: 'Docker image tag to deploy'
+    secrets:
+      AZURE_CREDENTIALS:
+        required: true
+      ACR_LOGIN_SERVER:
+        required: true
+      KUBE_CONFIG:
+        required: true
+
+env:
+  AKS_RESOURCE_GROUP: rg-unstract-${{ inputs.environment }}
+  AKS_CLUSTER_NAME: aks-unstract-${{ inputs.environment }}
+  NAMESPACE: unstract-${{ inputs.environment }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'latest'
+      
+      - name: Set AKS context
+        uses: azure/aks-set-context@v3
+        with:
+          resource-group: ${{ env.AKS_RESOURCE_GROUP }}
+          cluster-name: ${{ env.AKS_CLUSTER_NAME }}
+      
+      - name: Create namespace if not exists
+        run: |
+          kubectl create namespace ${{ env.NAMESPACE }} --dry-run=client -o yaml | kubectl apply -f -
+      
+      - name: Create image pull secret
+        run: |
+          kubectl create secret docker-registry acr-secret \
+            --docker-server=${{ secrets.ACR_LOGIN_SERVER }} \
+            --docker-username=${{ secrets.ACR_USERNAME }} \
+            --docker-password=${{ secrets.ACR_PASSWORD }} \
+            --namespace=${{ env.NAMESPACE }} \
+            --dry-run=client -o yaml | kubectl apply -f -
+      
+      - name: Deploy ConfigMaps and Secrets
+        run: |
+          # Create ConfigMap from environment files
+          kubectl create configmap unstract-config \
+            --from-env-file=./k8s/environments/${{ inputs.environment }}/config.env \
+            --namespace=${{ env.NAMESPACE }} \
+            --dry-run=client -o yaml | kubectl apply -f -
+          
+          # Deploy secrets from Key Vault
+          ./scripts/azure/sync-keyvault-secrets.sh ${{ inputs.environment }}
+      
+      - name: Apply Kubernetes manifests
+        run: |
+          # Update image tags in manifests
+          find ./k8s/manifests -name "*.yaml" -type f -exec \
+            sed -i "s|IMAGE_TAG|${{ inputs.image-tag }}|g" {} \;
+          
+          # Apply base manifests
+          kubectl apply -f ./k8s/manifests/base/ -n ${{ env.NAMESPACE }}
+          
+          # Apply environment-specific manifests
+          kubectl apply -f ./k8s/manifests/${{ inputs.environment }}/ -n ${{ env.NAMESPACE }}
+      
+      - name: Wait for deployments
+        run: |
+          kubectl wait --for=condition=available --timeout=600s \
+            deployment/backend \
+            deployment/frontend \
+            deployment/platform-service \
+            deployment/prompt-service \
+            deployment/runner \
+            deployment/x2text-service \
+            -n ${{ env.NAMESPACE }}
+      
+      - name: Run database migrations
+        run: |
+          kubectl exec -it deployment/backend -n ${{ env.NAMESPACE }} -- \
+            python manage.py migrate --no-input
+      
+      - name: Health check
+        run: |
+          ./scripts/health-check.sh ${{ inputs.environment }}
+      
+      - name: Notify deployment status
+        if: always()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          text: |
+            Deployment to ${{ inputs.environment }} ${{ job.status }}
+            Commit: ${{ github.sha }}
+            Author: ${{ github.actor }}
+          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+
+  smoke-tests:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run smoke tests
+        run: |
+          ./scripts/smoke-tests.sh ${{ inputs.environment }}
+      
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: smoke-test-results-${{ inputs.environment }}
+          path: test-results/

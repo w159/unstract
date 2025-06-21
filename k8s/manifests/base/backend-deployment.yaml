@@ -1,0 +1,133 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  labels:
+    app: unstract
+    component: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: unstract
+      component: backend
+  template:
+    metadata:
+      labels:
+        app: unstract
+        component: backend
+    spec:
+      serviceAccountName: unstract-backend
+      imagePullSecrets:
+        - name: acr-secret
+      containers:
+      - name: backend
+        image: ${ACR_LOGIN_SERVER}/unstract/backend:IMAGE_TAG
+        ports:
+        - containerPort: 8000
+          name: http
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        - name: DJANGO_SETTINGS_MODULE
+          value: "backend.settings.base"
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: unstract-secrets
+              key: db-host
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: unstract-secrets
+              key: db-name
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: unstract-secrets
+              key: db-user
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: unstract-secrets
+              key: db-password
+        - name: REDIS_HOST
+          valueFrom:
+            secretKeyRef:
+              name: unstract-secrets
+              key: redis-host
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: unstract-secrets
+              key: redis-password
+        - name: CELERY_BROKER_URL
+          valueFrom:
+            secretKeyRef:
+              name: unstract-secrets
+              key: servicebus-connection-string
+        - name: AZURE_STORAGE_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: unstract-secrets
+              key: storage-connection-string
+        - name: ENCRYPTION_KEY
+          valueFrom:
+            secretKeyRef:
+              name: unstract-secrets
+              key: encryption-key
+        envFrom:
+        - configMapRef:
+            name: unstract-config
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        volumeMounts:
+        - name: data
+          mountPath: /data
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: unstract-data-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  labels:
+    app: unstract
+    component: backend
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8000
+    targetPort: http
+    protocol: TCP
+    name: http
+  selector:
+    app: unstract
+    component: backend
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: unstract-backend
+  labels:
+    app: unstract
+    component: backend

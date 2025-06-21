@@ -1,0 +1,41 @@
+name: CD - Deploy to Production
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      image-tag:
+        description: 'Image tag to deploy (defaults to latest commit SHA)'
+        required: false
+        type: string
+
+jobs:
+  deploy-staging:
+    uses: ./.github/workflows/cd-deploy.yml
+    with:
+      environment: staging
+      image-tag: ${{ github.event.inputs.image-tag || github.sha }}
+    secrets:
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      ACR_LOGIN_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}
+      KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_STAGING }}
+
+  approve-production:
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    environment: production-approval
+    steps:
+      - name: Request production approval
+        run: echo "Waiting for production deployment approval..."
+
+  deploy-production:
+    needs: approve-production
+    uses: ./.github/workflows/cd-deploy.yml
+    with:
+      environment: prod
+      image-tag: ${{ github.event.inputs.image-tag || github.sha }}
+    secrets:
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      ACR_LOGIN_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}
+      KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_PROD }}
