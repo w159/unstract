@@ -1,38 +1,38 @@
-import { SettingOutlined } from "@ant-design/icons";
-import { Button, Modal, Tooltip, Typography } from "antd";
-import PropTypes from "prop-types";
-import { useCallback, useState } from "react";
+import { SettingOutlined } from '@ant-design/icons';
+import { Button, Modal, Tooltip, Typography } from 'antd';
+import PropTypes from 'prop-types';
+import { useCallback, useState } from 'react';
 
-import { HeaderTitle } from "../header-title/HeaderTitle.jsx";
-import { ExportToolIcon } from "../../../assets";
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler";
-import { useAlertStore } from "../../../store/alert-store";
-import { useCustomToolStore } from "../../../store/custom-tool-store";
-import { useSessionStore } from "../../../store/session-store";
-import { CustomButton } from "../../widgets/custom-button/CustomButton";
-import { ExportTool } from "../export-tool/ExportTool";
-import usePostHogEvents from "../../../hooks/usePostHogEvents";
-import "./Header.css";
+import { HeaderTitle } from '../header-title/HeaderTitle.jsx';
+import { ExportToolIcon } from '../../../assets';
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler';
+import { useAlertStore } from '../../../store/alert-store';
+import { useCustomToolStore } from '../../../store/custom-tool-store';
+import { useSessionStore } from '../../../store/session-store';
+import { CustomButton } from '../../widgets/custom-button/CustomButton';
+import { ExportTool } from '../export-tool/ExportTool';
+import usePostHogEvents from '../../../hooks/usePostHogEvents';
+import './Header.css';
 
 let SinglePassToggleSwitch;
 let CloneButton;
 let PromptShareButton;
 try {
   SinglePassToggleSwitch =
-    require("../../../plugins/single-pass-toggle-switch/SinglePassToggleSwitch").SinglePassToggleSwitch;
+    require('../../../plugins/single-pass-toggle-switch/SinglePassToggleSwitch').SinglePassToggleSwitch;
 } catch {
   // The variable will remain undefined if the component is not available.
 }
 try {
   PromptShareButton =
-    require("../../../plugins/prompt-studio-public-share/public-share-btn/PromptShareButton.jsx").PromptShareButton;
+    require('../../../plugins/prompt-studio-public-share/public-share-btn/PromptShareButton.jsx').PromptShareButton;
 } catch {
   // The variable will remain undefined if the component is not available.
 }
 try {
   CloneButton =
-    require("../../../plugins/prompt-studio-clone/clone-btn/CloneButton.jsx").CloneButton;
+    require('../../../plugins/prompt-studio-clone/clone-btn/CloneButton.jsx').CloneButton;
 } catch {
   // The variable will remain undefined if the component is not available.
 }
@@ -60,7 +60,7 @@ function Header({
     selectedUsers,
     toolDetail,
     isSharedWithEveryone,
-    forcedExport = false
+    forcedExport = false,
   ) => {
     const body = {
       is_shared_with_org: isSharedWithEveryone,
@@ -68,11 +68,11 @@ function Header({
       force_export: forcedExport,
     };
     const requestOptions = {
-      method: "POST",
+      method: 'POST',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/prompt-studio/export/${details?.tool_id}`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
-        "Content-Type": "application/json",
+        'X-CSRFToken': sessionDetails?.csrfToken,
+        'Content-Type': 'application/json',
       },
       data: body,
     };
@@ -80,12 +80,12 @@ function Header({
     axiosPrivate(requestOptions)
       .then(() => {
         setAlertDetails({
-          type: "success",
-          content: "Custom tool exported successfully",
+          type: 'success',
+          content: 'Custom tool exported successfully',
         });
       })
       .catch((err) => {
-        if (err?.response?.data?.errors[0]?.code === "warning") {
+        if (err?.response?.data?.errors[0]?.code === 'warning') {
           setLastExportParams({
             selectedUsers,
             toolDetail,
@@ -94,7 +94,7 @@ function Header({
           setConfirmModalVisible(true); // Show the confirmation modal
           return; // Exit early to prevent any further execution
         }
-        setAlertDetails(handleException(err, "Failed to export"));
+        setAlertDetails(handleException(err, 'Failed to export'));
       })
       .finally(() => {
         setIsExportLoading(false);
@@ -112,7 +112,7 @@ function Header({
 
   const handleShare = (isEdit) => {
     try {
-      setPostHogCustomEvent("ps_exported_tool", {
+      setPostHogCustomEvent('ps_exported_tool', {
         info: `Clicked on the 'Export' button`,
         tool_name: details?.tool_name,
       });
@@ -121,10 +121,10 @@ function Header({
     }
 
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/prompt-studio/export/${details?.tool_id}`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
     };
     setIsExportLoading(true);
@@ -150,7 +150,7 @@ function Header({
   const getAllUsers = async () => {
     setIsExportLoading(true);
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/users/`,
     };
 
@@ -161,12 +161,12 @@ function Header({
           users.map((user) => ({
             id: user?.id,
             email: user?.email,
-          }))
+          })),
         );
         return users;
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "Failed to load"));
+        setAlertDetails(handleException(err, 'Failed to load'));
       })
       .finally(() => {
         setIsExportLoading(false);
@@ -233,7 +233,7 @@ function Header({
         centered
       >
         Unable to export tool. Some prompt(s) were not run. Please run them
-        before exporting.{" "}
+        before exporting.{' '}
         <strong>Would you like to force export anyway?</strong>
       </Modal>
     </div>

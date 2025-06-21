@@ -1,15 +1,15 @@
-import { SearchOutlined } from "@ant-design/icons";
-import { Input, List } from "antd";
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
-import debounce from "lodash/debounce";
+import { SearchOutlined } from '@ant-design/icons';
+import { Input, List } from 'antd';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
+import debounce from 'lodash/debounce';
 
-import { DataSourceCard } from "../data-source-card/DataSourceCard";
-import "./ListOfSources.css";
+import { DataSourceCard } from '../data-source-card/DataSourceCard';
+import './ListOfSources.css';
 
 function ListOfSources({ setSelectedSourceId, open, sourcesList, type }) {
   const [filteredSourcesList, setFilteredSourcesList] = useState([]);
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     onSearch(searchText);

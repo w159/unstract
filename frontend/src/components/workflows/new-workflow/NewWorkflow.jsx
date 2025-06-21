@@ -1,12 +1,12 @@
-import { Form, Input, Modal } from "antd";
-import PropTypes from "prop-types";
-import { useRef, useState } from "react";
-import { getBackendErrorDetail } from "../../../helpers/GetStaticData";
+import { Form, Input, Modal } from 'antd';
+import PropTypes from 'prop-types';
+import { useRef, useState } from 'react';
+import { getBackendErrorDetail } from '../../../helpers/GetStaticData';
 const { TextArea } = Input;
 
 function NewWorkflow({
-  name = "",
-  description = "",
+  name = '',
+  description = '',
   onDone = () => {},
   onClose = () => {},
   loading = {},
@@ -54,7 +54,7 @@ function NewWorkflow({
     setBackendErrors((prevErrors) => {
       if (prevErrors) {
         const updatedErrors = prevErrors.errors.filter(
-          (error) => error.attr !== changedFieldName
+          (error) => error.attr !== changedFieldName,
         );
         return { ...prevErrors, errors: updatedErrors };
       }
@@ -64,13 +64,13 @@ function NewWorkflow({
 
   return (
     <Modal
-      title={name ? "Edit Workflow" : "New Workflow"}
+      title={name ? 'Edit Workflow' : 'New Workflow'}
       open={openModal}
       onCancel={onCancel}
       onOk={onCreate}
       centered
       maskClosable={false}
-      okText={name ? "Edit Workflow" : "Create Workflow"}
+      okText={name ? 'Edit Workflow' : 'Create Workflow'}
       width="400px"
       okButtonProps={{ disabled: disableCreation, loading: loading }}
     >
@@ -83,28 +83,28 @@ function NewWorkflow({
         <Form.Item
           label="Workflow Name"
           name="workflow_name"
-          rules={[{ required: true, message: "Please enter Workflow name!" }]}
+          rules={[{ required: true, message: 'Please enter Workflow name!' }]}
           labelCol={{ span: 24 }}
           wrapperCol={{ span: 24 }}
           validateStatus={
-            getBackendErrorDetail("workflow_name", backendErrors) ? "error" : ""
+            getBackendErrorDetail('workflow_name', backendErrors) ? 'error' : ''
           }
-          help={getBackendErrorDetail("workflow_name", backendErrors)}
+          help={getBackendErrorDetail('workflow_name', backendErrors)}
         >
           <Input defaultValue={nameRef.current} onChange={updateName} />
         </Form.Item>
         <Form.Item
           label="Description"
           name="workflow_description"
-          rules={[{ required: true, message: "Please enter Description!" }]}
+          rules={[{ required: true, message: 'Please enter Description!' }]}
           labelCol={{ span: 24 }}
           wrapperCol={{ span: 24 }}
           validateStatus={
-            getBackendErrorDetail("workflow_description", backendErrors)
-              ? "error"
-              : ""
+            getBackendErrorDetail('workflow_description', backendErrors)
+              ? 'error'
+              : ''
           }
-          help={getBackendErrorDetail("workflow_description", backendErrors)}
+          help={getBackendErrorDetail('workflow_description', backendErrors)}
         >
           <TextArea
             defaultValue={descriptionRef.current}

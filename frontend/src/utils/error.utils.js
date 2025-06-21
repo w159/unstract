@@ -6,13 +6,13 @@
  * Error types enum
  */
 export const ErrorTypes = {
-  NETWORK: "NETWORK_ERROR",
-  VALIDATION: "VALIDATION_ERROR",
-  AUTHENTICATION: "AUTHENTICATION_ERROR",
-  AUTHORIZATION: "AUTHORIZATION_ERROR",
-  NOT_FOUND: "NOT_FOUND_ERROR",
-  SERVER: "SERVER_ERROR",
-  UNKNOWN: "UNKNOWN_ERROR",
+  NETWORK: 'NETWORK_ERROR',
+  VALIDATION: 'VALIDATION_ERROR',
+  AUTHENTICATION: 'AUTHENTICATION_ERROR',
+  AUTHORIZATION: 'AUTHORIZATION_ERROR',
+  NOT_FOUND: 'NOT_FOUND_ERROR',
+  SERVER: 'SERVER_ERROR',
+  UNKNOWN: 'UNKNOWN_ERROR',
 };
 
 /**
@@ -52,12 +52,12 @@ export const getErrorType = (error) => {
  */
 export const getErrorMessage = (
   error,
-  defaultMessage = "An error occurred"
+  defaultMessage = 'An error occurred',
 ) => {
   // Check for network errors
   if (!error.response) {
-    if (error.message === "Network Error") {
-      return "Unable to connect to server. Please check your internet connection.";
+    if (error.message === 'Network Error') {
+      return 'Unable to connect to server. Please check your internet connection.';
     }
     return error.message || defaultMessage;
   }
@@ -66,7 +66,7 @@ export const getErrorMessage = (
   const responseData = error.response?.data;
 
   // Handle different error response formats
-  if (typeof responseData === "string") {
+  if (typeof responseData === 'string') {
     return responseData;
   }
 
@@ -80,10 +80,10 @@ export const getErrorMessage = (
 
   if (responseData?.errors) {
     if (Array.isArray(responseData.errors)) {
-      return responseData.errors.map((e) => e.detail || e.message).join(", ");
+      return responseData.errors.map((e) => e.detail || e.message).join(', ');
     }
-    if (typeof responseData.errors === "object") {
-      return Object.values(responseData.errors).flat().join(", ");
+    if (typeof responseData.errors === 'object') {
+      return Object.values(responseData.errors).flat().join(', ');
     }
   }
 
@@ -95,15 +95,15 @@ export const getErrorMessage = (
   const status = error.response?.status;
   switch (status) {
     case 400:
-      return "Invalid request. Please check your input.";
+      return 'Invalid request. Please check your input.';
     case 401:
-      return "You need to log in to access this resource.";
+      return 'You need to log in to access this resource.';
     case 403:
-      return "You do not have permission to perform this action.";
+      return 'You do not have permission to perform this action.';
     case 404:
-      return "The requested resource was not found.";
+      return 'The requested resource was not found.';
     case 500:
-      return "Server error. Please try again later.";
+      return 'Server error. Please try again later.';
     default:
       return defaultMessage;
   }
@@ -160,11 +160,11 @@ export const handleApiError = (error, setAlertDetails, customMessage) => {
   const errorObj = createErrorObject(error, customMessage);
 
   setAlertDetails({
-    type: "error",
+    type: 'error',
     content: errorObj.message,
   });
 
-  logError(error, "API_ERROR", { customMessage });
+  logError(error, 'API_ERROR', { customMessage });
 
   return errorObj;
 };
@@ -189,6 +189,6 @@ export const createErrorFallbackProps = (error, resetErrorBoundary) => {
   return {
     error: createErrorObject(error),
     resetErrorBoundary,
-    showDetails: process.env.NODE_ENV === "development",
+    showDetails: process.env.NODE_ENV === 'development',
   };
 };

@@ -1,21 +1,21 @@
-import { Button } from "antd";
-import { Row, Col } from "antd";
+import { Button } from 'antd';
+import { Row, Col } from 'antd';
 
-import { getBaseUrl } from "../../helpers/GetStaticData";
-import "./Login.css";
-import { UnstractBlackLogo } from "../../assets";
-import { ProductContentLayout } from "./ProductContentLayout";
+import { getBaseUrl } from '../../helpers/GetStaticData';
+import './Login.css';
+import { UnstractBlackLogo } from '../../assets';
+import { ProductContentLayout } from './ProductContentLayout';
 
 let LoginForm = null;
 try {
-  LoginForm = require("../../plugins/login-form/LoginForm").LoginForm;
+  LoginForm = require('../../plugins/login-form/LoginForm').LoginForm;
 } catch {
   // The components will remain null of it is not available
 }
 
 function Login() {
   const baseUrl = getBaseUrl();
-  const newURL = baseUrl + "/api/v1/login";
+  const newURL = baseUrl + '/api/v1/login';
   const handleLogin = () => {
     window.location.href = newURL;
   };

@@ -1,6 +1,6 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import "./IslandLayout.css";
+import './IslandLayout.css';
 
 function IslandLayout({ children }) {
   return (

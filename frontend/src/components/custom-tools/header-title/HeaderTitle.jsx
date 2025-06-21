@@ -1,10 +1,10 @@
-import { ArrowLeftOutlined, EditOutlined } from "@ant-design/icons";
-import { Button, Typography } from "antd";
-import { useNavigate } from "react-router-dom";
+import { ArrowLeftOutlined, EditOutlined } from '@ant-design/icons';
+import { Button, Typography } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
-import { useCustomToolStore } from "../../../store/custom-tool-store";
-import { useSessionStore } from "../../../store/session-store";
-import "./HeaderTitle.css";
+import { useCustomToolStore } from '../../../store/custom-tool-store';
+import { useSessionStore } from '../../../store/session-store';
+import './HeaderTitle.css';
 
 function HeaderTitle() {
   const navigate = useNavigate();

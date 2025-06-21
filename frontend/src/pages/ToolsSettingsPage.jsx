@@ -1,6 +1,6 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import { ToolSettings } from "../components/tool-settings/tool-settings/ToolSettings";
+import { ToolSettings } from '../components/tool-settings/tool-settings/ToolSettings';
 
 function ToolsSettingsPage({ type }) {
   return <ToolSettings type={type} />;

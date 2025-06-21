@@ -1,11 +1,11 @@
-import { DeleteOutlined, EditOutlined, MoreOutlined } from "@ant-design/icons";
-import { Card, Dropdown, Image } from "antd";
-import PropTypes from "prop-types";
+import { DeleteOutlined, EditOutlined, MoreOutlined } from '@ant-design/icons';
+import { Card, Dropdown, Image } from 'antd';
+import PropTypes from 'prop-types';
 
-import { ConfirmModal } from "../../widgets/confirm-modal/ConfirmModal";
-import { EmptyState } from "../../widgets/empty-state/EmptyState";
-import { SpinnerLoader } from "../../widgets/spinner-loader/SpinnerLoader";
-import "./ListOfItems.css";
+import { ConfirmModal } from '../../widgets/confirm-modal/ConfirmModal';
+import { EmptyState } from '../../widgets/empty-state/EmptyState';
+import { SpinnerLoader } from '../../widgets/spinner-loader/SpinnerLoader';
+import './ListOfItems.css';
 
 function ListOfItems({
   isLoading,
@@ -45,8 +45,8 @@ function ListOfItems({
                   menu={{
                     items: [
                       {
-                        label: "Edit",
-                        key: "edit",
+                        label: 'Edit',
+                        key: 'edit',
                         icon: <EditOutlined />,
                         onClick: () => setEditItemId(item?.id),
                       },
@@ -59,12 +59,12 @@ function ListOfItems({
                             Delete
                           </ConfirmModal>
                         ),
-                        key: "delete",
+                        key: 'delete',
                         icon: <DeleteOutlined />,
                       },
                     ],
                   }}
-                  trigger={["click"]}
+                  trigger={['click']}
                   placement="bottomRight"
                 >
                   <MoreOutlined />

@@ -1,8 +1,8 @@
-import { Checkbox, Space, Typography } from "antd";
-import PropTypes from "prop-types";
+import { Checkbox, Space, Typography } from 'antd';
+import PropTypes from 'prop-types';
 
-import "./CheckboxWidget.css";
-import CustomMarkdown from "../../helpers/custom-markdown/CustomMarkdown";
+import './CheckboxWidget.css';
+import CustomMarkdown from '../../helpers/custom-markdown/CustomMarkdown';
 const CheckboxWidget = ({
   id,
   value,
@@ -12,7 +12,7 @@ const CheckboxWidget = ({
   required,
   readonly,
 }) => {
-  const description = schema?.description || "";
+  const description = schema?.description || '';
   const handleCheckboxChange = (event) => {
     onChange(event.target.checked);
   };

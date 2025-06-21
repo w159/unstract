@@ -7,7 +7,7 @@ import {
   Space,
   Typography,
   Image,
-} from "antd";
+} from 'antd';
 import {
   UserOutlined,
   UserSwitchOutlined,
@@ -16,32 +16,32 @@ import {
   FileProtectOutlined,
   LikeOutlined,
   LoginOutlined,
-} from "@ant-design/icons";
-import { useEffect, useState, useMemo, useCallback } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
-import PropTypes from "prop-types";
+} from '@ant-design/icons';
+import { useEffect, useState, useMemo, useCallback } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
+import PropTypes from 'prop-types';
 
-import { UnstractLogo } from "../../../assets/index.js";
+import { UnstractLogo } from '../../../assets/index.js';
 import {
   getBaseUrl,
   homePagePath,
   onboardCompleted,
   UNSTRACT_ADMIN,
-} from "../../../helpers/GetStaticData.js";
-import useLogout from "../../../hooks/useLogout.js";
-import "../../../layouts/page-layout/PageLayout.css";
-import { useSessionStore } from "../../../store/session-store.js";
-import "./TopNavBar.css";
-import { useAlertStore } from "../../../store/alert-store.js";
-import { ConfirmModal } from "../../widgets/confirm-modal/ConfirmModal.jsx";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler.jsx";
-import config from "../../../config";
+} from '../../../helpers/GetStaticData.js';
+import useLogout from '../../../hooks/useLogout.js';
+import '../../../layouts/page-layout/PageLayout.css';
+import { useSessionStore } from '../../../store/session-store.js';
+import './TopNavBar.css';
+import { useAlertStore } from '../../../store/alert-store.js';
+import { ConfirmModal } from '../../widgets/confirm-modal/ConfirmModal.jsx';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler.jsx';
+import config from '../../../config';
 
 let TrialDaysInfo;
 try {
   TrialDaysInfo =
-    require("../../../plugins/unstract-subscription/components/TrialDaysInfo.jsx").default;
+    require('../../../plugins/unstract-subscription/components/TrialDaysInfo.jsx').default;
 } catch (err) {
   // Plugin not found
 }
@@ -50,7 +50,7 @@ let selectedProductStore;
 let selectedProduct;
 
 try {
-  selectedProductStore = require("../../../plugins/store/select-product-store.js");
+  selectedProductStore = require('../../../plugins/store/select-product-store.js');
 } catch {
   // Ignore if hook not available
 }
@@ -58,7 +58,7 @@ try {
 let PlatformDropdown;
 try {
   PlatformDropdown =
-    require("../../../plugins/platform-dropdown/PlatformDropDown.jsx").PlatformDropdown;
+    require('../../../plugins/platform-dropdown/PlatformDropDown.jsx').PlatformDropdown;
 } catch (err) {
   // Plugin not found
 }
@@ -66,7 +66,7 @@ try {
 let WhispererLogo;
 try {
   WhispererLogo =
-    require("../../../plugins/assets/llmWhisperer/index.js").WhispererLogo;
+    require('../../../plugins/assets/llmWhisperer/index.js').WhispererLogo;
 } catch {
   // Ignore if hook not available
 }
@@ -83,8 +83,8 @@ const CustomLogo = ({ onClick, className }) => {
         alt="logo"
         width={120}
         style={{
-          cursor: onClick ? "pointer" : undefined,
-          background: "transparent",
+          cursor: onClick ? 'pointer' : undefined,
+          background: 'transparent',
         }}
         onError={() => {
           // If image fails to load, component will re-render and use UnstractLogo
@@ -101,7 +101,7 @@ const CustomLogo = ({ onClick, className }) => {
 };
 let APIHubLogo;
 try {
-  APIHubLogo = require("../../../plugins/assets/verticals/index.js").APIHubLogo;
+  APIHubLogo = require('../../../plugins/assets/verticals/index.js').APIHubLogo;
 } catch {
   // Ignore if hook not available
 }
@@ -111,11 +111,11 @@ let unstractSubscriptionPlanStore;
 let UNSTRACT_SUBSCRIPTION_PLANS;
 let UnstractPricingMenuLink;
 try {
-  unstractSubscriptionPlanStore = require("../../../plugins/store/unstract-subscription-plan-store");
+  unstractSubscriptionPlanStore = require('../../../plugins/store/unstract-subscription-plan-store');
   UNSTRACT_SUBSCRIPTION_PLANS =
-    require("../../../plugins/unstract-subscription/helper/constants").UNSTRACT_SUBSCRIPTION_PLANS;
+    require('../../../plugins/unstract-subscription/helper/constants').UNSTRACT_SUBSCRIPTION_PLANS;
   UnstractPricingMenuLink =
-    require("../../../plugins/unstract-subscription/components/UnstractPricingMenuLink.jsx").UnstractPricingMenuLink;
+    require('../../../plugins/unstract-subscription/components/UnstractPricingMenuLink.jsx').UnstractPricingMenuLink;
 } catch (err) {
   // Plugin unavailable.
 }
@@ -130,14 +130,14 @@ function TopNavBar({ isSimpleLayout, topNavBarOptions }) {
   const [showOnboardBanner, setShowOnboardBanner] = useState(false);
   const [approverStatus, setApproverStatus] = useState(false);
   const [reviewerStatus, setReviewerStatus] = useState(false);
-  const [reviewPageHeader, setReviewPageHeader] = useState("");
+  const [reviewPageHeader, setReviewPageHeader] = useState('');
   const { setAlertDetails } = useAlertStore();
   const handleException = useExceptionHandler();
   const location = useLocation();
 
   if (selectedProductStore) {
     selectedProduct = selectedProductStore.useSelectedProductStore(
-      (state) => state?.selectedProduct
+      (state) => state?.selectedProduct,
     );
   }
 
@@ -145,7 +145,7 @@ function TopNavBar({ isSimpleLayout, topNavBarOptions }) {
     if (unstractSubscriptionPlanStore?.useUnstractSubscriptionPlanStore) {
       unstractSubscriptionPlan =
         unstractSubscriptionPlanStore?.useUnstractSubscriptionPlanStore(
-          (state) => state?.unstractSubscriptionPlan
+          (state) => state?.unstractSubscriptionPlan,
         );
     }
   } catch (error) {
@@ -160,20 +160,20 @@ function TopNavBar({ isSimpleLayout, topNavBarOptions }) {
     return unstractSubscriptionPlan?.remainingDays <= 0;
   }, [unstractSubscriptionPlan]);
 
-  const isUnstract = !(selectedProduct && selectedProduct !== "unstract");
-  const isAPIHub = selectedProduct && selectedProduct === "verticals";
+  const isUnstract = !(selectedProduct && selectedProduct !== 'unstract');
+  const isAPIHub = selectedProduct && selectedProduct === 'verticals';
 
   // Check user role and whether the onboarding is incomplete
   useEffect(() => {
     const { role } = sessionDetails;
-    const isReviewer = role === "unstract_reviewer";
-    const isSupervisor = role === "unstract_supervisor";
+    const isReviewer = role === 'unstract_reviewer';
+    const isSupervisor = role === 'unstract_supervisor';
     const isAdmin = role === UNSTRACT_ADMIN;
 
     setShowOnboardBanner(
       !onboardCompleted(sessionDetails?.adapters) &&
         !isReviewer &&
-        !isSupervisor
+        !isSupervisor,
     );
     setApproverStatus(isAdmin || isSupervisor);
     setReviewerStatus(isReviewer);
@@ -181,35 +181,35 @@ function TopNavBar({ isSimpleLayout, topNavBarOptions }) {
 
   // Determine review page header
   useEffect(() => {
-    const pathSegments = location.pathname.split("review");
+    const pathSegments = location.pathname.split('review');
     if (pathSegments.length > 1) {
-      if (pathSegments[1].includes("/approve")) {
-        setReviewPageHeader("Approve");
-      } else if (pathSegments[1].includes("/download_and_sync")) {
-        setReviewPageHeader("Download and syncmanager");
+      if (pathSegments[1].includes('/approve')) {
+        setReviewPageHeader('Approve');
+      } else if (pathSegments[1].includes('/download_and_sync')) {
+        setReviewPageHeader('Download and syncmanager');
       } else {
-        setReviewPageHeader("Review");
+        setReviewPageHeader('Review');
       }
     } else {
       setReviewPageHeader(null);
     }
-    if (location.pathname.includes("/simple_review")) {
-      setReviewPageHeader("Simple Review");
+    if (location.pathname.includes('/simple_review')) {
+      setReviewPageHeader('Simple Review');
     }
   }, [location]);
 
   // Switch organization
   const handleContinue = useCallback(async (selectedOrg) => {
     const requestOptions = {
-      method: "POST",
+      method: 'POST',
       url: `/api/v1/organization/${selectedOrg}/set`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
     };
     try {
       await axios(requestOptions);
-      navigate("/");
+      navigate('/');
       window.location.reload();
     } catch (err) {
       setAlertDetails(handleException(err));
@@ -226,7 +226,7 @@ function TopNavBar({ isSimpleLayout, topNavBarOptions }) {
             <div
               onClick={() =>
                 setAlertDetails({
-                  type: "error",
+                  type: 'error',
                   content: `You are already in ${org?.display_name}`,
                 })
               }
@@ -252,7 +252,7 @@ function TopNavBar({ isSimpleLayout, topNavBarOptions }) {
     // Profile
     if (isUnstract && !isSimpleLayout) {
       menuItems.push({
-        key: "1",
+        key: '1',
         label: (
           <Button
             onClick={() => navigate(`/${orgName}/profile`)}
@@ -268,7 +268,7 @@ function TopNavBar({ isSimpleLayout, topNavBarOptions }) {
     // Switch Organization
     if (allOrganization?.length > 1) {
       menuItems.push({
-        key: "3",
+        key: '3',
         label: (
           <Dropdown
             placeholder="Switch Organization"
@@ -276,7 +276,7 @@ function TopNavBar({ isSimpleLayout, topNavBarOptions }) {
               items: cascadeOptions,
               selectable: true,
               selectedKeys: [orgId],
-              className: "switch-org-menu",
+              className: 'switch-org-menu',
             }}
             placement="left"
           >
@@ -291,7 +291,7 @@ function TopNavBar({ isSimpleLayout, topNavBarOptions }) {
     // Review
     if (isUnstract && !isSimpleLayout && (reviewerStatus || approverStatus)) {
       menuItems.push({
-        key: "4",
+        key: '4',
         label: (
           <Button
             onClick={() => navigate(`/${orgName}/review`)}
@@ -307,7 +307,7 @@ function TopNavBar({ isSimpleLayout, topNavBarOptions }) {
     // Approve
     if (isUnstract && !isSimpleLayout && approverStatus) {
       menuItems.push({
-        key: "5",
+        key: '5',
         label: (
           <Button
             onClick={() => navigate(`/${orgName}/review/approve`)}
@@ -320,7 +320,7 @@ function TopNavBar({ isSimpleLayout, topNavBarOptions }) {
       });
 
       menuItems.push({
-        key: "6",
+        key: '6',
         label: (
           <Button
             onClick={() => navigate(`/${orgName}/review/download_and_sync`)}
@@ -340,14 +340,14 @@ function TopNavBar({ isSimpleLayout, topNavBarOptions }) {
       !sessionDetails?.provider
     ) {
       menuItems.push({
-        key: "7",
+        key: '7',
         label: <UnstractPricingMenuLink orgName={orgName} />,
       });
     }
 
     const handleLogin = () => {
       const baseUrl = getBaseUrl();
-      const newURL = baseUrl + "/api/v1/login";
+      const newURL = baseUrl + '/api/v1/login';
       window.location.href = newURL;
     };
 
@@ -355,10 +355,10 @@ function TopNavBar({ isSimpleLayout, topNavBarOptions }) {
 
     const handleClick = isLoggedIn ? logout : handleLogin;
     const icon = isLoggedIn ? <LogoutOutlined /> : <LoginOutlined />;
-    const label = isLoggedIn ? "Logout" : "Login";
+    const label = isLoggedIn ? 'Logout' : 'Login';
 
     menuItems.push({
-      key: "2",
+      key: '2',
       label: (
         <Button onClick={handleClick} icon={icon} className="logout-button">
           {label}
@@ -381,10 +381,10 @@ function TopNavBar({ isSimpleLayout, topNavBarOptions }) {
 
   // Function to get the initials from the user name
   const getInitials = useCallback((name) => {
-    const names = name?.split(" ");
+    const names = name?.split(' ');
     return names
       ?.map((n) => n.charAt(0))
-      ?.join("")
+      ?.join('')
       ?.toUpperCase();
   }, []);
 

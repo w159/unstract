@@ -1,36 +1,36 @@
-import { Button, Layout } from "antd";
-import { LeftOutlined, RightOutlined } from "@ant-design/icons";
-import Sider from "antd/es/layout/Sider";
-import { useEffect, useState } from "react";
+import { Button, Layout } from 'antd';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import Sider from 'antd/es/layout/Sider';
+import { useEffect, useState } from 'react';
 
-import { IslandLayout } from "../../../layouts/island-layout/IslandLayout";
-import { Actions } from "../actions/Actions";
-import { WorkflowExecution } from "../workflow-execution/WorkflowExecution";
-import "./Agency.css";
-import { useSocketMessagesStore } from "../../../store/socket-messages-store";
-import { useWorkflowStore } from "../../../store/workflow-store";
-import { SidePanel } from "../side-panel/SidePanel";
-import { PageTitle } from "../../widgets/page-title/PageTitle";
+import { IslandLayout } from '../../../layouts/island-layout/IslandLayout';
+import { Actions } from '../actions/Actions';
+import { WorkflowExecution } from '../workflow-execution/WorkflowExecution';
+import './Agency.css';
+import { useSocketMessagesStore } from '../../../store/socket-messages-store';
+import { useWorkflowStore } from '../../../store/workflow-store';
+import { SidePanel } from '../side-panel/SidePanel';
+import { PageTitle } from '../../widgets/page-title/PageTitle';
 
 function Agency() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [steps, setSteps] = useState([]);
-  const [inputMd, setInputMd] = useState("");
-  const [outputMd, setOutputMd] = useState("");
-  const [statusBarMsg, setStatusBarMsg] = useState("");
-  const [sourceMsg, setSourceMsg] = useState("");
-  const [destinationMsg, setDestinationMsg] = useState("");
+  const [inputMd, setInputMd] = useState('');
+  const [outputMd, setOutputMd] = useState('');
+  const [statusBarMsg, setStatusBarMsg] = useState('');
+  const [sourceMsg, setSourceMsg] = useState('');
+  const [destinationMsg, setDestinationMsg] = useState('');
   const { message, setDefault } = useSocketMessagesStore();
   const workflowStore = useWorkflowStore();
   const { details, loadingType, projectName } = workflowStore;
   const prompt = details?.prompt_text;
-  const [activeToolId, setActiveToolId] = useState("");
-  const [prevLoadingType, setPrevLoadingType] = useState("");
+  const [activeToolId, setActiveToolId] = useState('');
+  const [prevLoadingType, setPrevLoadingType] = useState('');
   const [isUpdateSteps, setIsUpdateSteps] = useState(false);
   const [stepLoader, setStepLoader] = useState(false);
 
   useEffect(() => {
-    if (prevLoadingType !== "EXECUTE") {
+    if (prevLoadingType !== 'EXECUTE') {
       setIsUpdateSteps(true);
     }
 
@@ -52,13 +52,13 @@ function Agency() {
 
   const initializeWfComp = () => {
     setToolInstances();
-    setActiveToolId("");
-    setInputMd("");
-    setOutputMd("");
-    setStatusBarMsg("");
+    setActiveToolId('');
+    setInputMd('');
+    setOutputMd('');
+    setStatusBarMsg('');
     setDefault();
-    setSourceMsg("");
-    setDestinationMsg("");
+    setSourceMsg('');
+    setDestinationMsg('');
   };
 
   useEffect(() => {
@@ -75,46 +75,46 @@ function Agency() {
 
     const state = message?.state;
     const msgComp = message?.component;
-    if (state === "INPUT_UPDATE") {
+    if (state === 'INPUT_UPDATE') {
       setInputMd(message?.message);
       return;
     }
 
-    if (state === "OUTPUT_UPDATE") {
+    if (state === 'OUTPUT_UPDATE') {
       setOutputMd(message?.message);
       return;
     }
 
-    if (state === "MESSAGE") {
+    if (state === 'MESSAGE') {
       setStatusBarMsg(message?.message);
       return;
     }
 
-    if (msgComp === "SOURCE" && state === "RUNNING") {
-      setSourceMsg("");
-      setDestinationMsg("");
+    if (msgComp === 'SOURCE' && state === 'RUNNING') {
+      setSourceMsg('');
+      setDestinationMsg('');
       const newSteps = [...steps].map((step) => {
-        step["progress"] = "";
-        step["status"] = "";
+        step['progress'] = '';
+        step['status'] = '';
         return step;
       });
       setSteps(newSteps);
     }
 
-    if (msgComp === "SOURCE") {
-      const srcMsg = message?.state + ": " + message?.message;
+    if (msgComp === 'SOURCE') {
+      const srcMsg = message?.state + ': ' + message?.message;
       setSourceMsg(srcMsg);
       return;
     }
 
-    if (msgComp === "DESTINATION") {
-      const destMsg = message?.state + ": " + message?.message;
+    if (msgComp === 'DESTINATION') {
+      const destMsg = message?.state + ': ' + message?.message;
       setDestinationMsg(destMsg);
-      setActiveToolId("");
+      setActiveToolId('');
       return;
     }
 
-    if (msgComp === "NEXT_STEP") {
+    if (msgComp === 'NEXT_STEP') {
       setStepLoader((prev) => !prev);
       return;
     }
@@ -127,8 +127,8 @@ function Agency() {
       }
 
       setActiveToolId(msgComp);
-      stepObj["progress"] = message?.state;
-      stepObj["status"] = message?.message;
+      stepObj['progress'] = message?.state;
+      stepObj['status'] = message?.message;
       return stepObj;
     });
     setSteps(newSteps);

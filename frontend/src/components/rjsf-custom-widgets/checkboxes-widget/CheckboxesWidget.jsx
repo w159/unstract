@@ -1,7 +1,7 @@
-import PropTypes from "prop-types";
-import { Checkbox } from "antd";
+import PropTypes from 'prop-types';
+import { Checkbox } from 'antd';
 
-import { RjsfWidgetLayout } from "../../../layouts/rjsf-widget-layout/RjsfWidgetLayout.jsx";
+import { RjsfWidgetLayout } from '../../../layouts/rjsf-widget-layout/RjsfWidgetLayout.jsx';
 
 const CheckboxesWidget = ({
   id,
@@ -13,7 +13,7 @@ const CheckboxesWidget = ({
   required,
   readonly,
 }) => {
-  const description = schema?.description || "";
+  const description = schema?.description || '';
   const handleCheckboxChange = (optionValue) => {
     const newValue = [...(value || [])];
     const index = newValue.indexOf(optionValue);

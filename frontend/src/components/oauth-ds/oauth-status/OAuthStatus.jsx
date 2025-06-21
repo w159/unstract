@@ -1,17 +1,17 @@
-import { Typography } from "antd";
-import { useLocation } from "react-router-dom";
+import { Typography } from 'antd';
+import { useLocation } from 'react-router-dom';
 
-import "./OAuthStatus.css";
+import './OAuthStatus.css';
 
-const SUCCESS = "success";
-const DANGER = "danger";
+const SUCCESS = 'success';
+const DANGER = 'danger';
 
 function OAuthStatus() {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const status = params.get("status");
+  const status = params.get('status');
 
-  localStorage.setItem("oauth-status", status);
+  localStorage.setItem('oauth-status', status);
 
   if (status === SUCCESS) {
     setTimeout(() => {
@@ -25,7 +25,7 @@ function OAuthStatus() {
         type={status === SUCCESS ? SUCCESS : DANGER}
         className="oauth-status-text"
       >
-        {"Authentication " + (status === SUCCESS ? "Successful" : "Failed")}
+        {'Authentication ' + (status === SUCCESS ? 'Successful' : 'Failed')}
       </Typography.Text>
     </div>
   );

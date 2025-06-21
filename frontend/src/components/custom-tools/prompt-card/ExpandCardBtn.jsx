@@ -1,19 +1,19 @@
-import { FullscreenExitOutlined, FullscreenOutlined } from "@ant-design/icons";
-import { Button, Tooltip } from "antd";
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
+import { Button, Tooltip } from 'antd';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 
 function ExpandCardBtn({ expandCard, setExpandCard }) {
   const [icon, setIcon] = useState(null);
-  const [tooltip, setTooltip] = useState("");
+  const [tooltip, setTooltip] = useState('');
 
   useEffect(() => {
     if (expandCard) {
       setIcon(<FullscreenExitOutlined className="prompt-card-actions-head" />);
-      setTooltip("Collapse");
+      setTooltip('Collapse');
     } else {
       setIcon(<FullscreenOutlined className="prompt-card-actions-head" />);
-      setTooltip("Expand");
+      setTooltip('Expand');
     }
   }, [expandCard]);
 

@@ -1,20 +1,20 @@
-import debounce from "lodash/debounce";
-import { useCallback, useEffect, useState } from "react";
-import { SearchOutlined } from "@ant-design/icons";
-import { Input } from "antd";
-import "./Tools.css";
+import debounce from 'lodash/debounce';
+import { useCallback, useEffect, useState } from 'react';
+import { SearchOutlined } from '@ant-design/icons';
+import { Input } from 'antd';
+import './Tools.css';
 
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { useAlertStore } from "../../../store/alert-store";
-import { useSessionStore } from "../../../store/session-store";
-import { ListOfTools } from "../list-of-tools/ListOfTools";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler";
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { useAlertStore } from '../../../store/alert-store';
+import { useSessionStore } from '../../../store/session-store';
+import { ListOfTools } from '../list-of-tools/ListOfTools';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler';
 
 function Tools() {
   const [listOfTools, setListOfTools] = useState([]);
   const [filteredListOfTools, setFilteredListOfTools] = useState([]);
   const [isLoading, setLoading] = useState(false);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const { setAlertDetails } = useAlertStore();
   const { sessionDetails } = useSessionStore();
   const axiosPrivate = useAxiosPrivate();
@@ -23,7 +23,7 @@ function Tools() {
   useEffect(() => {
     setLoading(true);
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/tool/`,
     };
 
@@ -58,7 +58,7 @@ function Tools() {
     debounce(({ target: { value } }) => {
       setSearch(value);
     }, 600),
-    []
+    [],
   );
 
   return (

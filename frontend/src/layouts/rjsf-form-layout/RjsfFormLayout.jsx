@@ -1,30 +1,30 @@
-import { useCallback, useMemo } from "react";
-import Form from "@rjsf/antd";
-import validator from "@rjsf/validator-ajv8";
-import PropTypes from "prop-types";
+import { useCallback, useMemo } from 'react';
+import Form from '@rjsf/antd';
+import validator from '@rjsf/validator-ajv8';
+import PropTypes from 'prop-types';
 
-import { AltDateTimeWidget } from "../../components/rjsf-custom-widgets/alt-date-time-widget/AltDateTimeWidget.jsx";
-import { AltDateWidget } from "../../components/rjsf-custom-widgets/alt-date-widget/AltDateWidget.jsx";
-import { ArrayField } from "../../components/rjsf-custom-widgets/array-field/ArrayField.jsx";
-import { CheckboxWidget } from "../../components/rjsf-custom-widgets/checkbox-widget/CheckboxWidget.jsx";
-import { CheckboxesWidget } from "../../components/rjsf-custom-widgets/checkboxes-widget/CheckboxesWidget.jsx";
-import { ColorWidget } from "../../components/rjsf-custom-widgets/color-widget/ColorWidget.jsx";
-import { DateTimeWidget } from "../../components/rjsf-custom-widgets/date-time-widget/DateTimeWidget.jsx";
-import { DateWidget } from "../../components/rjsf-custom-widgets/date-widget/DateWidget.jsx";
-import { EmailWidget } from "../../components/rjsf-custom-widgets/email-widget/EmailWidget.jsx";
-import { FileWidget } from "../../components/rjsf-custom-widgets/file-widget/FileWidget.jsx";
-import { HiddenWidget } from "../../components/rjsf-custom-widgets/hidden-widget/HiddenWidget.jsx";
-import { SelectWidget } from "../../components/rjsf-custom-widgets/select-widget/SelectWidget.jsx";
-import { TimeWidget } from "../../components/rjsf-custom-widgets/time-widget/TimeWidget.jsx";
-import { URLWidget } from "../../components/rjsf-custom-widgets/url-widget/URLWidget.jsx";
-import { SpinnerLoader } from "../../components/widgets/spinner-loader/SpinnerLoader.jsx";
-import { TextWidget } from "../../components/rjsf-custom-widgets/text-widget/TextWidget.jsx";
-import { PasswordWidget } from "../../components/rjsf-custom-widgets/password-widget/PasswordWidget.jsx";
-import { UpDownWidget } from "../../components/rjsf-custom-widgets/up-down-widget/UpDownWidget.jsx";
-import { CustomFieldTemplate } from "./CustomFieldTemplate.jsx";
-import { Alert, Space } from "antd";
-import CustomMarkdown from "../../components/helpers/custom-markdown/CustomMarkdown.jsx";
-import "./RjsfFormLayout.css";
+import { AltDateTimeWidget } from '../../components/rjsf-custom-widgets/alt-date-time-widget/AltDateTimeWidget.jsx';
+import { AltDateWidget } from '../../components/rjsf-custom-widgets/alt-date-widget/AltDateWidget.jsx';
+import { ArrayField } from '../../components/rjsf-custom-widgets/array-field/ArrayField.jsx';
+import { CheckboxWidget } from '../../components/rjsf-custom-widgets/checkbox-widget/CheckboxWidget.jsx';
+import { CheckboxesWidget } from '../../components/rjsf-custom-widgets/checkboxes-widget/CheckboxesWidget.jsx';
+import { ColorWidget } from '../../components/rjsf-custom-widgets/color-widget/ColorWidget.jsx';
+import { DateTimeWidget } from '../../components/rjsf-custom-widgets/date-time-widget/DateTimeWidget.jsx';
+import { DateWidget } from '../../components/rjsf-custom-widgets/date-widget/DateWidget.jsx';
+import { EmailWidget } from '../../components/rjsf-custom-widgets/email-widget/EmailWidget.jsx';
+import { FileWidget } from '../../components/rjsf-custom-widgets/file-widget/FileWidget.jsx';
+import { HiddenWidget } from '../../components/rjsf-custom-widgets/hidden-widget/HiddenWidget.jsx';
+import { SelectWidget } from '../../components/rjsf-custom-widgets/select-widget/SelectWidget.jsx';
+import { TimeWidget } from '../../components/rjsf-custom-widgets/time-widget/TimeWidget.jsx';
+import { URLWidget } from '../../components/rjsf-custom-widgets/url-widget/URLWidget.jsx';
+import { SpinnerLoader } from '../../components/widgets/spinner-loader/SpinnerLoader.jsx';
+import { TextWidget } from '../../components/rjsf-custom-widgets/text-widget/TextWidget.jsx';
+import { PasswordWidget } from '../../components/rjsf-custom-widgets/password-widget/PasswordWidget.jsx';
+import { UpDownWidget } from '../../components/rjsf-custom-widgets/up-down-widget/UpDownWidget.jsx';
+import { CustomFieldTemplate } from './CustomFieldTemplate.jsx';
+import { Alert, Space } from 'antd';
+import CustomMarkdown from '../../components/helpers/custom-markdown/CustomMarkdown.jsx';
+import './RjsfFormLayout.css';
 
 function RjsfFormLayout({
   children,
@@ -44,7 +44,7 @@ function RjsfFormLayout({
     return rest;
   }, [schema]);
 
-  const description = useMemo(() => schema?.description || "", [schema]);
+  const description = useMemo(() => schema?.description || '', [schema]);
 
   const widgets = useMemo(
     () => ({
@@ -65,21 +65,21 @@ function RjsfFormLayout({
       UpDownWidget,
       URLWidget,
     }),
-    []
+    [],
   );
 
   const fields = useMemo(
     () => ({
       ArrayField,
     }),
-    []
+    [],
   );
 
   const uiSchema = useMemo(
     () => ({
-      "ui:classNames": "my-rjsf-form",
+      'ui:classNames': 'my-rjsf-form',
     }),
-    [formData]
+    [formData],
   );
 
   const removeBlankDefault = useCallback((schema) => {
@@ -88,7 +88,7 @@ function RjsfFormLayout({
       schema.required.forEach((key) => {
         if (
           properties[key] &&
-          (properties[key].default === null || properties[key].default === "")
+          (properties[key].default === null || properties[key].default === '')
         ) {
           delete properties[key].default;
         }
@@ -99,10 +99,10 @@ function RjsfFormLayout({
 
   const transformErrors = useCallback((errors) => {
     return errors.map((error) => {
-      if (error.name === "required") {
+      if (error.name === 'required') {
         return {
           ...error,
-          message: "This field is mandatory. Please provide a value.",
+          message: 'This field is mandatory. Please provide a value.',
         };
       }
       return error;
@@ -117,7 +117,7 @@ function RjsfFormLayout({
       const data = event.formData;
       setFormData(data);
     },
-    [isStateUpdateRequired, setFormData]
+    [isStateUpdateRequired, setFormData],
   );
 
   return (

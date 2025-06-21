@@ -1,18 +1,18 @@
-import { ArrowLeftOutlined } from "@ant-design/icons";
-import { Button, Select, Typography } from "antd";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { ArrowLeftOutlined } from '@ant-design/icons';
+import { Button, Select, Typography } from 'antd';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler.jsx";
-import { IslandLayout } from "../../../layouts/island-layout/IslandLayout.jsx";
-import { useAlertStore } from "../../../store/alert-store";
-import { useSessionStore } from "../../../store/session-store";
-import { CustomButton } from "../../widgets/custom-button/CustomButton.jsx";
-import SpaceWrapper from "../../widgets/space-wrapper/SpaceWrapper.jsx";
-import { SpinnerLoader } from "../../widgets/spinner-loader/SpinnerLoader.jsx";
-import "./DefaultTriad.css";
-import usePostHogEvents from "../../../hooks/usePostHogEvents.js";
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler.jsx';
+import { IslandLayout } from '../../../layouts/island-layout/IslandLayout.jsx';
+import { useAlertStore } from '../../../store/alert-store';
+import { useSessionStore } from '../../../store/session-store';
+import { CustomButton } from '../../widgets/custom-button/CustomButton.jsx';
+import SpaceWrapper from '../../widgets/space-wrapper/SpaceWrapper.jsx';
+import { SpinnerLoader } from '../../widgets/spinner-loader/SpinnerLoader.jsx';
+import './DefaultTriad.css';
+import usePostHogEvents from '../../../hooks/usePostHogEvents.js';
 
 const { Option } = Select;
 
@@ -30,13 +30,13 @@ function DefaultTriad() {
   const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const desiredOrder = ["LLM", "EMBEDDING", "VECTOR_DB", "X2TEXT"];
+  const desiredOrder = ['LLM', 'EMBEDDING', 'VECTOR_DB', 'X2TEXT'];
 
   const labelMap = {
-    LLM: "Default LLM",
-    EMBEDDING: "Default Embedding",
-    VECTOR_DB: "Default Vector DB",
-    X2TEXT: "Default Text Extractor",
+    LLM: 'Default LLM',
+    EMBEDDING: 'Default Embedding',
+    VECTOR_DB: 'Default Vector DB',
+    X2TEXT: 'Default Text Extractor',
   };
 
   function getKeyByValue(value) {
@@ -60,7 +60,7 @@ function DefaultTriad() {
 
   const fetchData = () => {
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/adapter/`,
     };
     axiosPrivate(requestOptions)
@@ -70,7 +70,7 @@ function DefaultTriad() {
       })
       .catch((err) => {
         setAlertDetails(
-          handleException(err, "Failed to get the adapters list")
+          handleException(err, 'Failed to get the adapters list'),
         );
       });
   };
@@ -78,7 +78,7 @@ function DefaultTriad() {
   const fetchDetaultTriads = () => {
     setIsLoading(true);
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/adapter/default_triad/`,
     };
     axiosPrivate(requestOptions)
@@ -97,7 +97,7 @@ function DefaultTriad() {
         updateDropdownData(defaultValues);
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "Failed to fetch Default Triads"));
+        setAlertDetails(handleException(err, 'Failed to fetch Default Triads'));
       })
       .finally(() => {
         setIsLoading(false);
@@ -122,8 +122,8 @@ function DefaultTriad() {
     setIsSubmitEnabled(true);
 
     try {
-      setPostHogCustomEvent("intent_success_select_default_triad", {
-        info: "Selected default triad",
+      setPostHogCustomEvent('intent_success_select_default_triad', {
+        info: 'Selected default triad',
         adapter_name: adapterType,
       });
     } catch (err) {
@@ -142,16 +142,16 @@ function DefaultTriad() {
     // Filter out null or blank values
     body = Object.fromEntries(
       Object.entries(body).filter(
-        ([key, value]) => value !== null && value !== ""
-      )
+        ([key, value]) => value !== null && value !== '',
+      ),
     );
 
     const header = {
-      "X-CSRFToken": sessionDetails?.csrfToken,
-      "Content-Type": "application/json",
+      'X-CSRFToken': sessionDetails?.csrfToken,
+      'Content-Type': 'application/json',
     };
     const requestOptions = {
-      method: "POST",
+      method: 'POST',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/adapter/default_triad/`,
       headers: header,
       data: body,
@@ -159,15 +159,15 @@ function DefaultTriad() {
     axiosPrivate(requestOptions)
       .then((res) => {
         setAlertDetails({
-          type: "success",
-          content: "Default triad setting saved successfully",
+          type: 'success',
+          content: 'Default triad setting saved successfully',
         });
         fetchData();
         setIsSubmitEnabled(false);
       })
       .catch((err) => {
         setAlertDetails(
-          handleException(err, "Failed to update Default Triads")
+          handleException(err, 'Failed to update Default Triads'),
         );
       });
   };
@@ -197,7 +197,7 @@ function DefaultTriad() {
                     placeholder={`Select ${labelMap[type]}`}
                     value={selectedValues[type] || undefined}
                     onChange={(value) => handleDropdownChange(type, value)}
-                    style={{ width: "100%" }}
+                    style={{ width: '100%' }}
                   >
                     {dropdownData
                       .filter((data) => data?.adapter_type === type)

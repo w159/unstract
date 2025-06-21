@@ -1,6 +1,6 @@
-import { displayURL } from "../helpers/GetStaticData";
-import { useAlertStore } from "../store/alert-store";
-import { useExceptionHandler } from "./useExceptionHandler";
+import { displayURL } from '../helpers/GetStaticData';
+import { useAlertStore } from '../store/alert-store';
+import { useExceptionHandler } from './useExceptionHandler';
 
 const usePipelineHelper = () => {
   const { setAlertDetails } = useAlertStore();
@@ -28,14 +28,14 @@ const usePipelineHelper = () => {
         const href = URL.createObjectURL(data);
         // Get filename from header or use a default
         const filename =
-          headers["content-disposition"]
-            ?.split("filename=")[1]
+          headers['content-disposition']
+            ?.split('filename=')[1]
             ?.trim()
-            .replaceAll('"', "") || "postman_collection.json";
+            .replaceAll('"', '') || 'postman_collection.json';
         // create "a" HTML element with href to file & click
-        const link = document.createElement("a");
+        const link = document.createElement('a');
         link.href = href;
-        link.setAttribute("download", filename);
+        link.setAttribute('download', filename);
         document.body.appendChild(link);
         link.click();
 
@@ -43,8 +43,8 @@ const usePipelineHelper = () => {
         document.body.removeChild(link);
         URL.revokeObjectURL(href);
         setAlertDetails({
-          type: "success",
-          content: "Collection downloaded successfully",
+          type: 'success',
+          content: 'Collection downloaded successfully',
         });
       })
       .catch((err) => {
@@ -58,14 +58,14 @@ const usePipelineHelper = () => {
       .writeText(completeUrl)
       .then(() => {
         setAlertDetails({
-          type: "success",
-          content: "Endpoint copied to clipboard",
+          type: 'success',
+          content: 'Endpoint copied to clipboard',
         });
       })
       .catch((error) => {
         setAlertDetails({
-          type: "error",
-          content: "Copy failed",
+          type: 'error',
+          content: 'Copy failed',
         });
       });
   };

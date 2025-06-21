@@ -8,30 +8,30 @@ import {
   CloudDownloadOutlined,
   FileSearchOutlined,
   NotificationOutlined,
-} from "@ant-design/icons";
-import { Button, Dropdown, Space, Switch, Tooltip, Typography } from "antd";
-import { useEffect, useState, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+} from '@ant-design/icons';
+import { Button, Dropdown, Space, Switch, Tooltip, Typography } from 'antd';
+import { useEffect, useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { deploymentApiTypes, displayURL } from "../../../helpers/GetStaticData";
-import { useAlertStore } from "../../../store/alert-store";
-import { useSessionStore } from "../../../store/session-store";
-import { usePromptStudioStore } from "../../../store/prompt-studio-store";
-import { workflowService } from "../../workflows/workflow/workflow-service.js";
-import { CreateApiDeploymentModal } from "../create-api-deployment-modal/CreateApiDeploymentModal";
-import { DeleteModal } from "../delete-modal/DeleteModal";
-import { DisplayCode } from "../display-code/DisplayCode";
-import { Layout } from "../layout/Layout";
-import { ManageKeys } from "../manage-keys/ManageKeys";
-import { PromptStudioModal } from "../../common/PromptStudioModal";
-import { apiDeploymentsService } from "./api-deployments-service";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler.jsx";
-import { LogsModal } from "../../pipelines-or-deployments/log-modal/LogsModal.jsx";
-import { fetchExecutionLogs } from "../../pipelines-or-deployments/log-modal/fetchExecutionLogs";
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate.js";
-import usePipelineHelper from "../../../hooks/usePipelineHelper.js";
-import { NotificationModal } from "../../pipelines-or-deployments/notification-modal/NotificationModal.jsx";
-import { usePromptStudioService } from "../../api/prompt-studio-service";
+import { deploymentApiTypes, displayURL } from '../../../helpers/GetStaticData';
+import { useAlertStore } from '../../../store/alert-store';
+import { useSessionStore } from '../../../store/session-store';
+import { usePromptStudioStore } from '../../../store/prompt-studio-store';
+import { workflowService } from '../../workflows/workflow/workflow-service.js';
+import { CreateApiDeploymentModal } from '../create-api-deployment-modal/CreateApiDeploymentModal';
+import { DeleteModal } from '../delete-modal/DeleteModal';
+import { DisplayCode } from '../display-code/DisplayCode';
+import { Layout } from '../layout/Layout';
+import { ManageKeys } from '../manage-keys/ManageKeys';
+import { PromptStudioModal } from '../../common/PromptStudioModal';
+import { apiDeploymentsService } from './api-deployments-service';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler.jsx';
+import { LogsModal } from '../../pipelines-or-deployments/log-modal/LogsModal.jsx';
+import { fetchExecutionLogs } from '../../pipelines-or-deployments/log-modal/fetchExecutionLogs';
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate.js';
+import usePipelineHelper from '../../../hooks/usePipelineHelper.js';
+import { NotificationModal } from '../../pipelines-or-deployments/notification-modal/NotificationModal.jsx';
+import { usePromptStudioService } from '../../api/prompt-studio-service';
 
 function ApiDeployment() {
   const { sessionDetails } = useSessionStore();
@@ -76,28 +76,28 @@ function ApiDeployment() {
       setExecutionLogsTotalCount,
       setAlertDetails,
       page,
-      pageSize
+      pageSize,
     );
   };
 
   const columns = [
     {
-      title: "API Name",
-      key: "display_name",
+      title: 'API Name',
+      key: 'display_name',
       render: (_, record) => (
         <Typography.Text strong>{record?.display_name}</Typography.Text>
       ),
-      align: "left",
+      align: 'left',
     },
     {
-      title: "Description",
-      key: "description",
+      title: 'Description',
+      key: 'description',
       render: (_, record) => <Space>{record?.description}</Space>,
-      align: "left",
+      align: 'left',
     },
     {
-      title: "API Endpoint",
-      key: "api_endpoint",
+      title: 'API Endpoint',
+      key: 'api_endpoint',
       render: (_, record) => (
         <Space direction="horizontal" className="display-flex-space-between">
           <div>
@@ -117,18 +117,18 @@ function ApiDeployment() {
           </div>
         </Space>
       ),
-      align: "left",
+      align: 'left',
     },
     {
-      title: "Workflow",
-      key: "workflow_name",
+      title: 'Workflow',
+      key: 'workflow_name',
       render: (_, record) => (
         <Tooltip title="view workflow">
           <Space
             className="workflowName"
             onClick={() =>
               navigate(
-                `/${sessionDetails?.orgName}/workflows/${record?.workflow}`
+                `/${sessionDetails?.orgName}/workflows/${record?.workflow}`,
               )
             }
           >
@@ -136,13 +136,13 @@ function ApiDeployment() {
           </Space>
         </Tooltip>
       ),
-      align: "left",
+      align: 'left',
     },
     {
-      title: "Enabled",
-      key: "active",
-      dataIndex: "active",
-      align: "center",
+      title: 'Enabled',
+      key: 'active',
+      dataIndex: 'active',
+      align: 'center',
       render: (_, record) => (
         <Switch
           size="small"
@@ -154,14 +154,14 @@ function ApiDeployment() {
       ),
     },
     {
-      title: "Actions",
-      key: "pipeline_id",
-      align: "center",
+      title: 'Actions',
+      key: 'pipeline_id',
+      align: 'center',
       render: (_, record) => (
         <Dropdown
           menu={{ items: actionItems }}
           placement="bottomLeft"
-          trigger={["click"]}
+          trigger={['click']}
           onOpenChange={() => setSelectedRow(record)}
         >
           <EllipsisOutlined className="cur-pointer" />
@@ -176,14 +176,14 @@ function ApiDeployment() {
   }, []);
   const getWorkflows = () => {
     workflowApiService
-      .getWorkflowEndpointList("SOURCE", "API")
+      .getWorkflowEndpointList('SOURCE', 'API')
       .then((res) => {
         setWorkflowEndpointList(res?.data);
       })
       .catch(() => {
         setAlertDetails({
-          type: "error",
-          content: "Unable to get workflow list.",
+          type: 'error',
+          content: 'Unable to get workflow list.',
         });
       });
   };
@@ -211,8 +211,8 @@ function ApiDeployment() {
         setOpenDeleteModal(false);
         getApiDeploymentList();
         setAlertDetails({
-          type: "success",
-          content: "API Deployment Deleted Successfully",
+          type: 'success',
+          content: 'API Deployment Deleted Successfully',
         });
       })
       .catch((err) => {
@@ -227,8 +227,8 @@ function ApiDeployment() {
       .updateApiDeployment(record)
       .then((res) => {
         setAlertDetails({
-          type: "success",
-          content: "Status updated successfully",
+          type: 'success',
+          content: 'Status updated successfully',
         });
       })
       .catch((err) => {
@@ -246,7 +246,7 @@ function ApiDeployment() {
 
   const actionItems = [
     {
-      key: "1",
+      key: '1',
       label: (
         <Space
           direction="horizontal"
@@ -263,7 +263,7 @@ function ApiDeployment() {
       ),
     },
     {
-      key: "2",
+      key: '2',
       label: (
         <Space
           direction="horizontal"
@@ -273,7 +273,7 @@ function ApiDeployment() {
               apiDeploymentsApiService,
               selectedRow?.id,
               setApiKeys,
-              setOpenManageKeysModal
+              setOpenManageKeysModal,
             )
           }
         >
@@ -287,7 +287,7 @@ function ApiDeployment() {
       ),
     },
     {
-      key: "3",
+      key: '3',
       label: (
         <Space
           direction="horizontal"
@@ -306,7 +306,7 @@ function ApiDeployment() {
       ),
     },
     {
-      key: "4",
+      key: '4',
       label: (
         <Space
           direction="horizontal"
@@ -323,7 +323,7 @@ function ApiDeployment() {
       ),
     },
     {
-      key: "5",
+      key: '5',
       label: (
         <Space
           direction="horizontal"
@@ -337,7 +337,7 @@ function ApiDeployment() {
               selectedRow,
               setExecutionLogs,
               setExecutionLogsTotalCount,
-              setAlertDetails
+              setAlertDetails,
             );
           }}
         >
@@ -351,7 +351,7 @@ function ApiDeployment() {
       ),
     },
     {
-      key: "6",
+      key: '6',
       label: (
         <Space
           direction="horizontal"
@@ -368,7 +368,7 @@ function ApiDeployment() {
       ),
     },
     {
-      key: "7",
+      key: '7',
       label: (
         <Space
           direction="horizontal"

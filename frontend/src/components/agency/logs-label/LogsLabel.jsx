@@ -1,6 +1,6 @@
-import { Col, Row, Typography } from "antd";
+import { Col, Row, Typography } from 'antd';
 
-import "./LogsLabel.css";
+import './LogsLabel.css';
 
 function LogsLabel() {
   return (

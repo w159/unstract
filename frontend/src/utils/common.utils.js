@@ -30,7 +30,7 @@ export const safeJsonParse = (str, fallback = null) => {
   try {
     return JSON.parse(str);
   } catch (e) {
-    console.error("JSON parse error:", e);
+    console.error('JSON parse error:', e);
     return fallback;
   }
 };
@@ -60,15 +60,15 @@ export const debounce = (func, wait = 300) => {
  * @return {string} - Formatted string
  */
 export const formatBytes = (bytes, decimals = 2) => {
-  if (bytes === 0) return "0 Bytes";
+  if (bytes === 0) return '0 Bytes';
 
   const k = 1024;
   const dm = decimals < 0 ? 0 : decimals;
-  const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB"];
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB'];
 
   const i = Math.floor(Math.log(bytes) / Math.log(k));
 
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 };
 
 /**
@@ -85,7 +85,7 @@ export const generateUniqueId = () => {
  * @return {Object} - Cloned object
  */
 export const deepClone = (obj) => {
-  if (obj === null || typeof obj !== "object") return obj;
+  if (obj === null || typeof obj !== 'object') return obj;
   if (obj instanceof Date) return new Date(obj.getTime());
   if (obj instanceof Array) return obj.map((item) => deepClone(item));
   if (obj instanceof Object) {
@@ -107,7 +107,7 @@ export const deepClone = (obj) => {
  */
 export const truncateString = (str, maxLength = 50) => {
   if (!str || str.length <= maxLength) return str;
-  return str.substring(0, maxLength - 3) + "...";
+  return str.substring(0, maxLength - 3) + '...';
 };
 
 /**
@@ -124,7 +124,7 @@ export const retryWithBackoff = async (fn, maxRetries = 3, delay = 1000) => {
     } catch (error) {
       if (i === maxRetries - 1) throw error;
       await new Promise((resolve) =>
-        setTimeout(resolve, delay * Math.pow(2, i))
+        setTimeout(resolve, delay * Math.pow(2, i)),
       );
     }
   }
@@ -138,7 +138,7 @@ export const retryWithBackoff = async (fn, maxRetries = 3, delay = 1000) => {
  * @return {*} - Value or default
  */
 export const getNestedValue = (obj, path, defaultValue = undefined) => {
-  const value = path.split(".").reduce((acc, part) => acc && acc[part], obj);
+  const value = path.split('.').reduce((acc, part) => acc && acc[part], obj);
   return value === undefined ? defaultValue : value;
 };
 
@@ -169,15 +169,15 @@ export const deepMerge = (target, source) => {
  * @param {string} format - Format type ('short', 'long', 'time')
  * @return {string} - Formatted date
  */
-export const formatDate = (date, format = "short") => {
+export const formatDate = (date, format = 'short') => {
   const d = new Date(date);
-  if (isNaN(d.getTime())) return "Invalid Date";
+  if (isNaN(d.getTime())) return 'Invalid Date';
 
   const options = {
-    short: { year: "numeric", month: "short", day: "numeric" },
-    long: { weekday: "long", year: "numeric", month: "long", day: "numeric" },
-    time: { hour: "2-digit", minute: "2-digit", second: "2-digit" },
+    short: { year: 'numeric', month: 'short', day: 'numeric' },
+    long: { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' },
+    time: { hour: '2-digit', minute: '2-digit', second: '2-digit' },
   };
 
-  return d.toLocaleDateString("en-US", options[format] || options.short);
+  return d.toLocaleDateString('en-US', options[format] || options.short);
 };

@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import PropTypes from "prop-types";
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
-import { inputService } from "../../input-output/input-output/input-service.js";
-import { FileExplorer } from "../file-system/FileSystem.jsx";
+import { inputService } from '../../input-output/input-output/input-service.js';
+import { FileExplorer } from '../file-system/FileSystem.jsx';
 
 function ManageFiles({ selectedItem }) {
   const inpService = inputService();

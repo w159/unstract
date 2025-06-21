@@ -1,16 +1,16 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes } from 'react-router-dom';
 
-import { GenericError } from "../components/error/GenericError/GenericError.jsx";
-import { NotFound } from "../components/error/NotFound/NotFound.jsx";
-import { PersistentLogin } from "../components/helpers/auth/PersistentLogin.js";
-import { RequireGuest } from "../components/helpers/auth/RequireGuest.js";
-import { OAuthStatus } from "../components/oauth-ds/oauth-status/OAuthStatus.jsx";
-import { LandingPage } from "../pages/LandingPage.jsx";
-import { SetOrgPage } from "../pages/SetOrgPage.jsx";
-import { useMainAppRoutes } from "./useMainAppRoutes.js";
-import { RequireAuth } from "../components/helpers/auth/RequireAuth.js";
-import { ToolIdePage } from "../pages/ToolIdePage.jsx";
-import { OutputAnalyzerPage } from "../pages/OutputAnalyzerPage.jsx";
+import { GenericError } from '../components/error/GenericError/GenericError.jsx';
+import { NotFound } from '../components/error/NotFound/NotFound.jsx';
+import { PersistentLogin } from '../components/helpers/auth/PersistentLogin.js';
+import { RequireGuest } from '../components/helpers/auth/RequireGuest.js';
+import { OAuthStatus } from '../components/oauth-ds/oauth-status/OAuthStatus.jsx';
+import { LandingPage } from '../pages/LandingPage.jsx';
+import { SetOrgPage } from '../pages/SetOrgPage.jsx';
+import { useMainAppRoutes } from './useMainAppRoutes.js';
+import { RequireAuth } from '../components/helpers/auth/RequireAuth.js';
+import { ToolIdePage } from '../pages/ToolIdePage.jsx';
+import { OutputAnalyzerPage } from '../pages/OutputAnalyzerPage.jsx';
 
 let PublicPromptStudioHelper;
 
@@ -24,19 +24,19 @@ let SelectProduct;
 let UnstractSubscriptionEndPage;
 try {
   SimplePromptStudioHelper =
-    require("../plugins/simple-prompt-studio/SimplePromptStudioHelper.jsx").SimplePromptStudioHelper;
+    require('../plugins/simple-prompt-studio/SimplePromptStudioHelper.jsx').SimplePromptStudioHelper;
   SimplePromptStudio =
-    require("../plugins/simple-prompt-studio/SimplePromptStudio.jsx").SimplePromptStudio;
+    require('../plugins/simple-prompt-studio/SimplePromptStudio.jsx').SimplePromptStudio;
   SpsLanding =
-    require("../plugins/simple-prompt-studio/SpsLanding.jsx").SpsLanding;
+    require('../plugins/simple-prompt-studio/SpsLanding.jsx').SpsLanding;
   SpsUpload =
-    require("../plugins/simple-prompt-studio/SpsUpload.jsx").SpsUpload;
+    require('../plugins/simple-prompt-studio/SpsUpload.jsx').SpsUpload;
 } catch (err) {
   // Do nothing, Not-found Page will be triggered.
 }
 try {
   PublicPromptStudioHelper =
-    require("../plugins/prompt-studio-public-share/helpers/PublicPromptStudioHelper.js").PublicPromptStudioHelper;
+    require('../plugins/prompt-studio-public-share/helpers/PublicPromptStudioHelper.js').PublicPromptStudioHelper;
 } catch (err) {
   // Do nothing, Not-found Page will be triggered.
 }
@@ -44,7 +44,7 @@ try {
 let llmWhispererRouter;
 try {
   llmWhispererRouter =
-    require("../plugins/routes/useLlmWhispererRoutes.js").useLlmWhispererRoutes;
+    require('../plugins/routes/useLlmWhispererRoutes.js').useLlmWhispererRoutes;
 } catch (err) {
   // Do nothing, Not-found Page will be triggered.
 }
@@ -52,28 +52,28 @@ try {
 let verticalsRouter;
 try {
   verticalsRouter =
-    require("../plugins/routes/useVerticalsRoutes.js").useVerticalsRoutes;
+    require('../plugins/routes/useVerticalsRoutes.js').useVerticalsRoutes;
 } catch (err) {
   // Do nothing, Not-found Page will be triggered.
 }
 
 try {
   SelectProduct =
-    require("../plugins/select-product/SelectProduct.jsx").SelectProduct;
+    require('../plugins/select-product/SelectProduct.jsx').SelectProduct;
 } catch (err) {
   // Do nothing, Not-found Page will be triggered.
 }
 
 try {
   UnstractSubscriptionEndPage =
-    require("../plugins/unstract-subscription/pages/UnstractSubscriptionEndPage.jsx").UnstractSubscriptionEndPage;
+    require('../plugins/unstract-subscription/pages/UnstractSubscriptionEndPage.jsx').UnstractSubscriptionEndPage;
 } catch (err) {
   // Do nothing, Not-found Page will be triggered.
 }
 
 try {
   PaymentSuccessful =
-    require("../plugins/payment-successful/PaymentSuccessful.jsx").PaymentSuccessful;
+    require('../plugins/payment-successful/PaymentSuccessful.jsx').PaymentSuccessful;
 } catch (err) {
   // Do nothing, Not-found Page will be triggered.
 }

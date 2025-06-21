@@ -1,7 +1,7 @@
-import { Menu, Tooltip } from "antd";
-import PropTypes from "prop-types";
-import comingSoon from "../../../assets/coming-soon.png";
-import "./ListOfConnectors.css";
+import { Menu, Tooltip } from 'antd';
+import PropTypes from 'prop-types';
+import comingSoon from '../../../assets/coming-soon.png';
+import './ListOfConnectors.css';
 
 function ListOfConnectors({ listOfConnectors, selectedId, handleSelectItem }) {
   return (

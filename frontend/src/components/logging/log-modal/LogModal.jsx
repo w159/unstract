@@ -1,17 +1,17 @@
-import { Modal, Table, Tooltip } from "antd";
-import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import { Modal, Table, Tooltip } from 'antd';
+import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
-import "./LogModal.css";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler";
-import { useAlertStore } from "../../../store/alert-store";
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
+import './LogModal.css';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler';
+import { useAlertStore } from '../../../store/alert-store';
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
 import {
   formattedDateTime,
   formattedDateTimeWithSeconds,
-} from "../../../helpers/GetStaticData";
-import { FilterDropdown, FilterIcon } from "../filter-dropdown/FilterDropdown";
-import useRequestUrl from "../../../hooks/useRequestUrl";
+} from '../../../helpers/GetStaticData';
+import { FilterDropdown, FilterIcon } from '../filter-dropdown/FilterDropdown';
+import useRequestUrl from '../../../hooks/useRequestUrl';
 
 function LogModal({
   executionId,
@@ -34,7 +34,7 @@ function LogModal({
     pageSize: 10,
     total: 0,
   });
-  const filterOptions = ["INFO", "WARN", "DEBUG", "ERROR"];
+  const filterOptions = ['INFO', 'WARN', 'DEBUG', 'ERROR'];
 
   const fetchExecutionFileLogs = async (executionId, fileId, page) => {
     try {
@@ -43,7 +43,7 @@ function LogModal({
         params: {
           page_size: pagination.pageSize,
           page,
-          file_execution_id: fileId || "null",
+          file_execution_id: fileId || 'null',
           log_level: selectedLogLevel,
           ordering,
         },
@@ -81,9 +81,9 @@ function LogModal({
 
   const logDetailsColumns = [
     {
-      title: "Event Time",
-      dataIndex: "eventTime",
-      key: "eventTime",
+      title: 'Event Time',
+      dataIndex: 'eventTime',
+      key: 'eventTime',
       sorter: true,
       width: 200,
       render: (_, record) => (
@@ -93,14 +93,14 @@ function LogModal({
       ),
     },
     {
-      title: "Event Stage",
-      dataIndex: "eventStage",
-      key: "stage",
+      title: 'Event Stage',
+      dataIndex: 'eventStage',
+      key: 'stage',
     },
     {
-      title: "Log Level",
-      dataIndex: "logLevel",
-      key: "level",
+      title: 'Log Level',
+      dataIndex: 'logLevel',
+      key: 'level',
       filterDropdown: (props) => (
         <FilterDropdown
           {...props}
@@ -113,9 +113,9 @@ function LogModal({
       render: (level) => <span className={level?.toLowerCase()}>{level}</span>,
     },
     {
-      title: "Log",
-      dataIndex: "log",
-      key: "log",
+      title: 'Log',
+      dataIndex: 'log',
+      key: 'log',
     },
   ];
 
@@ -131,9 +131,9 @@ function LogModal({
 
     if (sorter.order) {
       // Determine ascending or descending order
-      const executionTimeParam = filterParams.executionTime || "created_at";
+      const executionTimeParam = filterParams.executionTime || 'created_at';
       const order =
-        sorter.order === "ascend"
+        sorter.order === 'ascend'
           ? executionTimeParam
           : `-${executionTimeParam}`;
       setOrdering(order);
@@ -169,7 +169,7 @@ function LogModal({
         }}
         loading={loading}
         onChange={handleTableChange}
-        sortDirections={["ascend", "descend", "ascend"]}
+        sortDirections={['ascend', 'descend', 'ascend']}
       />
     </Modal>
   );

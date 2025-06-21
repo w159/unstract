@@ -1,9 +1,9 @@
-import { Col, Row } from "antd";
-import PropTypes from "prop-types";
+import { Col, Row } from 'antd';
+import PropTypes from 'prop-types';
 
-import { Steps } from "../steps/Steps";
-import "./WorkflowExecutionMain.css";
-import { InputOutput } from "../input-output/InputOutput";
+import { Steps } from '../steps/Steps';
+import './WorkflowExecutionMain.css';
+import { InputOutput } from '../input-output/InputOutput';
 
 function WorkflowExecutionMain({
   setSteps,

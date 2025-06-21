@@ -1,18 +1,18 @@
-import PropTypes from "prop-types";
-import { memo, useEffect, useState } from "react";
+import PropTypes from 'prop-types';
+import { memo, useEffect, useState } from 'react';
 
 import {
   PROMPT_RUN_API_STATUSES,
   promptStudioUpdateStatus,
-} from "../../../helpers/GetStaticData";
-import { useAlertStore } from "../../../store/alert-store";
-import { useCustomToolStore } from "../../../store/custom-tool-store";
-import { useSocketCustomToolStore } from "../../../store/socket-custom-tool";
-import { OutputForDocModal } from "../output-for-doc-modal/OutputForDocModal";
-import usePostHogEvents from "../../../hooks/usePostHogEvents";
-import { PromptCardItems } from "./PromptCardItems";
-import "./PromptCard.css";
-import { handleUpdateStatus } from "./constants";
+} from '../../../helpers/GetStaticData';
+import { useAlertStore } from '../../../store/alert-store';
+import { useCustomToolStore } from '../../../store/custom-tool-store';
+import { useSocketCustomToolStore } from '../../../store/socket-custom-tool';
+import { OutputForDocModal } from '../output-for-doc-modal/OutputForDocModal';
+import usePostHogEvents from '../../../hooks/usePostHogEvents';
+import { PromptCardItems } from './PromptCardItems';
+import './PromptCard.css';
+import { handleUpdateStatus } from './constants';
 
 const PromptCard = memo(
   ({
@@ -37,8 +37,8 @@ const PromptCard = memo(
       promptId: null,
       status: null,
     });
-    const [promptKey, setPromptKey] = useState("");
-    const [promptText, setPromptText] = useState("");
+    const [promptKey, setPromptKey] = useState('');
+    const [promptText, setPromptText] = useState('');
     const [selectedLlmProfileId, setSelectedLlmProfileId] = useState(null);
 
     const [isCoverageLoading, setIsCoverageLoading] = useState(false);
@@ -75,7 +75,7 @@ const PromptCard = memo(
           (item) =>
             (item?.component?.prompt_id === promptDetailsState?.prompt_id ||
               item?.component?.prompt_key === promptKey) &&
-            (item?.level === "INFO" || item?.level === "ERROR")
+            (item?.level === 'INFO' || item?.level === 'ERROR'),
         );
 
       // If no matching message is found, return early
@@ -85,14 +85,14 @@ const PromptCard = memo(
 
       // Set the progress message state with the found message
       setProgressMsg({
-        message: msg?.message || "",
-        level: msg?.level || "INFO",
+        message: msg?.message || '',
+        level: msg?.level || 'INFO',
       });
     }, [messages]);
 
     useEffect(() => {
       setSelectedLlmProfileId(
-        promptDetailsState?.profile_manager || llmProfiles[0]?.profile_id
+        promptDetailsState?.profile_manager || llmProfiles[0]?.profile_id,
       );
     }, [promptDetailsState]);
 
@@ -100,7 +100,7 @@ const PromptCard = memo(
       const promptRunStatusKeys = Object.keys(promptRunStatus);
 
       const coverageLoading = promptRunStatusKeys.some(
-        (key) => promptRunStatus[key] === PROMPT_RUN_API_STATUSES.RUNNING
+        (key) => promptRunStatus[key] === PROMPT_RUN_API_STATUSES.RUNNING,
       );
       setIsCoverageLoading(coverageLoading);
     }, [promptRunStatus]);
@@ -109,10 +109,10 @@ const PromptCard = memo(
       event,
       promptId,
       dropdownItem,
-      isUpdateStatus = false
+      isUpdateStatus = false,
     ) => {
-      let name = "";
-      let value = "";
+      let name = '';
+      let value = '';
       if (dropdownItem?.length) {
         name = dropdownItem;
         value = event;
@@ -130,7 +130,7 @@ const PromptCard = memo(
         isUpdateStatus,
         promptId,
         promptStudioUpdateStatus.isUpdating,
-        setUpdateStatus
+        setUpdateStatus,
       );
       setPromptDetailsState(updatedPromptDetailsState);
       return handleChangePromptCard(name, value, promptId)
@@ -144,7 +144,7 @@ const PromptCard = memo(
             isUpdateStatus,
             promptId,
             promptStudioUpdateStatus.done,
-            setUpdateStatus
+            setUpdateStatus,
           );
         })
         .catch(() => {
@@ -165,7 +165,7 @@ const PromptCard = memo(
       handleChange(
         llmProfileId,
         promptDetailsState?.prompt_id,
-        "profile_manager"
+        'profile_manager',
       );
     };
 
@@ -178,15 +178,15 @@ const PromptCard = memo(
     const processNestedArray = (nestedValue, flattened) => {
       if (Array.isArray(nestedValue)) {
         nestedValue.forEach((coords) =>
-          addCoordsToFlattened(coords, flattened)
+          addCoordsToFlattened(coords, flattened),
         );
       }
     };
 
     const processObjectValues = (item, flattened) => {
-      if (typeof item === "object" && !Array.isArray(item)) {
+      if (typeof item === 'object' && !Array.isArray(item)) {
         Object.values(item).forEach((value) =>
-          processNestedArray(value, flattened)
+          processNestedArray(value, flattened),
         );
       }
     };
@@ -200,7 +200,7 @@ const PromptCard = memo(
     };
 
     const flattenHighlightData = (data) => {
-      if (!data || typeof data !== "object") return data;
+      if (!data || typeof data !== 'object') return data;
 
       const flattened = [];
       Object.values(data).forEach((value) => {
@@ -215,12 +215,12 @@ const PromptCard = memo(
       highlightData,
       highlightedPrompt,
       highlightedProfile,
-      confidenceData
+      confidenceData,
     ) => {
       if (details?.enable_highlight) {
         const processedHighlight =
           singlePassExtractMode &&
-          typeof highlightData === "object" &&
+          typeof highlightData === 'object' &&
           !Array.isArray(highlightData)
             ? flattenHighlightData(highlightData)
             : highlightData;
@@ -236,7 +236,7 @@ const PromptCard = memo(
     };
 
     const handleTypeChange = (value) => {
-      handleChange(value, promptDetailsState?.prompt_id, "enforce_type", true);
+      handleChange(value, promptDetailsState?.prompt_id, 'enforce_type', true);
     };
 
     const handleSpsLoading = (docId, isLoadingStatus) => {
@@ -249,7 +249,7 @@ const PromptCard = memo(
     // Generate the result for the currently selected document
     const handleRun = (promptRunType, promptId, profileId, documentId) => {
       try {
-        setPostHogCustomEvent("ps_prompt_run", {
+        setPostHogCustomEvent('ps_prompt_run', {
           info: "Click on 'Run Prompt' button (Multi Pass)",
         });
       } catch (err) {
@@ -259,24 +259,24 @@ const PromptCard = memo(
       const validateInputs = () => {
         if (!selectedDoc) {
           setAlertDetails({
-            type: "error",
-            content: "Document not selected",
+            type: 'error',
+            content: 'Document not selected',
           });
           return true;
         }
 
         if (!promptKey) {
           setAlertDetails({
-            type: "error",
-            content: "Prompt key cannot be empty",
+            type: 'error',
+            content: 'Prompt key cannot be empty',
           });
           return true;
         }
 
         if (!promptText) {
           setAlertDetails({
-            type: "error",
-            content: "Prompt cannot be empty",
+            type: 'error',
+            content: 'Prompt cannot be empty',
           });
           return true;
         }
@@ -290,7 +290,7 @@ const PromptCard = memo(
 
       const docId = selectedDoc?.document_id;
       const isSummaryIndexed = [...summarizeIndexStatus].find(
-        (item) => item?.docId === docId && item?.isIndexed === true
+        (item) => item?.docId === docId && item?.isIndexed === true,
       );
 
       if (
@@ -300,7 +300,7 @@ const PromptCard = memo(
       ) {
         // Summary needs to be indexed before running the prompt
         setAlertDetails({
-          type: "error",
+          type: 'error',
           content: `Summary needs to be indexed before running the prompt - ${selectedDoc?.document_name}.`,
         });
         return;
@@ -348,10 +348,10 @@ const PromptCard = memo(
         />
       </>
     );
-  }
+  },
 );
 
-PromptCard.displayName = "PromptCard";
+PromptCard.displayName = 'PromptCard';
 
 PromptCard.propTypes = {
   promptDetails: PropTypes.object.isRequired,

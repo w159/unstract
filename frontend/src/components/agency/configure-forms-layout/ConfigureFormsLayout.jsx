@@ -1,9 +1,9 @@
-import { Col, Row, Typography } from "antd";
-import PropTypes from "prop-types";
+import { Col, Row, Typography } from 'antd';
+import PropTypes from 'prop-types';
 
-import { SettingsForm } from "../settings-form/SettingsForm";
-import { AddSource } from "../../input-output/add-source/AddSource";
-import { EmptyState } from "../../widgets/empty-state/EmptyState";
+import { SettingsForm } from '../settings-form/SettingsForm';
+import { AddSource } from '../../input-output/add-source/AddSource';
+import { EmptyState } from '../../widgets/empty-state/EmptyState';
 
 function ConfigureFormsLayout({
   selectedId,
@@ -31,8 +31,8 @@ function ConfigureFormsLayout({
               <EmptyState
                 text={
                   isConnAvailable
-                    ? "Select the connector"
-                    : "No Connector available"
+                    ? 'Select the connector'
+                    : 'No Connector available'
                 }
               />
             ) : (
@@ -51,7 +51,7 @@ function ConfigureFormsLayout({
           </div>
         </div>
       </Col>
-      {connType !== "MANUALREVIEW" && (
+      {connType !== 'MANUALREVIEW' && (
         <Col span={12} className="conn-modal-form-left">
           <div className="conn-modal-flex">
             <Typography.Text strong>Configuration</Typography.Text>

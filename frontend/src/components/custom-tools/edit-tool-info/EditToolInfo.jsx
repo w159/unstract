@@ -1,6 +1,6 @@
-import { Input, Space, Typography } from "antd";
+import { Input, Space, Typography } from 'antd';
 
-import "./EditToolInfo.css";
+import './EditToolInfo.css';
 
 function EditToolInfo() {
   return (
@@ -36,7 +36,7 @@ function EditToolInfo() {
               type="secondary"
               className="edit-tool-info-helper-text"
             >
-              Choose icons from here -{" "}
+              Choose icons from here -{' '}
               <a
                 href="https://fonts.google.com/icons"
                 target="_blank"

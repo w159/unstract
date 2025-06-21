@@ -6,19 +6,19 @@ import {
   Popconfirm,
   Tooltip,
   Typography,
-} from "antd";
-import PropTypes from "prop-types";
-import "./ListView.css";
+} from 'antd';
+import PropTypes from 'prop-types';
+import './ListView.css';
 import {
   DeleteOutlined,
   EditOutlined,
   QuestionCircleOutlined,
   ShareAltOutlined,
   UserOutlined,
-} from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+} from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 
-import { useSessionStore } from "../../../store/session-store";
+import { useSessionStore } from '../../../store/session-store';
 
 function ListView({
   listOfTools,
@@ -95,9 +95,9 @@ function ListView({
               <Typography.Text className="shared-username">
                 {item?.created_by_email
                   ? item?.created_by_email === sessionDetails.email
-                    ? "Me"
+                    ? 'Me'
                     : item?.created_by_email
-                  : "-"}
+                  : '-'}
               </Typography.Text>
             </div>
           )}
@@ -143,11 +143,11 @@ function ListView({
     <List
       size="large"
       dataSource={listOfTools}
-      style={{ marginInline: "4px" }}
+      style={{ marginInline: '4px' }}
       pagination={{
-        position: "bottom",
-        align: "end",
-        size: "small",
+        position: 'bottom',
+        align: 'end',
+        size: 'small',
       }}
       className="list-view-wrapper"
       renderItem={(item) => {
@@ -159,7 +159,7 @@ function ListView({
                 ? navigate(`${item[idProp]}`)
                 : handleShareClick(event, item, false);
             }}
-            className={`cur-pointer ${centered ? "centered" : ""}`}
+            className={`cur-pointer ${centered ? 'centered' : ''}`}
           >
             <List.Item.Meta
               className="list-item-desc"

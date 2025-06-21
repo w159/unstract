@@ -1,19 +1,19 @@
-import { CloseOutlined } from "@ant-design/icons";
-import { Card, Col, Progress, Row, Typography } from "antd";
-import PropTypes from "prop-types";
-import { useRef } from "react";
-import { useDrag, useDrop } from "react-dnd";
+import { CloseOutlined } from '@ant-design/icons';
+import { Card, Col, Progress, Row, Typography } from 'antd';
+import PropTypes from 'prop-types';
+import { useRef } from 'react';
+import { useDrag, useDrop } from 'react-dnd';
 
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { useAlertStore } from "../../../store/alert-store";
-import { useSessionStore } from "../../../store/session-store";
-import { useToolSettingsStore } from "../../../store/tool-settings";
-import { useWorkflowStore } from "../../../store/workflow-store";
-import { ConfirmModal } from "../../widgets/confirm-modal/ConfirmModal";
-import "../step-card/StepCard.css";
-import "./CardList.css";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler";
-import { ToolIcon } from "../tool-icon/ToolIcon";
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { useAlertStore } from '../../../store/alert-store';
+import { useSessionStore } from '../../../store/session-store';
+import { useToolSettingsStore } from '../../../store/tool-settings';
+import { useWorkflowStore } from '../../../store/workflow-store';
+import { ConfirmModal } from '../../widgets/confirm-modal/ConfirmModal';
+import '../step-card/StepCard.css';
+import './CardList.css';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler';
+import { ToolIcon } from '../tool-icon/ToolIcon';
 
 const CardsList = ({ step, index, activeTool, moveItem }) => {
   const ref = useRef(null);
@@ -30,10 +30,10 @@ const CardsList = ({ step, index, activeTool, moveItem }) => {
   };
   const deleteStep = () => {
     const requestOptions = {
-      method: "DELETE",
+      method: 'DELETE',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/tool_instance/${toolSettings?.id}/`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
     };
 
@@ -42,18 +42,18 @@ const CardsList = ({ step, index, activeTool, moveItem }) => {
         deleteToolInstance(toolSettings?.id);
         cleanUpToolSettings();
         setAlertDetails({
-          type: "success",
-          content: "Successfully deleted the tool instance",
+          type: 'success',
+          content: 'Successfully deleted the tool instance',
         });
       })
       .catch((err) => {
         setAlertDetails(
-          handleException(err, "Failed to delete the tool instance")
+          handleException(err, 'Failed to delete the tool instance'),
         );
       });
   };
   const [, drop] = useDrop({
-    accept: "STEP",
+    accept: 'STEP',
     drop: (draggedItem) => {
       if (!index && !draggedItem?.function_name) {
         moveItem(draggedItem.index, index, draggedItem?.function_name);
@@ -101,7 +101,7 @@ const CardsList = ({ step, index, activeTool, moveItem }) => {
     },
   });
   const [{ isDragging }, drag] = useDrag({
-    type: "STEP",
+    type: 'STEP',
     item: { index },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -112,9 +112,9 @@ const CardsList = ({ step, index, activeTool, moveItem }) => {
     <div ref={ref}>
       <Card
         className={
-          "wf-step-card-layout card-body " +
-          (toolSettings?.id === step?.id ? "tool-active" : "") +
-          (isDragging ? "tool-dragging" : "")
+          'wf-step-card-layout card-body ' +
+          (toolSettings?.id === step?.id ? 'tool-active' : '') +
+          (isDragging ? 'tool-dragging' : '')
         }
         onClick={() => handleClick(step?.id, step?.tool_id, index)}
       >
@@ -134,7 +134,7 @@ const CardsList = ({ step, index, activeTool, moveItem }) => {
           <Col
             span={19}
             className={`card-col-details ${
-              activeTool === step?.id ? "active" : ""
+              activeTool === step?.id ? 'active' : ''
             }`}
           >
             <div className="card-col-div">

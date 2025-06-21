@@ -1,7 +1,7 @@
-import PropTypes from "prop-types";
-import { Input } from "antd";
+import PropTypes from 'prop-types';
+import { Input } from 'antd';
 
-import { RjsfWidgetLayout } from "../../../layouts/rjsf-widget-layout/RjsfWidgetLayout.jsx";
+import { RjsfWidgetLayout } from '../../../layouts/rjsf-widget-layout/RjsfWidgetLayout.jsx';
 
 const ColorWidget = ({
   id,
@@ -12,7 +12,7 @@ const ColorWidget = ({
   required,
   readonly,
 }) => {
-  const description = schema?.description || "";
+  const description = schema?.description || '';
 
   const handleColorChange = (event) => {
     onChange(event.target.value);

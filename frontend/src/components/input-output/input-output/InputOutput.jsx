@@ -1,24 +1,24 @@
-import { Col, Image, Row } from "antd";
-import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { Col, Image, Row } from 'antd';
+import { useEffect, useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 
-import { CONNECTOR_TYPE_MAP } from "../../../helpers/GetStaticData.js";
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { useAlertStore } from "../../../store/alert-store";
-import { useSessionStore } from "../../../store/session-store";
-import { AddSourceModal } from "../add-source-modal/AddSourceModal.jsx";
-import { ManageFiles } from "../manage-files/ManageFiles.jsx";
-import { Sidebar } from "../sidebar/Sidebar.jsx";
-import "./InputOutput.css";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler.jsx";
-const INPUT = "input";
-const OUTPUT = "output";
+import { CONNECTOR_TYPE_MAP } from '../../../helpers/GetStaticData.js';
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { useAlertStore } from '../../../store/alert-store';
+import { useSessionStore } from '../../../store/session-store';
+import { AddSourceModal } from '../add-source-modal/AddSourceModal.jsx';
+import { ManageFiles } from '../manage-files/ManageFiles.jsx';
+import { Sidebar } from '../sidebar/Sidebar.jsx';
+import './InputOutput.css';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler.jsx';
+const INPUT = 'input';
+const OUTPUT = 'output';
 
 function InputOutput() {
   const [selectedItem, setSelectedItem] = useState();
   const [listOfItems, setListOfItems] = useState([]);
   const [openModal, setOpenModal] = useState(false);
-  const [connectorType, setConnectorType] = useState("");
+  const [connectorType, setConnectorType] = useState('');
   const [reloadList, setReloadList] = useState(false);
   const [editItemId, setEditItemId] = useState(null);
   const { sessionDetails } = useSessionStore();
@@ -34,7 +34,7 @@ function InputOutput() {
   };
 
   useEffect(() => {
-    const currentPathSplit = currentPath.split("/");
+    const currentPathSplit = currentPath.split('/');
     const currentPathLastIndex = currentPathSplit?.length - 1;
 
     const type = currentPathSplit[currentPathLastIndex];
@@ -46,7 +46,7 @@ function InputOutput() {
     setConnectorType(type);
 
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${
         sessionDetails?.orgId
       }/connector/?workflow=${id}&connector_type=${type.toUpperCase()}`,
@@ -56,12 +56,12 @@ function InputOutput() {
       .then((res) => {
         const sources = res?.data;
         if (sources?.length === 0) {
-          setSelectedItem("");
+          setSelectedItem('');
           setListOfItems([]);
           return;
         }
         const menuItems = sources.map((item) =>
-          getItem(item?.connector_name, item?.id, sourceIcon(item?.icon))
+          getItem(item?.connector_name, item?.id, sourceIcon(item?.icon)),
         );
         const firstId = sources[0].id.toString();
         setSelectedItem(firstId);
@@ -91,10 +91,10 @@ function InputOutput() {
 
   const handleDelete = () => {
     const requestOptions = {
-      method: "DELETE",
+      method: 'DELETE',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/connector/${selectedItem}/`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
     };
 
@@ -114,14 +114,14 @@ function InputOutput() {
         if (item?.key !== newItem?.id) {
           return item;
         }
-        item["label"] = newItem?.connector_name;
+        item['label'] = newItem?.connector_name;
         return item;
       });
     } else {
       const itemToAdd = getItem(
         newItem?.connector_name,
         newItem?.id,
-        sourceIcon(newItem?.icon)
+        sourceIcon(newItem?.icon),
       );
       items.push(itemToAdd);
     }

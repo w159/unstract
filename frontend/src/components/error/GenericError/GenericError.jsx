@@ -1,6 +1,6 @@
-import { Result } from "antd";
-import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Result } from 'antd';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 function GenericError() {
   const [searchParams] = useSearchParams();
@@ -10,22 +10,22 @@ function GenericError() {
     // Simulating fetching JSON data with key-value pairs
     const jsonData = {
       IDM: {
-        title: "Sorry, but this invitation is not meant for you.",
+        title: 'Sorry, but this invitation is not meant for you.',
         subtitle:
           "Please make sure to use the same email address that you were invited with. If that doesn't work, contact the organization owner to send you another invite.",
       },
       INF: {
-        title: "This invitation is either invalid or has expired.",
+        title: 'This invitation is either invalid or has expired.',
         subtitle:
-          "Please contact the organization owner to send you another invite.",
+          'Please contact the organization owner to send you another invite.',
       },
       UMM: {
-        title: "Sorry, but you seem to be a member of multiple organizations.",
-        subtitle: "This is not allowed normally. Please contact support.",
+        title: 'Sorry, but you seem to be a member of multiple organizations.',
+        subtitle: 'This is not allowed normally. Please contact support.',
       },
       USF: {
         title: `We're unable to create your account since an account for your organization ${searchParams.get(
-          "domain"
+          'domain',
         )} already exists.`,
         subtitle:
           "You'll need to contact the admin of your organization's account to get access or you'll need to use a different email address to sign up.",
@@ -37,20 +37,20 @@ function GenericError() {
       },
       INE001: {
         title: `Email not allowed`,
-        subtitle: "Disposable emails not allowed.",
+        subtitle: 'Disposable emails not allowed.',
       },
       INE002: {
         title: `Invalid Email format`,
-        subtitle: "Please give a valid email address",
+        subtitle: 'Please give a valid email address',
       },
       INS: {
         title: `Access Denied`,
-        subtitle: "Please contact your administrator to request access.",
+        subtitle: 'Please contact your administrator to request access.',
       },
 
       // Add more key-value pairs as needed
     };
-    const msgId = searchParams.get("code");
+    const msgId = searchParams.get('code');
 
     setId(msgId);
     setMessages(jsonData);
@@ -67,7 +67,7 @@ function GenericError() {
       subTitle={
         id && messages[id]
           ? messages[id].subtitle
-          : "Please try to login again for accessing your data."
+          : 'Please try to login again for accessing your data.'
       }
     />
   );

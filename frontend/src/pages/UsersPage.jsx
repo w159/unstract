@@ -1,4 +1,4 @@
-import { Users } from "../components/settings/users/Users.jsx";
+import { Users } from '../components/settings/users/Users.jsx';
 
 function UsersPage() {
   return <Users />;

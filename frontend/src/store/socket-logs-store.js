@@ -1,7 +1,7 @@
-import { create } from "zustand";
-import axios from "axios";
+import { create } from 'zustand';
+import axios from 'axios';
 
-import { useSessionStore } from "./session-store";
+import { useSessionStore } from './session-store';
 
 const STORE_VARIABLES = {
   logs: [],
@@ -34,20 +34,20 @@ const useSocketLogsStore = create((setState, getState) => ({
 
     newLogs.forEach((newLog) => {
       if (
-        newLog?.type === "NOTIFICATION" &&
+        newLog?.type === 'NOTIFICATION' &&
         sessionDetails?.isLoggedIn &&
         isStoreNotifications
       ) {
         const requestOptions = {
-          method: "POST",
+          method: 'POST',
           url: `/api/v1/unstract/${sessionDetails?.orgId}/logs/`,
           headers: {
-            "X-CSRFToken": sessionDetails?.csrfToken,
+            'X-CSRFToken': sessionDetails?.csrfToken,
           },
           data: { log: JSON.stringify(newLog) },
         };
         axios(requestOptions).catch((err) => {
-          console.error("Failed to post log:", err);
+          console.error('Failed to post log:', err);
         });
       }
     });

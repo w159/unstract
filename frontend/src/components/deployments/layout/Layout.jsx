@@ -1,8 +1,8 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import { Body } from "../body/Body";
-import { Header } from "../header/Header";
-import "./Layout.css";
+import { Body } from '../body/Body';
+import { Header } from '../header/Header';
+import './Layout.css';
 
 function Layout({ type, columns, tableData, isTableLoading, openAddModal }) {
   return (

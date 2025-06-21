@@ -1,30 +1,30 @@
-import { PlusOutlined, UserOutlined } from "@ant-design/icons";
-import { Typography } from "antd";
-import isEmpty from "lodash/isEmpty";
-import PropTypes from "prop-types";
-import { useEffect, useRef, useState, useCallback } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { PlusOutlined, UserOutlined } from '@ant-design/icons';
+import { Typography } from 'antd';
+import isEmpty from 'lodash/isEmpty';
+import PropTypes from 'prop-types';
+import { useEffect, useRef, useState, useCallback } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import { useAlertStore } from "../../../store/alert-store";
-import { useSessionStore } from "../../../store/session-store";
-import { useWorkflowStore } from "../../../store/workflow-store";
-import { usePromptStudioStore } from "../../../store/prompt-studio-store";
-import { CustomButton } from "../../widgets/custom-button/CustomButton.jsx";
-import { EmptyState } from "../../widgets/empty-state/EmptyState.jsx";
-import { LazyLoader } from "../../widgets/lazy-loader/LazyLoader.jsx";
-import { SpinnerLoader } from "../../widgets/spinner-loader/SpinnerLoader.jsx";
-import "./Workflows.css";
-import { workflowService } from "./workflow-service";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler.jsx";
-import { ToolNavBar } from "../../navigations/tool-nav-bar/ToolNavBar.jsx";
-import { ViewTools } from "../../custom-tools/view-tools/ViewTools.jsx";
-import usePostHogEvents from "../../../hooks/usePostHogEvents.js";
-import { PromptStudioModal } from "../../common/PromptStudioModal";
-import { usePromptStudioService } from "../../api/prompt-studio-service";
+import { useAlertStore } from '../../../store/alert-store';
+import { useSessionStore } from '../../../store/session-store';
+import { useWorkflowStore } from '../../../store/workflow-store';
+import { usePromptStudioStore } from '../../../store/prompt-studio-store';
+import { CustomButton } from '../../widgets/custom-button/CustomButton.jsx';
+import { EmptyState } from '../../widgets/empty-state/EmptyState.jsx';
+import { LazyLoader } from '../../widgets/lazy-loader/LazyLoader.jsx';
+import { SpinnerLoader } from '../../widgets/spinner-loader/SpinnerLoader.jsx';
+import './Workflows.css';
+import { workflowService } from './workflow-service';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler.jsx';
+import { ToolNavBar } from '../../navigations/tool-nav-bar/ToolNavBar.jsx';
+import { ViewTools } from '../../custom-tools/view-tools/ViewTools.jsx';
+import usePostHogEvents from '../../../hooks/usePostHogEvents.js';
+import { PromptStudioModal } from '../../common/PromptStudioModal';
+import { usePromptStudioService } from '../../api/prompt-studio-service';
 
 const PROJECT_FILTER_OPTIONS = [
-  { label: "My Workflows", value: "mine" },
-  { label: "Organization Workflows", value: "all" },
+  { label: 'My Workflows', value: 'mine' },
+  { label: 'Organization Workflows', value: 'all' },
 ];
 
 const { Title, Text } = Typography;
@@ -71,7 +71,7 @@ function Workflows() {
         setProjectList(res.data);
       })
       .catch(() => {
-        console.error("Unable to get project list");
+        console.error('Unable to get project list');
       });
   }
 
@@ -81,15 +81,15 @@ function Workflows() {
       return;
     }
     const filteredList = projectListRef.current.filter((item) =>
-      item.workflow_name.toLowerCase().includes(searchText.toLowerCase())
+      item.workflow_name.toLowerCase().includes(searchText.toLowerCase()),
     );
     setSearchList(filteredList);
   }
 
   function applyFilter(value) {
     filterViewRef.current = value;
-    projectListRef.current = "";
-    setProjectList("");
+    projectListRef.current = '';
+    setProjectList('');
     getProjectList();
   }
 
@@ -105,13 +105,13 @@ function Workflows() {
           openProject(res.data);
         }
         setAlertDetails({
-          type: "success",
-          content: "Workflow updated successfully",
+          type: 'success',
+          content: 'Workflow updated successfully',
         });
         getProjectList();
       })
       .catch((err) => {
-        handleException(err, "", setBackendErrors);
+        handleException(err, '', setBackendErrors);
       })
       .finally(() => {
         setLoading(false);
@@ -124,14 +124,14 @@ function Workflows() {
   }
 
   function showNewProject() {
-    setEditProject({ name: "", description: "" });
+    setEditProject({ name: '', description: '' });
   }
 
   function updateProject(_event, project) {
     toggleModal(true);
     setEditProject({
       name: project.workflow_name,
-      description: project.description || "",
+      description: project.description || '',
       id: project.id,
     });
   }
@@ -152,21 +152,21 @@ function Workflows() {
         .then(() => {
           getProjectList();
           setAlertDetails({
-            type: "success",
-            content: "Workflow deleted successfully",
+            type: 'success',
+            content: 'Workflow deleted successfully',
           });
         })
         .catch(() => {
           setAlertDetails({
-            type: "error",
+            type: 'error',
             content: `Unable to delete workflow ${project.id}`,
           });
         });
     } else {
       setAlertDetails({
-        type: "error",
+        type: 'error',
         content:
-          "Cannot delete this Workflow, since it is used in one or many of the API/ETL/Task pipelines",
+          'Cannot delete this Workflow, since it is used in one or many of the API/ETL/Task pipelines',
       });
     }
   };
@@ -180,7 +180,7 @@ function Workflows() {
     toggleModal(true);
 
     try {
-      setPostHogCustomEvent("intent_new_wf_project", {
+      setPostHogCustomEvent('intent_new_wf_project', {
         info: "Clicked on '+ New Workflow' button",
       });
     } catch (err) {
@@ -263,8 +263,8 @@ function Workflows() {
           )}
           {editingProject && (
             <LazyLoader
-              component={() => import("../new-workflow/NewWorkflow.jsx")}
-              componentName={"NewWorkflow"}
+              component={() => import('../new-workflow/NewWorkflow.jsx')}
+              componentName={'NewWorkflow'}
               name={editingProject.name}
               description={editingProject.description}
               onDone={editProject}

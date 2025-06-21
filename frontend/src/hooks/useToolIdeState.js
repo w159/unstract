@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 /**
  * Custom hook to manage the complex state logic for ToolIde component
@@ -72,9 +72,9 @@ export const loadPlugins = () => {
   // Load onboarding plugins
   try {
     plugins.OnboardMessagesModal =
-      require("../../../plugins/onboarding-messages/OnboardMessagesModal.jsx").OnboardMessagesModal;
+      require('../../../plugins/onboarding-messages/OnboardMessagesModal.jsx').OnboardMessagesModal;
     plugins.slides =
-      require("../../../plugins/onboarding-messages/prompt-slides.jsx").PromptSlides;
+      require('../../../plugins/onboarding-messages/prompt-slides.jsx').PromptSlides;
   } catch (err) {
     // Plugins not available, use defaults
   }
@@ -82,11 +82,11 @@ export const loadPlugins = () => {
   // Load share plugins
   try {
     plugins.PromptShareModal =
-      require("../../../plugins/prompt-studio-public-share/public-share-modal/PromptShareModal.jsx").PromptShareModal;
+      require('../../../plugins/prompt-studio-public-share/public-share-modal/PromptShareModal.jsx').PromptShareModal;
     plugins.PromptShareLink =
-      require("../../../plugins/prompt-studio-public-share/public-link-modal/PromptShareLink.jsx").PromptShareLink;
+      require('../../../plugins/prompt-studio-public-share/public-link-modal/PromptShareLink.jsx').PromptShareLink;
     plugins.HeaderPublic =
-      require("../../../plugins/prompt-studio-public-share/header-public/HeaderPublic.jsx").HeaderPublic;
+      require('../../../plugins/prompt-studio-public-share/header-public/HeaderPublic.jsx').HeaderPublic;
   } catch (err) {
     // Plugins not available, use defaults
   }
@@ -94,7 +94,7 @@ export const loadPlugins = () => {
   // Load clone plugin
   try {
     plugins.CloneTitle =
-      require("../../../plugins/prompt-studio-clone/clone-title-modal/CloneTitle.jsx").CloneTitle;
+      require('../../../plugins/prompt-studio-clone/clone-title-modal/CloneTitle.jsx').CloneTitle;
   } catch (err) {
     // Plugin not available, use default
   }

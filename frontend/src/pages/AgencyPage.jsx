@@ -1,4 +1,4 @@
-import { Agency } from "../components/agency/agency/Agency";
+import { Agency } from '../components/agency/agency/Agency';
 
 function AgencyPage() {
   return <Agency />;

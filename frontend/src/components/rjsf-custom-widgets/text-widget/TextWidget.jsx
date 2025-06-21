@@ -1,11 +1,11 @@
-import { Input } from "antd";
-import PropTypes from "prop-types";
+import { Input } from 'antd';
+import PropTypes from 'prop-types';
 
-import { RjsfWidgetLayout } from "../../../layouts/rjsf-widget-layout/RjsfWidgetLayout.jsx";
+import { RjsfWidgetLayout } from '../../../layouts/rjsf-widget-layout/RjsfWidgetLayout.jsx';
 
 const TextWidget = (props) => {
   const { id, value, onChange, label, schema, required, readonly } = props;
-  const description = schema?.description || "";
+  const description = schema?.description || '';
   const handleTextChange = (event) => {
     onChange(event.target.value);
   };

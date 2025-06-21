@@ -1,13 +1,13 @@
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef, useCallback, useEffect } from 'react';
 
-import { LogsHeader } from "./LogsHeader";
-import "./DisplayLogsAndNotifications.css";
-import { LogsAndNotificationsTable } from "./LogsAndNotificationsTable";
-import { useAxiosPrivate } from "../../hooks/useAxiosPrivate";
-import { useSessionStore } from "../../store/session-store";
-import { useSocketLogsStore } from "../../store/socket-logs-store";
-import { useAlertStore } from "../../store/alert-store";
-import { useExceptionHandler } from "../../hooks/useExceptionHandler";
+import { LogsHeader } from './LogsHeader';
+import './DisplayLogsAndNotifications.css';
+import { LogsAndNotificationsTable } from './LogsAndNotificationsTable';
+import { useAxiosPrivate } from '../../hooks/useAxiosPrivate';
+import { useSessionStore } from '../../store/session-store';
+import { useSocketLogsStore } from '../../store/socket-logs-store';
+import { useAlertStore } from '../../store/alert-store';
+import { useExceptionHandler } from '../../hooks/useExceptionHandler';
 
 export function DisplayLogsAndNotifications() {
   const [contentHeight, setContentHeight] = useState(0);
@@ -27,18 +27,18 @@ export function DisplayLogsAndNotifications() {
     getLogs();
     const parent = containerRef.current?.parentElement;
     if (parent) {
-      if (window.getComputedStyle(parent).position === "static") {
-        parent.style.position = "relative";
+      if (window.getComputedStyle(parent).position === 'static') {
+        parent.style.position = 'relative';
       }
     }
   }, []);
 
   const getLogs = async () => {
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/logs/`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
     };
 
@@ -100,10 +100,10 @@ export function DisplayLogsAndNotifications() {
       draggingRef.current = true;
       startYRef.current = e.clientY;
       startHeightRef.current = contentHeight;
-      document.addEventListener("mousemove", onMouseMove);
-      document.addEventListener("mouseup", onMouseUp);
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
     },
-    [contentHeight]
+    [contentHeight],
   );
 
   const onMouseMove = useCallback(
@@ -115,13 +115,13 @@ export function DisplayLogsAndNotifications() {
       const maxHeight = parentHeight - 40;
       setContentHeight(Math.max(0, Math.min(maxHeight, newHeight)));
     },
-    [getParentHeight]
+    [getParentHeight],
   );
 
   const onMouseUp = useCallback(() => {
     draggingRef.current = false;
-    document.removeEventListener("mousemove", onMouseMove);
-    document.removeEventListener("mouseup", onMouseUp);
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
   }, [onMouseMove]);
 
   const parentHeight = getParentHeight();

@@ -1,18 +1,18 @@
-import { Col, Row } from "antd";
-import PropTypes from "prop-types";
-import { createRef, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Col, Row } from 'antd';
+import PropTypes from 'prop-types';
+import { createRef, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-import { sourceTypes } from "../../../helpers/GetStaticData.js";
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler.jsx";
-import { RjsfFormLayout } from "../../../layouts/rjsf-form-layout/RjsfFormLayout.jsx";
-import { useAlertStore } from "../../../store/alert-store";
-import { useSessionStore } from "../../../store/session-store";
-import { OAuthDs } from "../../oauth-ds/oauth-ds/OAuthDs.jsx";
-import { CustomButton } from "../../widgets/custom-button/CustomButton.jsx";
-import "./ConfigureDs.css";
-import usePostHogEvents from "../../../hooks/usePostHogEvents.js";
+import { sourceTypes } from '../../../helpers/GetStaticData.js';
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler.jsx';
+import { RjsfFormLayout } from '../../../layouts/rjsf-form-layout/RjsfFormLayout.jsx';
+import { useAlertStore } from '../../../store/alert-store';
+import { useSessionStore } from '../../../store/session-store';
+import { OAuthDs } from '../../oauth-ds/oauth-ds/OAuthDs.jsx';
+import { CustomButton } from '../../widgets/custom-button/CustomButton.jsx';
+import './ConfigureDs.css';
+import usePostHogEvents from '../../../hooks/usePostHogEvents.js';
 
 function ConfigureDs({
   spec,
@@ -38,8 +38,8 @@ function ConfigureDs({
   const [isTcSuccessful, setIsTcSuccessful] = useState(false);
   const [isTcLoading, setIsTcLoading] = useState(false);
   const [isSubmitApiLoading, setIsSubmitApiLoading] = useState(false);
-  const [cacheKey, setCacheKey] = useState("");
-  const [status, setStatus] = useState("");
+  const [cacheKey, setCacheKey] = useState('');
+  const [status, setStatus] = useState('');
   const { sessionDetails } = useSessionStore();
   const { setAlertDetails } = useAlertStore();
   const handleException = useExceptionHandler();
@@ -86,10 +86,10 @@ function ConfigureDs({
     if (!isFormValid()) {
       return;
     }
-    if (oAuthProvider?.length && (status !== "success" || !cacheKey?.length)) {
+    if (oAuthProvider?.length && (status !== 'success' || !cacheKey?.length)) {
       setAlertDetails({
-        type: "error",
-        content: "Invalid OAuth",
+        type: 'error',
+        content: 'Invalid OAuth',
       });
       return;
     }
@@ -104,7 +104,7 @@ function ConfigureDs({
         connector_id: selectedSourceId,
         connector_metadata: connectorMetadata,
       };
-      url += "test_connectors/";
+      url += 'test_connectors/';
     } else {
       const adapterMetadata = { ...updatedFormData };
       delete adapterMetadata.adapterName;
@@ -113,7 +113,7 @@ function ConfigureDs({
         adapter_metadata: adapterMetadata,
         adapter_type: type.toUpperCase(),
       };
-      url += "test_adapters/";
+      url += 'test_adapters/';
 
       try {
         setPostHogCustomEvent(posthogTcEventText[type], {
@@ -125,18 +125,18 @@ function ConfigureDs({
     }
 
     if (oAuthProvider?.length > 0) {
-      body["connector_metadata"] = {
-        ...body["connector_metadata"],
-        ...{ "oauth-key": cacheKey },
+      body['connector_metadata'] = {
+        ...body['connector_metadata'],
+        ...{ 'oauth-key': cacheKey },
       };
     }
 
     const requestOptions = {
-      method: "POST",
+      method: 'POST',
       url,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
-        "Content-Type": "application/json",
+        'X-CSRFToken': sessionDetails?.csrfToken,
+        'Content-Type': 'application/json',
       },
       data: body,
     };
@@ -148,19 +148,19 @@ function ConfigureDs({
         setIsTcSuccessful(isValid);
         if (!isValid) {
           setAlertDetails({
-            type: "error",
-            content: "Test connection failed",
+            type: 'error',
+            content: 'Test connection failed',
           });
         } else {
           setAlertDetails({
-            type: "success",
-            content: "Test connection successful",
+            type: 'success',
+            content: 'Test connection successful',
           });
         }
       })
       .catch((err) => {
         const TestErrorMessage =
-          err?.response?.data?.message || "Test connection failed";
+          err?.response?.data?.message || 'Test connection failed';
         setAlertDetails(handleException(err, TestErrorMessage));
       })
       .finally(() => {
@@ -171,8 +171,8 @@ function ConfigureDs({
   const handleSubmit = () => {
     if (!isTcSuccessful) {
       setAlertDetails({
-        type: "error",
-        content: "Please test the connection before submitting.",
+        type: 'error',
+        content: 'Please test the connection before submitting.',
       });
       return;
     }
@@ -192,7 +192,7 @@ function ConfigureDs({
         connector_type: type.toUpperCase(),
         connector_name: connectorName,
       };
-      url += "connector/";
+      url += 'connector/';
 
       try {
         setPostHogCustomEvent(
@@ -200,7 +200,7 @@ function ConfigureDs({
           {
             info: `Clicked on 'Submit' button`,
             connector_name: selectedSourceName,
-          }
+          },
         );
       } catch (err) {
         // If an error occurs while setting custom posthog event, ignore it and continue
@@ -215,7 +215,7 @@ function ConfigureDs({
         adapter_type: type.toUpperCase(),
         adapter_name: adapterName,
       };
-      url += "adapter/";
+      url += 'adapter/';
 
       try {
         setPostHogCustomEvent(posthogSubmitEventText[type], {
@@ -227,9 +227,9 @@ function ConfigureDs({
       }
     }
 
-    let method = "POST";
+    let method = 'POST';
     if (editItemId?.length) {
-      method = "PUT";
+      method = 'PUT';
       url += `${editItemId}/`;
     }
 
@@ -242,8 +242,8 @@ function ConfigureDs({
       method,
       url,
       headers: {
-        "Content-Type": "application/json",
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'Content-Type': 'application/json',
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
       data: body,
     };
@@ -255,7 +255,7 @@ function ConfigureDs({
         if (sourceTypes.connectors.includes(type)) {
           handleUpdate(
             { connector_instance: data?.id, configuration: formDataConfig },
-            true
+            true,
           );
           setIsTcSuccessful(false);
           return;
@@ -264,12 +264,12 @@ function ConfigureDs({
           addNewItem(data, !!editItemId);
         }
         setAlertDetails({
-          type: "success",
+          type: 'success',
           content: `Successfully ${
-            method === "POST" ? "added" : "updated"
+            method === 'POST' ? 'added' : 'updated'
           } connector`,
         });
-        if (sourceType === Object.keys(sourceTypes)[1] && method === "POST") {
+        if (sourceType === Object.keys(sourceTypes)[1] && method === 'POST') {
           updateSession(type);
         }
         setOpen(false);

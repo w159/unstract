@@ -1,15 +1,15 @@
-import { Col, Image, Modal, Row, Typography } from "antd";
-import PropTypes from "prop-types";
+import { Col, Image, Modal, Row, Typography } from 'antd';
+import PropTypes from 'prop-types';
 
-import { DisplayPromptResult } from "./DisplayPromptResult";
-import { TABLE } from "./constants";
-import SpaceWrapper from "../../widgets/space-wrapper/SpaceWrapper";
-import { useCustomToolStore } from "../../../store/custom-tool-store";
-import usePromptOutput from "../../../hooks/usePromptOutput";
+import { DisplayPromptResult } from './DisplayPromptResult';
+import { TABLE } from './constants';
+import SpaceWrapper from '../../widgets/space-wrapper/SpaceWrapper';
+import { useCustomToolStore } from '../../../store/custom-tool-store';
+import usePromptOutput from '../../../hooks/usePromptOutput';
 
 let TableOutput;
 try {
-  TableOutput = require("../../../plugins/prompt-card/TableOutput").TableOutput;
+  TableOutput = require('../../../plugins/prompt-card/TableOutput').TableOutput;
 } catch {
   // The component will remain null of it is not available
 }
@@ -44,7 +44,7 @@ function PromptOutputsModal({
         >
           Prompt Results
         </Typography.Text>
-        <Row style={{ height: "85vh" }}>
+        <Row style={{ height: '85vh' }}>
           {llmProfiles.map((profile, index) => {
             const profileId = profile?.profile_id;
             const docId = selectedDoc?.document_id;
@@ -53,13 +53,13 @@ function PromptOutputsModal({
               docId,
               profileId,
               singlePassExtractMode,
-              true
+              true,
             );
             const promptOutputData = promptOutputs[promptOutputKey];
             return (
               <Col
                 className={`overflow-hidden height-100 prompt-output-pad ${
-                  index < llmProfiles?.length - 1 && "border-right-grey"
+                  index < llmProfiles?.length - 1 && 'border-right-grey'
                 }`}
                 key={profileId}
                 span={24 / llmProfiles?.length}
@@ -83,7 +83,7 @@ function PromptOutputsModal({
                   </div>
                   <div className="flex-1 overflow-y-auto pad-top-10">
                     {enforceType === TABLE &&
-                    tableSettings?.document_type !== "rent_rolls" &&
+                    tableSettings?.document_type !== 'rent_rolls' &&
                     TableOutput ? (
                       <>
                         <TableOutput

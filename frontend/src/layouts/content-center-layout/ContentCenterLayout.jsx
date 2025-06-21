@@ -1,6 +1,6 @@
-import PropTypes from "prop-types";
-import "./ContentCenterLayout.css";
-import { Typography } from "antd";
+import PropTypes from 'prop-types';
+import './ContentCenterLayout.css';
+import { Typography } from 'antd';
 
 function ContentCenterLayout({ children, headerText, mainText, subText }) {
   return (

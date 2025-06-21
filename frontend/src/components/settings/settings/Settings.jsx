@@ -1,20 +1,20 @@
-import { Typography } from "antd";
-import { useNavigate } from "react-router-dom";
-import "./Settings.css";
+import { Typography } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import './Settings.css';
 
-import { IslandLayout } from "../../../layouts/island-layout/IslandLayout.jsx";
-import { useSessionStore } from "../../../store/session-store";
-import usePostHogEvents from "../../../hooks/usePostHogEvents.js";
+import { IslandLayout } from '../../../layouts/island-layout/IslandLayout.jsx';
+import { useSessionStore } from '../../../store/session-store';
+import usePostHogEvents from '../../../hooks/usePostHogEvents.js';
 
 function Settings() {
   const navigate = useNavigate();
   const { sessionDetails } = useSessionStore();
   const { setPostHogCustomEvent } = usePostHogEvents();
   const handleDefaultTriadClick = () => {
-    navigate("triad");
+    navigate('triad');
 
     try {
-      setPostHogCustomEvent("intent_select_default_triad", {
+      setPostHogCustomEvent('intent_select_default_triad', {
         info: "Clicked on 'Default Triad' button",
       });
     } catch (err) {
@@ -35,7 +35,7 @@ function Settings() {
             <Typography.Link
               className="settings-plt-typo"
               strong
-              onClick={() => navigate("platform")}
+              onClick={() => navigate('platform')}
             >
               Platform Settings
             </Typography.Link>
@@ -64,7 +64,7 @@ function Settings() {
               <Typography.Link
                 className="settings-plt-typo"
                 strong
-                onClick={() => navigate("admin")}
+                onClick={() => navigate('admin')}
               >
                 Admin settings
               </Typography.Link>
@@ -74,7 +74,7 @@ function Settings() {
             <Typography.Link
               className="settings-plt-typo"
               strong
-              onClick={() => navigate("review")}
+              onClick={() => navigate('review')}
             >
               Human In The Loop Settings
             </Typography.Link>

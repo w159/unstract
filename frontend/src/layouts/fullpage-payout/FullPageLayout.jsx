@@ -1,6 +1,6 @@
-import { Layout } from "antd";
-import { Outlet } from "react-router-dom";
-import "./FullPageLayout.css";
+import { Layout } from 'antd';
+import { Outlet } from 'react-router-dom';
+import './FullPageLayout.css';
 
 function FullPageLayout() {
   return (

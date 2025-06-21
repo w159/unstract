@@ -73,7 +73,7 @@
   position: fixed;
   transform: translate(-50%, 100%);
   z-index: 1;
-  transition: "left 0.1s linear";
+  transition: 'left 0.1s linear';
 }
 
 .tool-ide-collapse-panel {
@@ -103,7 +103,7 @@
   font-size: 12px;
 }
 
-.public-tool-ide-body{
+.public-tool-ide-body {
   flex: 1 1;
   overflow-y: hidden;
   width: 100vw;

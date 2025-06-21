@@ -6,17 +6,17 @@ import {
   Popconfirm,
   Select,
   Typography,
-} from "antd";
-import "./SharePermission.css";
-import PropTypes from "prop-types";
+} from 'antd';
+import './SharePermission.css';
+import PropTypes from 'prop-types';
 import {
   DeleteOutlined,
   QuestionCircleOutlined,
   UserOutlined,
-} from "@ant-design/icons";
-import { useEffect, useState } from "react";
+} from '@ant-design/icons';
+import { useEffect, useState } from 'react';
 
-import { SpinnerLoader } from "../spinner-loader/SpinnerLoader";
+import { SpinnerLoader } from '../spinner-loader/SpinnerLoader';
 
 function SharePermission({
   open,
@@ -63,18 +63,18 @@ function SharePermission({
           } else {
             return user?.toString();
           }
-        })
+        }),
       );
     }
   }, [adapter, allUsers]);
 
   const handleDeleteUser = (userId) => {
     setSelectedUsers((prevSelectedUsers) =>
-      prevSelectedUsers.filter((user) => user !== userId)
+      prevSelectedUsers.filter((user) => user !== userId),
     );
   };
   const filterOption = (input, option) =>
-    (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+    (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
   const handleShareWithEveryone = (checked) => {
     setShareWithEveryone(checked);
@@ -88,7 +88,7 @@ function SharePermission({
       <List
         dataSource={selectedUsers.map((userId) => {
           const user = allUsers.find(
-            (u) => u?.id.toString() === userId.toString()
+            (u) => u?.id.toString() === userId.toString(),
           );
           return {
             id: user?.id,
@@ -141,16 +141,16 @@ function SharePermission({
   return (
     adapter && (
       <Modal
-        title={"Share Users"}
+        title={'Share Users'}
         open={open}
         onCancel={() => setOpen(false)}
         maskClosable={false}
         centered
         closable={true}
-        okText={"Apply"}
+        okText={'Apply'}
         onOk={() => onApply(selectedUsers, adapter, shareWithEveryone)}
-        cancelButtonProps={!permissionEdit && { style: { display: "none" } }}
-        okButtonProps={!permissionEdit && { style: { display: "none" } }}
+        cancelButtonProps={!permissionEdit && { style: { display: 'none' } }}
+        okButtonProps={!permissionEdit && { style: { display: 'none' } }}
         className="share-permission-modal"
       >
         {loading ? (
@@ -170,7 +170,7 @@ function SharePermission({
               <Select
                 filterOption={filterOption}
                 showSearch
-                size={"middle"}
+                size={'middle'}
                 placeholder="Search"
                 value={null}
                 className="share-permission-search"

@@ -1,9 +1,9 @@
-import { useEffect, useRef } from "react";
-import { Col, Row, Typography } from "antd";
+import { useEffect, useRef } from 'react';
+import { Col, Row, Typography } from 'antd';
 
-import "./DisplayLogs.css";
-import { useSocketLogsStore } from "../../../store/socket-logs-store";
-import CustomMarkdown from "../../helpers/custom-markdown/CustomMarkdown";
+import './DisplayLogs.css';
+import { useSocketLogsStore } from '../../../store/socket-logs-store';
+import CustomMarkdown from '../../helpers/custom-markdown/CustomMarkdown';
 
 function DisplayLogs() {
   const bottomRef = useRef(null);
@@ -12,7 +12,7 @@ function DisplayLogs() {
   useEffect(() => {
     if (logs?.length) {
       // Scroll down to the lastest chat.
-      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+      bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [logs]);
 

@@ -1,8 +1,8 @@
-import { Typography } from "antd";
-import PropTypes from "prop-types";
+import { Typography } from 'antd';
+import PropTypes from 'prop-types';
 
-import "./WorkflowExecution.css";
-import { WorkflowExecutionMain } from "../workflow-execution-layout/WorkflowExecutionMain";
+import './WorkflowExecution.css';
+import { WorkflowExecutionMain } from '../workflow-execution-layout/WorkflowExecutionMain';
 
 function WorkflowExecution({
   setSteps,

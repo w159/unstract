@@ -1,13 +1,13 @@
-import { Image } from "antd";
-import emojiRegex from "emoji-regex";
-import PropTypes from "prop-types";
+import { Image } from 'antd';
+import emojiRegex from 'emoji-regex';
+import PropTypes from 'prop-types';
 
-import "./ToolIcon.css";
+import './ToolIcon.css';
 
 function ToolIcon({ iconSrc, showBorder }) {
   const emojiregex = emojiRegex();
   const isSVG =
-    iconSrc && typeof iconSrc === "string" && iconSrc.includes("<svg");
+    iconSrc && typeof iconSrc === 'string' && iconSrc.includes('<svg');
 
   if (isSVG) {
     // If it's an SVG, render it as an image
@@ -15,18 +15,18 @@ function ToolIcon({ iconSrc, showBorder }) {
     return (
       <div
         className={`display-flex-center ${
-          showBorder ? "tool-icon-border" : ""
+          showBorder ? 'tool-icon-border' : ''
         }`}
       >
         <Image src={uri} preview={false} height={30} width={30} />
       </div>
     );
-  } else if (typeof iconSrc === "string" && emojiregex.test(iconSrc)) {
+  } else if (typeof iconSrc === 'string' && emojiregex.test(iconSrc)) {
     // If it's a string, render it using Typography
     return (
       <div
         className={`display-flex-center ${
-          showBorder ? "tool-icon-border" : ""
+          showBorder ? 'tool-icon-border' : ''
         }`}
       >
         {iconSrc}
@@ -37,10 +37,10 @@ function ToolIcon({ iconSrc, showBorder }) {
     return (
       <div
         className={`display-flex-center ${
-          showBorder ? "tool-icon-border" : ""
+          showBorder ? 'tool-icon-border' : ''
         }`}
       >
-        {"🧰"}
+        {'🧰'}
       </div>
     );
   }

@@ -5,8 +5,8 @@ import {
   InfoCircleOutlined,
   PlayCircleFilled,
   PlayCircleOutlined,
-} from "@ant-design/icons";
-import PropTypes from "prop-types";
+} from '@ant-design/icons';
+import PropTypes from 'prop-types';
 import {
   Button,
   Col,
@@ -16,39 +16,39 @@ import {
   Space,
   Tooltip,
   Typography,
-} from "antd";
-import { motion, AnimatePresence } from "framer-motion";
-import CheckableTag from "antd/es/tag/CheckableTag";
+} from 'antd';
+import { motion, AnimatePresence } from 'framer-motion';
+import CheckableTag from 'antd/es/tag/CheckableTag';
 
 import {
   displayPromptResult,
   generateApiRunStatusId,
   PROMPT_RUN_API_STATUSES,
   PROMPT_RUN_TYPES,
-} from "../../../helpers/GetStaticData";
-import { TokenUsage } from "../token-usage/TokenUsage";
-import { useWindowDimensions } from "../../../hooks/useWindowDimensions";
-import { useCustomToolStore } from "../../../store/custom-tool-store";
-import { TABLE } from "./constants";
-import { CopyPromptOutputBtn } from "./CopyPromptOutputBtn";
-import { useAlertStore } from "../../../store/alert-store";
-import { PromptOutputExpandBtn } from "./PromptOutputExpandBtn";
-import { DisplayPromptResult } from "./DisplayPromptResult";
-import usePromptOutput from "../../../hooks/usePromptOutput";
-import { PromptRunTimer } from "./PromptRunTimer";
-import { PromptRunCost } from "./PromptRunCost";
-import { useState } from "react";
+} from '../../../helpers/GetStaticData';
+import { TokenUsage } from '../token-usage/TokenUsage';
+import { useWindowDimensions } from '../../../hooks/useWindowDimensions';
+import { useCustomToolStore } from '../../../store/custom-tool-store';
+import { TABLE } from './constants';
+import { CopyPromptOutputBtn } from './CopyPromptOutputBtn';
+import { useAlertStore } from '../../../store/alert-store';
+import { PromptOutputExpandBtn } from './PromptOutputExpandBtn';
+import { DisplayPromptResult } from './DisplayPromptResult';
+import usePromptOutput from '../../../hooks/usePromptOutput';
+import { PromptRunTimer } from './PromptRunTimer';
+import { PromptRunCost } from './PromptRunCost';
+import { useState } from 'react';
 
 let TableOutput;
 try {
-  TableOutput = require("../../../plugins/prompt-card/TableOutput").TableOutput;
+  TableOutput = require('../../../plugins/prompt-card/TableOutput').TableOutput;
 } catch {
   // The component will remain null of it is not available
 }
 let ChallengeModal;
 try {
   ChallengeModal =
-    require("../../../plugins/challenge-modal/ChallengeModal").ChallengeModal;
+    require('../../../plugins/challenge-modal/ChallengeModal').ChallengeModal;
 } catch {
   // The component will remain null of it is not available
 }
@@ -86,7 +86,7 @@ function PromptOutput({
   const { setAlertDetails } = useAlertStore();
   const { generatePromptOutputKey } = usePromptOutput();
   const isTableExtraction = enforceType === TABLE;
-  const noHighlightEnforceType = !["table", "record"].includes(enforceType);
+  const noHighlightEnforceType = !['table', 'record'].includes(enforceType);
   const tooltipContent = (adapterConf) => (
     <div>
       {Object.entries(adapterConf)?.map(([key, value]) => (
@@ -101,12 +101,12 @@ function PromptOutput({
     setEnabledProfiles((prevState) =>
       checked
         ? [...prevState, profileId]
-        : prevState.filter((id) => id !== profileId)
+        : prevState.filter((id) => id !== profileId),
     );
   };
 
   const handleTable = (profileId, promptOutputData) => {
-    if (tableSettings?.document_type !== "rent_rolls")
+    if (tableSettings?.document_type !== 'rent_rolls')
       return <TableOutput output={promptOutputData?.output} />;
     else
       return (
@@ -127,7 +127,7 @@ function PromptOutput({
             <CopyPromptOutputBtn
               copyToClipboard={() =>
                 copyOutputToClipboard(
-                  displayPromptResult(promptOutputData?.output, true)
+                  displayPromptResult(promptOutputData?.output, true),
                 )
               }
             />
@@ -139,7 +139,7 @@ function PromptOutput({
   const getColSpan = () => (componentWidth < 1200 ? 24 : 6);
 
   const copyOutputToClipboard = (text) => {
-    if (!text || text === "undefined" || isTableExtraction) {
+    if (!text || text === 'undefined' || isTableExtraction) {
       return;
     }
 
@@ -147,14 +147,14 @@ function PromptOutput({
       .writeText(text)
       .then(() => {
         setAlertDetails({
-          type: "success",
-          content: "Prompt output copied successfully",
+          type: 'success',
+          content: 'Prompt output copied successfully',
         });
       })
       .catch(() => {
         setAlertDetails({
-          type: "error",
-          content: "Failed to copy prompt output",
+          type: 'error',
+          content: 'Failed to copy prompt output',
         });
       });
   };
@@ -170,7 +170,7 @@ function PromptOutput({
       docId,
       defaultLlmProfile,
       singlePassExtractMode,
-      true
+      true,
     );
 
     const promptOutput = promptOutputs[promptOutputKey]?.output;
@@ -182,7 +182,7 @@ function PromptOutput({
         docId,
         defaultLlmProfile,
         singlePassExtractMode,
-        true
+        true,
       );
       if (promptOutputs[promptOutputKey] !== undefined) {
         promptOutputData = promptOutputs[promptOutputKey];
@@ -199,7 +199,7 @@ function PromptOutput({
             noHighlightEnforceType &&
             selectedHighlight?.highlightedPrompt === promptId &&
             selectedHighlight?.highlightedProfile === defaultLlmProfile &&
-            "highlighted-prompt-cell"
+            'highlighted-prompt-cell'
           }`}
         >
           <DisplayPromptResult
@@ -220,8 +220,8 @@ function PromptOutput({
                   displayPromptResult(
                     promptOutput,
                     true,
-                    promptDetails?.enable_highlight
-                  )
+                    promptDetails?.enable_highlight,
+                  ),
                 )
               }
             />
@@ -251,7 +251,7 @@ function PromptOutput({
           const docId = selectedDoc?.document_id;
           const profileId = profile?.profile_id;
           const isChecked = enabledProfiles.includes(profileId);
-          const tokenUsageId = promptId + "__" + docId + "__" + profileId;
+          const tokenUsageId = promptId + '__' + docId + '__' + profileId;
           let promptOutputData = {};
           if (promptOutputs && Object.keys(promptOutputs)) {
             const promptOutputKey = generatePromptOutputKey(
@@ -259,7 +259,7 @@ function PromptOutput({
               docId,
               profileId,
               singlePassExtractMode,
-              true
+              true,
             );
             if (promptOutputs[promptOutputKey] !== undefined) {
               promptOutputData = promptOutputs[promptOutputKey];
@@ -276,13 +276,13 @@ function PromptOutput({
               animate={{
                 x: profileId === selectedLlmProfileId && index !== 0 ? -10 : 0,
               }}
-              transition={{ duration: 0.5, ease: "linear" }}
+              transition={{ duration: 0.5, ease: 'linear' }}
               className={`prompt-card-llm ${
                 details?.enable_highlight &&
                 noHighlightEnforceType &&
                 selectedHighlight?.highlightedPrompt === promptId &&
                 selectedHighlight?.highlightedProfile === profileId &&
-                "highlighted-prompt-cell"
+                'highlighted-prompt-cell'
               }`}
             >
               <Col
@@ -295,12 +295,12 @@ function PromptOutput({
                   direction="vertical"
                   className="prompt-card-llm-layout"
                   onClick={() => {
-                    enforceType !== "json" &&
+                    enforceType !== 'json' &&
                       handleSelectHighlight(
                         promptOutputData?.highlightData,
                         promptId,
                         profileId,
-                        promptOutputData?.confidenceData
+                        promptOutputData?.confidenceData,
                       );
                   }}
                 >
@@ -339,7 +339,7 @@ function PromptOutput({
                             challengeData={
                               promptOutputData?.challengeData || {}
                             }
-                            context={promptOutputData?.context || ""}
+                            context={promptOutputData?.context || ''}
                             tokenUsage={promptOutputData?.tokenUsage || {}}
                           />
                         )}
@@ -357,7 +357,7 @@ function PromptOutput({
                   </div>
                   <div className="prompt-cost">
                     <Typography.Text className="prompt-cost-item">
-                      Tokens:{" "}
+                      Tokens:{' '}
                       {!singlePassExtractMode && (
                         <TokenUsage
                           tokenUsageId={tokenUsageId}
@@ -386,7 +386,7 @@ function PromptOutput({
                           handleTagChange(checked, profileId)
                         }
                         disabled={isPublicSource}
-                        className={isChecked ? "checked" : "unchecked"}
+                        className={isChecked ? 'checked' : 'unchecked'}
                       >
                         {isChecked ? (
                           <span>
@@ -412,7 +412,7 @@ function PromptOutput({
                               PROMPT_RUN_TYPES.RUN_ONE_PROMPT_ONE_LLM_ONE_DOC,
                               promptDetails?.prompt_id,
                               profileId,
-                              selectedDoc?.document_id
+                              selectedDoc?.document_id,
                             )
                           }
                           disabled={isPromptLoading || isPublicSource}
@@ -430,7 +430,7 @@ function PromptOutput({
                               PROMPT_RUN_TYPES.RUN_ONE_PROMPT_ONE_LLM_ALL_DOCS,
                               promptDetails?.prompt_id,
                               profileId,
-                              null
+                              null,
                             )
                           }
                           disabled={isPromptLoading || isPublicSource}
@@ -476,8 +476,8 @@ function PromptOutput({
                               copyOutputToClipboard(
                                 displayPromptResult(
                                   promptOutputData?.output,
-                                  true
-                                )
+                                  true,
+                                ),
                               )
                             }
                           />

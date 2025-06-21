@@ -1,41 +1,41 @@
-import { CheckCircleOutlined, CopyOutlined } from "@ant-design/icons";
-import { Modal, Select, Tabs, Tooltip } from "antd";
-import Handlebars from "handlebars";
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { CheckCircleOutlined, CopyOutlined } from '@ant-design/icons';
+import { Modal, Select, Tabs, Tooltip } from 'antd';
+import Handlebars from 'handlebars';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 
-import CodeSnippet from "./CodeSnippet.jsx";
-import "./DisplayCode.css";
+import CodeSnippet from './CodeSnippet.jsx';
+import './DisplayCode.css';
 
 const DisplayCode = ({ isDialogOpen, setDialogOpen, url }) => {
   const [copied, setCopied] = useState(false);
-  const [language, setLanguage] = useState("python");
-  const [code, setCode] = useState("");
-  const [activeTabKey, setActiveTabKey] = useState("POST");
+  const [language, setLanguage] = useState('python');
+  const [code, setCode] = useState('');
+  const [activeTabKey, setActiveTabKey] = useState('POST');
   const params =
-    "?execution_id=REPLACE_WITH_EXECUTION_ID&include_metadata=False";
+    '?execution_id=REPLACE_WITH_EXECUTION_ID&include_metadata=False';
 
   const handleCloseDialog = () => {
     setDialogOpen(false);
   };
 
   const generateCode = () => {
-    if (language === "python") {
+    if (language === 'python') {
       generatePythonCode();
-    } else if (language === "bash") {
+    } else if (language === 'bash') {
       generateCurlCode();
-    } else if (language === "javascript") {
+    } else if (language === 'javascript') {
       generateJavascriptCode();
     } else {
-      setCode("");
+      setCode('');
     }
   };
 
   const trimIndent = (text) => {
     return text
-      .split("\n")
+      .split('\n')
       .map((line) => line.trim())
-      .join("\n");
+      .join('\n');
   };
 
   const generatePythonCode = () => {
@@ -64,7 +64,7 @@ const DisplayCode = ({ isDialogOpen, setDialogOpen, url }) => {
     const pythonCode = template({
       url,
       params,
-      isPost: activeTabKey === "POST",
+      isPost: activeTabKey === 'POST',
     });
     setCode(pythonCode);
   };
@@ -86,8 +86,8 @@ const DisplayCode = ({ isDialogOpen, setDialogOpen, url }) => {
     const curlCode = template({
       url,
       params,
-      isPost: activeTabKey === "POST",
-      pathToFile: "/path/to/file",
+      isPost: activeTabKey === 'POST',
+      pathToFile: '/path/to/file',
     });
     setCode(curlCode);
   };
@@ -113,7 +113,7 @@ const DisplayCode = ({ isDialogOpen, setDialogOpen, url }) => {
     code = trimIndent(code);
     const template = Handlebars.compile(code);
 
-    const jsCode = template({ url, params, isPost: activeTabKey === "POST" });
+    const jsCode = template({ url, params, isPost: activeTabKey === 'POST' });
     setCode(jsCode);
   };
 
@@ -133,29 +133,29 @@ const DisplayCode = ({ isDialogOpen, setDialogOpen, url }) => {
 
   const TAB_ITEMS = [
     {
-      key: "POST",
-      label: "POST Document",
+      key: 'POST',
+      label: 'POST Document',
       children: <CodeSnippet code={code} />,
     },
     {
-      key: "GET",
-      label: "GET Status",
+      key: 'GET',
+      label: 'GET Status',
       children: <CodeSnippet code={code} />,
     },
   ];
 
   const LANGUAGE_OPTIONS = [
     {
-      value: "python",
-      label: "Python",
+      value: 'python',
+      label: 'Python',
     },
     {
-      value: "bash",
-      label: "cURL",
+      value: 'bash',
+      label: 'cURL',
     },
     {
-      value: "javascript",
-      label: "JavaScript",
+      value: 'javascript',
+      label: 'JavaScript',
     },
   ];
 

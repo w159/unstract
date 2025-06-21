@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { Modal } from "antd";
-import { Cron } from "react-js-cron";
-import "react-js-cron/dist/styles.css";
-import PropTypes from "prop-types";
+import { useState } from 'react';
+import { Modal } from 'antd';
+import { Cron } from 'react-js-cron';
+import 'react-js-cron/dist/styles.css';
+import PropTypes from 'prop-types';
 
 function CronGenerator({ open, showCronGenerator, setCronValue }) {
-  const [cronState, setCronState] = useState("0 * * * *");
+  const [cronState, setCronState] = useState('0 * * * *');
   const handleCancel = () => {
     showCronGenerator(false);
   };

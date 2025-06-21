@@ -1,18 +1,18 @@
-import { Form, Input, Modal, Select } from "antd";
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
-import { getBackendErrorDetail } from "../../../helpers/GetStaticData.js";
-import { useAlertStore } from "../../../store/alert-store";
-import { apiDeploymentsService } from "../../deployments/api-deployment/api-deployments-service.js";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler.jsx";
-import { useWorkflowStore } from "../../../store/workflow-store.js";
-import usePostHogEvents from "../../../hooks/usePostHogEvents.js";
+import { Form, Input, Modal, Select } from 'antd';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
+import { getBackendErrorDetail } from '../../../helpers/GetStaticData.js';
+import { useAlertStore } from '../../../store/alert-store';
+import { apiDeploymentsService } from '../../deployments/api-deployment/api-deployments-service.js';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler.jsx';
+import { useWorkflowStore } from '../../../store/workflow-store.js';
+import usePostHogEvents from '../../../hooks/usePostHogEvents.js';
 
 const defaultFromDetails = {
-  display_name: "",
-  description: "",
-  api_name: "",
-  workflow: "",
+  display_name: '',
+  description: '',
+  api_name: '',
+  workflow: '',
 };
 
 const CreateApiDeploymentModal = ({
@@ -34,7 +34,7 @@ const CreateApiDeploymentModal = ({
   const handleException = useExceptionHandler();
   const { Option } = Select;
   const [formDetails, setFormDetails] = useState(
-    isEdit ? { ...selectedRow } : { ...defaultFromDetails }
+    isEdit ? { ...selectedRow } : { ...defaultFromDetails },
   );
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
@@ -55,7 +55,7 @@ const CreateApiDeploymentModal = ({
     setBackendErrors((prevErrors) => {
       if (prevErrors) {
         const updatedErrors = prevErrors.errors.filter(
-          (error) => error.attr !== changedFieldName
+          (error) => error.attr !== changedFieldName,
         );
         return { ...prevErrors, errors: updatedErrors };
       }
@@ -88,8 +88,8 @@ const CreateApiDeploymentModal = ({
       })
       .catch((err) => {
         setAlertDetails({
-          type: "error",
-          content: "Error fetching API deployments",
+          type: 'error',
+          content: 'Error fetching API deployments',
         });
       });
   };
@@ -97,9 +97,9 @@ const CreateApiDeploymentModal = ({
   const createApiDeployment = () => {
     try {
       const wf = workflowEndpointList.find(
-        (item) => item?.workflow === formDetails?.workflow
+        (item) => item?.workflow === formDetails?.workflow,
       );
-      setPostHogCustomEvent("intent_success_api_deployment", {
+      setPostHogCustomEvent('intent_success_api_deployment', {
         info: "Clicked on 'Save' button",
         deployment_name: formDetails?.api_name,
         workflow_name: wf?.workflow_name,
@@ -125,12 +125,12 @@ const CreateApiDeploymentModal = ({
         setOpen(false);
         clearFormDetails();
         setAlertDetails({
-          type: "success",
-          content: "New API created successfully",
+          type: 'success',
+          content: 'New API created successfully',
         });
       })
       .catch((err) => {
-        handleException(err, "", setBackendErrors);
+        handleException(err, '', setBackendErrors);
       })
       .finally(() => {
         setIsLoading(false);
@@ -148,12 +148,12 @@ const CreateApiDeploymentModal = ({
         setOpen(false);
         clearFormDetails();
         setAlertDetails({
-          type: "success",
-          content: "API deployment updated successfully",
+          type: 'success',
+          content: 'API deployment updated successfully',
         });
       })
       .catch((err) => {
-        handleException(err, "", setBackendErrors);
+        handleException(err, '', setBackendErrors);
       })
       .finally(() => {
         setIsLoading(false);
@@ -162,13 +162,13 @@ const CreateApiDeploymentModal = ({
 
   return (
     <Modal
-      title={isEdit ? "Update API deployment " : "Add API deployment"}
+      title={isEdit ? 'Update API deployment ' : 'Add API deployment'}
       centered
       maskClosable={false}
       open={open}
       onOk={isEdit ? updateApiDeployment : createApiDeployment}
       onCancel={handleCancel}
-      okText={isEdit ? "Update" : "Save"}
+      okText={isEdit ? 'Update' : 'Save'}
       okButtonProps={{
         loading: isLoading,
         disabled: !isFormChanged,
@@ -185,11 +185,11 @@ const CreateApiDeploymentModal = ({
         <Form.Item
           label="Display Name (for humans)"
           name="display_name"
-          rules={[{ required: true, message: "Please enter a display name" }]}
+          rules={[{ required: true, message: 'Please enter a display name' }]}
           validateStatus={
-            getBackendErrorDetail("display_name", backendErrors) ? "error" : ""
+            getBackendErrorDetail('display_name', backendErrors) ? 'error' : ''
           }
-          help={getBackendErrorDetail("display_name", backendErrors)}
+          help={getBackendErrorDetail('display_name', backendErrors)}
         >
           <Input />
         </Form.Item>
@@ -198,9 +198,9 @@ const CreateApiDeploymentModal = ({
           label="Description"
           name="description"
           validateStatus={
-            getBackendErrorDetail("description", backendErrors) ? "error" : ""
+            getBackendErrorDetail('description', backendErrors) ? 'error' : ''
           }
-          help={getBackendErrorDetail("description", backendErrors)}
+          help={getBackendErrorDetail('description', backendErrors)}
         >
           <Input />
         </Form.Item>
@@ -209,21 +209,21 @@ const CreateApiDeploymentModal = ({
           label="API Name (forms part of the API signature)"
           name="api_name"
           rules={[
-            { required: true, message: "Please enter an API Name" },
+            { required: true, message: 'Please enter an API Name' },
             {
               pattern: /^[a-zA-Z0-9_-]+$/,
               message:
-                "Only letters, numbers, hyphen and underscores are allowed",
+                'Only letters, numbers, hyphen and underscores are allowed',
             },
             {
               pattern: /^.{1,30}$/,
-              message: "Maximum 30 characters only allowed",
+              message: 'Maximum 30 characters only allowed',
             },
           ]}
           validateStatus={
-            getBackendErrorDetail("api_name", backendErrors) ? "error" : ""
+            getBackendErrorDetail('api_name', backendErrors) ? 'error' : ''
           }
-          help={getBackendErrorDetail("api_name", backendErrors)}
+          help={getBackendErrorDetail('api_name', backendErrors)}
         >
           <Input />
         </Form.Item>
@@ -232,11 +232,11 @@ const CreateApiDeploymentModal = ({
           <Form.Item
             label="Workflow"
             name="workflow"
-            rules={[{ required: true, message: "Please select a workflow" }]}
+            rules={[{ required: true, message: 'Please select a workflow' }]}
             validateStatus={
-              getBackendErrorDetail("workflow", backendErrors) ? "error" : ""
+              getBackendErrorDetail('workflow', backendErrors) ? 'error' : ''
             }
-            help={getBackendErrorDetail("workflow", backendErrors)}
+            help={getBackendErrorDetail('workflow', backendErrors)}
           >
             <Select>
               {workflowEndpointList.map((endpoint) => {

@@ -1,13 +1,13 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
-import { promptType } from "../helpers/GetStaticData";
+import { promptType } from '../helpers/GetStaticData';
 
 const defaultState = {
   dropdownItems: {},
   selectedDoc: null,
   listOfDocs: [],
   refreshRawView: false,
-  defaultLlmProfile: "",
+  defaultLlmProfile: '',
   llmProfiles: [],
   details: {},
   disableLlmOrDocChange: [],
@@ -26,18 +26,18 @@ const defaultState = {
 };
 
 const defaultPromptInstance = {
-  prompt_key: "Enter key",
-  prompt: "Enter prompt",
-  output_type: "Text",
-  output_processing: "Default",
+  prompt_key: 'Enter key',
+  prompt: 'Enter prompt',
+  output_type: 'Text',
+  output_processing: 'Default',
   prompt_type: promptType.prompt,
 };
 
 const defaultNoteInstance = {
-  prompt_key: "Enter key",
-  prompt: "Enter notes",
-  output_type: "Text",
-  output_processing: "Default",
+  prompt_key: 'Enter key',
+  prompt: 'Enter notes',
+  output_type: 'Text',
+  output_processing: 'Default',
   prompt_type: promptType.notes,
 };
 
@@ -60,23 +60,23 @@ const useCustomToolStore = create((setState, getState) => ({
 
     if (type === promptType.prompt) {
       const newPrompt = { ...defaultPromptInstance };
-      newPrompt["prompt_id"] = `unsaved_${promptsAndNotes.length + 1}`;
+      newPrompt['prompt_id'] = `unsaved_${promptsAndNotes.length + 1}`;
       promptsAndNotes.push(newPrompt);
     } else {
       const newNote = { ...defaultNoteInstance };
-      newNote["prompt_id"] = `unsaved_${promptsAndNotes.length + 1}`;
+      newNote['prompt_id'] = `unsaved_${promptsAndNotes.length + 1}`;
       promptsAndNotes.push(newNote);
     }
-    newState["details"]["prompts"] = [...promptsAndNotes];
+    newState['details']['prompts'] = [...promptsAndNotes];
     setState({ ...newState });
   },
   deleteInstance: (promptId) => {
     const newState = { ...getState() };
     const promptsAndNotes = newState?.details?.prompts;
     const filteredData = promptsAndNotes.filter(
-      (item) => item?.prompt_id !== promptId
+      (item) => item?.prompt_id !== promptId,
     );
-    newState["details"]["prompts"] = filteredData;
+    newState['details']['prompts'] = filteredData;
     setState({ ...newState });
   },
   getDropdownItems: (propertyName) => {
@@ -95,7 +95,7 @@ const useCustomToolStore = create((setState, getState) => ({
   deleteIndexDoc: (docId) => {
     const existingState = { ...getState() };
     const docs = [...(existingState?.indexDocs || [])].filter(
-      (item) => item !== docId
+      (item) => item !== docId,
     );
     existingState.indexDocs = docs;
     setState(existingState);

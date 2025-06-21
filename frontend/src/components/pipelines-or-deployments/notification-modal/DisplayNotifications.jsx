@@ -1,9 +1,9 @@
-import PropTypes from "prop-types";
-import SpaceWrapper from "../../widgets/space-wrapper/SpaceWrapper";
-import { Button, Space, Switch, Table, Tooltip } from "antd";
-import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
-import { SpinnerLoader } from "../../widgets/spinner-loader/SpinnerLoader";
-import { ConfirmModal } from "../../widgets/confirm-modal/ConfirmModal";
+import PropTypes from 'prop-types';
+import SpaceWrapper from '../../widgets/space-wrapper/SpaceWrapper';
+import { Button, Space, Switch, Table, Tooltip } from 'antd';
+import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { SpinnerLoader } from '../../widgets/spinner-loader/SpinnerLoader';
+import { ConfirmModal } from '../../widgets/confirm-modal/ConfirmModal';
 
 function DisplayNotifications({
   setIsForm,
@@ -15,20 +15,20 @@ function DisplayNotifications({
 }) {
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
     },
     {
-      title: "Type",
-      dataIndex: "notification_type",
-      key: "notification_type",
+      title: 'Type',
+      dataIndex: 'notification_type',
+      key: 'notification_type',
     },
     {
-      title: "Active",
-      key: "is_active",
-      dataIndex: "is_active",
-      align: "center",
+      title: 'Active',
+      key: 'is_active',
+      dataIndex: 'is_active',
+      align: 'center',
       render: (_, record) => (
         <Switch
           size="small"
@@ -38,9 +38,9 @@ function DisplayNotifications({
       ),
     },
     {
-      title: "Actions",
-      key: "pipeline_id",
-      align: "center",
+      title: 'Actions',
+      key: 'pipeline_id',
+      align: 'center',
       render: (_, record) => (
         <>
           <Space className="actions">

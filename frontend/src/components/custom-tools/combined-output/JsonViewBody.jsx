@@ -1,7 +1,7 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import { ProfileInfoBar } from "../profile-info-bar/ProfileInfoBar";
-import { SpinnerLoader } from "../../widgets/spinner-loader/SpinnerLoader";
+import { ProfileInfoBar } from '../profile-info-bar/ProfileInfoBar';
+import { SpinnerLoader } from '../../widgets/spinner-loader/SpinnerLoader';
 
 function JsonViewBody({
   activeKey,
@@ -16,7 +16,7 @@ function JsonViewBody({
 
   return (
     <>
-      {activeKey !== "0" && (
+      {activeKey !== '0' && (
         <ProfileInfoBar profileId={selectedProfile} profiles={llmProfiles} />
       )}
       <div className="combined-op-body code-snippet">

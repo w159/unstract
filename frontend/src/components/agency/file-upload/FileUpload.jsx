@@ -1,6 +1,6 @@
-import PropTypes from "prop-types";
-import { Modal, Upload, Button } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import PropTypes from 'prop-types';
+import { Modal, Upload, Button } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
 
 const FileUpload = ({
   open,
@@ -23,7 +23,7 @@ const FileUpload = ({
     continueWfExecution(
       wfExecutionParams[0],
       wfExecutionParams[1],
-      wfExecutionParams[2]
+      wfExecutionParams[2],
     );
     setOpen(false);
   };

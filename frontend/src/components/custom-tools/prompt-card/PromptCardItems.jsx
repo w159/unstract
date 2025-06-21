@@ -1,5 +1,5 @@
-import PropTypes from "prop-types";
-import { SearchOutlined } from "@ant-design/icons";
+import PropTypes from 'prop-types';
+import { SearchOutlined } from '@ant-design/icons';
 import {
   Button,
   Card,
@@ -10,21 +10,21 @@ import {
   Space,
   Tag,
   Typography,
-} from "antd";
-import { useEffect, useRef, useState } from "react";
+} from 'antd';
+import { useEffect, useRef, useState } from 'react';
 
-import { SpinnerLoader } from "../../widgets/spinner-loader/SpinnerLoader";
-import { EditableText } from "../editable-text/EditableText";
-import { useCustomToolStore } from "../../../store/custom-tool-store";
-import { Header } from "./Header";
-import { OutputForIndex } from "./OutputForIndex";
-import { PromptOutput } from "./PromptOutput";
-import { TABLE } from "./constants";
+import { SpinnerLoader } from '../../widgets/spinner-loader/SpinnerLoader';
+import { EditableText } from '../editable-text/EditableText';
+import { useCustomToolStore } from '../../../store/custom-tool-store';
+import { Header } from './Header';
+import { OutputForIndex } from './OutputForIndex';
+import { PromptOutput } from './PromptOutput';
+import { TABLE } from './constants';
 
 let TableExtractionSettingsBtn;
 try {
   TableExtractionSettingsBtn =
-    require("../../../plugins/prompt-card/TableExtractionSettingsBtn").TableExtractionSettingsBtn;
+    require('../../../plugins/prompt-card/TableExtractionSettingsBtn').TableExtractionSettingsBtn;
 } catch {
   // The component will remain null of it is not available
 }
@@ -77,12 +77,12 @@ function PromptCardItems({
   const [llmProfileDetails, setLlmProfileDetails] = useState([]);
   const [openIndexProfile, setOpenIndexProfile] = useState(null);
   const [enabledProfiles, setEnabledProfiles] = useState(
-    llmProfiles.map((profile) => profile.profile_id)
+    llmProfiles.map((profile) => profile.profile_id),
   );
   const [isIndexOpen, setIsIndexOpen] = useState(false);
   const isNotSingleLlmProfile = llmProfiles.length > 1;
   const divRef = useRef(null);
-  const [enforceType, setEnforceType] = useState("");
+  const [enforceType, setEnforceType] = useState('');
   const [tableSettings, setTableSettings] = useState({});
   const promptId = promptDetails?.prompt_id;
 
@@ -94,29 +94,29 @@ function PromptCardItems({
 
   useEffect(() => {
     setTableSettings(
-      allTableSettings.find((item) => item.prompt_id === promptId) || {}
+      allTableSettings.find((item) => item.prompt_id === promptId) || {},
     );
   }, [allTableSettings]);
 
   const getModelOrAdapterId = (profile, adapters) => {
     const result = { conf: {} };
     const keys = [
-      { key: "llm", label: "LLM" },
-      { key: "embedding_model", label: "Embedding Model" },
-      { key: "vector_store", label: "Vector Store" },
-      { key: "x2text", label: "Text Extractor" },
+      { key: 'llm', label: 'LLM' },
+      { key: 'embedding_model', label: 'Embedding Model' },
+      { key: 'vector_store', label: 'Vector Store' },
+      { key: 'x2text', label: 'Text Extractor' },
     ];
 
     keys.forEach((key) => {
       const adapterName = profile[key.key];
       const adapter = adapters?.find(
-        (adapter) => adapter?.adapter_name === adapterName
+        (adapter) => adapter?.adapter_name === adapterName,
       );
       if (adapter) {
         result.conf[key.label] =
-          adapter?.model || adapter?.adapter_id?.split("|")[0];
-        if (adapter?.adapter_type === "LLM") result.icon = adapter?.icon;
-        result.conf["Profile Name"] = profile?.profile_name;
+          adapter?.model || adapter?.adapter_id?.split('|')[0];
+        if (adapter?.adapter_type === 'LLM') result.icon = adapter?.icon;
+        result.conf['Profile Name'] = profile?.profile_name;
       }
     });
     return result;
@@ -125,7 +125,7 @@ function PromptCardItems({
   const getUpdatedCoverage = (promptId, singlePass, promptOutputs) => {
     let updatedCoverage = null;
     Object.keys(promptOutputs).forEach((key) => {
-      const [keyPromptId, , , keyIsSinglePass] = key.split("__"); // Destructure the key parts
+      const [keyPromptId, , , keyIsSinglePass] = key.split('__'); // Destructure the key parts
 
       // Check if the key matches the criteria
       if (keyPromptId === promptId && keyIsSinglePass === String(singlePass)) {
@@ -171,7 +171,7 @@ function PromptCardItems({
           if (a?.isEnabled && !b?.isEnabled) return -1; // Enabled profiles come before disabled
           if (!a?.isEnabled && b?.isEnabled) return 1;
           return 0;
-        })
+        }),
     );
   };
 
@@ -188,7 +188,7 @@ function PromptCardItems({
       className={`prompt-card ${
         details?.enable_highlight &&
         selectedHighlight?.highlightedPrompt === promptDetails?.prompt_id &&
-        "highlighted-prompt"
+        'highlighted-prompt'
       }`}
     >
       <div className="prompt-card-div prompt-card-bg-col1 prompt-card-rad">
@@ -218,9 +218,9 @@ function PromptCardItems({
       <Collapse
         className="prompt-card-collapse prompt-card-bg-col1"
         ghost
-        activeKey={expandCard && "1"}
+        activeKey={expandCard && '1'}
       >
-        <Collapse.Panel key={"1"} showArrow={false}>
+        <Collapse.Panel key={'1'} showArrow={false}>
           <div className="prompt-card-div-body">
             <EditableText
               isEditing={isEditingPrompt}
@@ -255,7 +255,7 @@ function PromptCardItems({
                             <SearchOutlined className="font-size-12" />
                           )}
                           <Typography.Link className="font-size-12">
-                            Coverage: {promptCoverage?.length || 0} of{" "}
+                            Coverage: {promptCoverage?.length || 0} of{' '}
                             {listOfDocs?.length || 0} docs
                           </Typography.Link>
                         </Space>
@@ -263,16 +263,16 @@ function PromptCardItems({
                     </Space>
                     <Space>
                       {details?.enable_highlight &&
-                        ["table", "record"].includes(enforceType) && (
+                        ['table', 'record'].includes(enforceType) && (
                           <Tag
                             color="red"
                             style={{
-                              whiteSpace: "normal",
-                              wordWrap: "break-word",
-                              minWidth: "200px",
+                              whiteSpace: 'normal',
+                              wordWrap: 'break-word',
+                              minWidth: '200px',
                             }}
                           >
-                            Highlighting is not supported when enforce type is{" "}
+                            Highlighting is not supported when enforce type is{' '}
                             {enforceType}
                           </Tag>
                         )}

@@ -1,30 +1,30 @@
-import { DatePicker, Flex, Tabs, Typography } from "antd";
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { DatePicker, Flex, Tabs, Typography } from 'antd';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
-import { LogsTable } from "../logs-table/LogsTable";
-import { DetailedLogs } from "../detailed-logs/DetailedLogs";
+import { LogsTable } from '../logs-table/LogsTable';
+import { DetailedLogs } from '../detailed-logs/DetailedLogs';
 import {
   ApiDeployments,
   ETLIcon,
   Workflows,
   Task,
-} from "../../../assets/index";
-import "./ExecutionLogs.css";
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { useSessionStore } from "../../../store/session-store";
-import { useAlertStore } from "../../../store/alert-store";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler";
+} from '../../../assets/index';
+import './ExecutionLogs.css';
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { useSessionStore } from '../../../store/session-store';
+import { useAlertStore } from '../../../store/alert-store';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler';
 import {
   formattedDateTime,
   formattedDateTimeWithSeconds,
-} from "../../../helpers/GetStaticData";
-import { ToolNavBar } from "../../navigations/tool-nav-bar/ToolNavBar";
-import useRequestUrl from "../../../hooks/useRequestUrl";
+} from '../../../helpers/GetStaticData';
+import { ToolNavBar } from '../../navigations/tool-nav-bar/ToolNavBar';
+import useRequestUrl from '../../../hooks/useRequestUrl';
 
 function ExecutionLogs() {
   const { RangePicker } = DatePicker;
-  const [activeTab, setActiveTab] = useState("ETL");
+  const [activeTab, setActiveTab] = useState('ETL');
   const { id } = useParams();
   const axiosPrivate = useAxiosPrivate();
   const { sessionDetails } = useSessionStore();
@@ -47,38 +47,38 @@ function ExecutionLogs() {
   const currentPath = location.pathname !== `/${sessionDetails?.orgName}/logs`;
   const items = [
     {
-      key: "ETL",
-      label: "ETL Sessions",
+      key: 'ETL',
+      label: 'ETL Sessions',
       icon: (
         <ETLIcon
-          className={`log-tab-icon ${activeTab === "ETL" ? "active" : ""}`}
+          className={`log-tab-icon ${activeTab === 'ETL' ? 'active' : ''}`}
         />
       ),
     },
     {
-      key: "API",
-      label: "API Sessions",
+      key: 'API',
+      label: 'API Sessions',
       icon: (
         <ApiDeployments
-          className={`log-tab-icon ${activeTab === "API" ? "active" : ""}`}
+          className={`log-tab-icon ${activeTab === 'API' ? 'active' : ''}`}
         />
       ),
     },
     {
-      key: "WF",
-      label: "Workflow Sessions",
+      key: 'WF',
+      label: 'Workflow Sessions',
       icon: (
         <Workflows
-          className={`log-tab-icon ${activeTab === "WF" ? "active" : ""}`}
+          className={`log-tab-icon ${activeTab === 'WF' ? 'active' : ''}`}
         />
       ),
     },
     {
-      key: "TASK",
-      label: "Task Sessions",
+      key: 'TASK',
+      label: 'Task Sessions',
       icon: (
         <Task
-          className={`log-tab-icon ${activeTab === "TASK" ? "active" : ""}`}
+          className={`log-tab-icon ${activeTab === 'TASK' ? 'active' : ''}`}
         />
       ),
     },
@@ -116,8 +116,8 @@ function ExecutionLogs() {
             progress,
             processed,
             total,
-            success: item?.status === "COMPLETED",
-            isError: item?.status === "ERROR",
+            success: item?.status === 'COMPLETED',
+            isError: item?.status === 'ERROR',
             status: item?.status,
             successfulFiles: item?.successful_files,
             failedFiles: item?.failed_files,
@@ -125,7 +125,7 @@ function ExecutionLogs() {
           };
 
           // If status is no longer executing, remove from polling
-          if (item?.status.toLowerCase() !== "executing") {
+          if (item?.status.toLowerCase() !== 'executing') {
             setPollingIds((prev) => {
               const newSet = new Set(prev);
               newSet.delete(id);
@@ -137,7 +137,7 @@ function ExecutionLogs() {
       });
 
       // Continue polling if still executing
-      if (item?.status === "EXECUTING") {
+      if (item?.status === 'EXECUTING') {
         setTimeout(() => pollExecutingRecord(id), 5000); // Poll every 5 seconds
       }
     } catch (err) {
@@ -151,7 +151,7 @@ function ExecutionLogs() {
 
   const startPollingForExecuting = (records) => {
     records.forEach((record) => {
-      if (record.status === "EXECUTING" && !pollingIds.has(record.key)) {
+      if (record.status === 'EXECUTING' && !pollingIds.has(record.key)) {
         setPollingIds((prev) => {
           const newSet = new Set(prev);
           newSet.add(record.key);
@@ -193,10 +193,10 @@ function ExecutionLogs() {
           executionId: item?.id,
           progress,
           processed,
-          success: item?.status === "COMPLETED",
-          isError: item?.status === "ERROR",
+          success: item?.status === 'COMPLETED',
+          isError: item?.status === 'ERROR',
           workflowName: item?.workflow_name,
-          pipelineName: item?.pipeline_name || "Pipeline name not found",
+          pipelineName: item?.pipeline_name || 'Pipeline name not found',
           successfulFiles: item?.successful_files,
           failedFiles: item?.failed_files,
           totalFiles: item?.total_files,
@@ -223,12 +223,12 @@ function ExecutionLogs() {
           className="log-tab"
         />
         <RangePicker
-          showTime={{ format: "YYYY-MM-DDTHH:mm:ssZ[Z]" }}
+          showTime={{ format: 'YYYY-MM-DDTHH:mm:ssZ[Z]' }}
           value={datePickerValue}
           onChange={(value) => {
             setDatePickerValue(value);
             setSelectedDateRange(
-              value ? [value[0].toISOString(), value[1].toISOString()] : []
+              value ? [value[0].toISOString(), value[1].toISOString()] : [],
             );
           }}
           onOk={onOk}
@@ -250,7 +250,7 @@ function ExecutionLogs() {
   return (
     <>
       <ToolNavBar
-        title={"Logs"}
+        title={'Logs'}
         CustomButtons={customButtons}
         enableSearch={false}
       />

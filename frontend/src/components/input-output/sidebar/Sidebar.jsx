@@ -1,8 +1,8 @@
-import { Button, Menu } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import PropTypes from "prop-types";
+import { Button, Menu } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import PropTypes from 'prop-types';
 
-import "./Sidebar.css";
+import './Sidebar.css';
 
 function Sidebar({
   selectedItem,

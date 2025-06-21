@@ -1,22 +1,22 @@
-import { useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 
-import { useCustomToolStore } from "../store/custom-tool-store";
-import { usePromptOutputStore } from "../store/prompt-output-store";
-import { useSessionStore } from "../store/session-store";
-import { useTokenUsageStore } from "../store/token-usage-store";
-import { useAxiosPrivate } from "./useAxiosPrivate";
+import { useCustomToolStore } from '../store/custom-tool-store';
+import { usePromptOutputStore } from '../store/prompt-output-store';
+import { useSessionStore } from '../store/session-store';
+import { useTokenUsageStore } from '../store/token-usage-store';
+import { useAxiosPrivate } from './useAxiosPrivate';
 
 let promptOutputApiSps;
 try {
   promptOutputApiSps =
-    require("../plugins/simple-prompt-studio/helper").promptOutputApiSps;
+    require('../plugins/simple-prompt-studio/helper').promptOutputApiSps;
 } catch {
   // The component will remain null of it is not available
 }
 let publicOutputsApi;
 try {
   publicOutputsApi =
-    require("../plugins/prompt-studio-public-share/helpers/PublicShareAPIs").publicOutputsApi;
+    require('../plugins/prompt-studio-public-share/helpers/PublicShareAPIs').publicOutputsApi;
 } catch {
   // The component will remain null of it is not available
 }
@@ -35,7 +35,7 @@ const usePromptOutput = () => {
     docId,
     llmProfile,
     isSinglePass,
-    isIncludeSinglePass = true
+    isIncludeSinglePass = true,
   ) => {
     let key = `${promptId}__${docId}__${llmProfile}`;
 
@@ -107,7 +107,7 @@ const usePromptOutput = () => {
         docId,
         llmProfile,
         isSinglePass,
-        true
+        true,
       );
       outputs[key] = {
         runId: item?.run_id,
@@ -129,7 +129,7 @@ const usePromptOutput = () => {
       if (item?.is_single_pass_extract) {
         const tokenUsageId = generatePromptOutputKeyForSinglePass(
           llmProfile,
-          docId
+          docId,
         );
         tokenUsageDetails[tokenUsageId] = item?.token_usage;
         tokenUsageDetails[
@@ -147,7 +147,7 @@ const usePromptOutput = () => {
         docId,
         llmProfile,
         false,
-        false
+        false,
       );
       tokenUsageDetails[tokenUsageId] = item?.token_usage;
     });
@@ -164,7 +164,7 @@ const usePromptOutput = () => {
   const updateCoverage = (promptOutputs, outputs) => {
     let updatedPromptOutputs = promptOutputs;
     Object.keys(outputs).forEach((key) => {
-      const [keyPromptId, keyDoctId, , keyIsSinglePass] = key.split("__");
+      const [keyPromptId, keyDoctId, , keyIsSinglePass] = key.split('__');
       // only add output of selected document
       if (keyDoctId === selectedDoc?.document_id) {
         const currentOutput = { [key]: outputs[key] };
@@ -172,7 +172,7 @@ const usePromptOutput = () => {
       }
       Object.keys(updatedPromptOutputs).forEach((innerKey) => {
         const [existingPromptId, , , existingIsSinglePass] =
-          innerKey.split("__"); // Extract promptId from key
+          innerKey.split('__'); // Extract promptId from key
         if (
           keyPromptId === existingPromptId &&
           keyIsSinglePass === existingIsSinglePass
@@ -189,20 +189,20 @@ const usePromptOutput = () => {
     docId = null,
     promptId = null,
     llmProfile = null,
-    isSinglePassExtract = false
+    isSinglePassExtract = false,
   ) => {
     const url = getUrl(
       toolId,
       docId,
       promptId,
       llmProfile,
-      isSinglePassExtract
+      isSinglePassExtract,
     );
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
     };
 

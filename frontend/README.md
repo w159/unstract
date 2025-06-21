@@ -16,7 +16,7 @@ NodeJS 16
 
 ### Steps to run the setup
 
-   `npm start`
+`npm start`
 
 3. Node will automatically run the `localhost:3000` in your browser.
    The page will reload when you make changes.
@@ -56,7 +56,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ## React Strict Mode
 
-*React Strict Mode* is enabled by default, which will **mount all components twice** during local development.
+_React Strict Mode_ is enabled by default, which will **mount all components twice** during local development.
 
 This helps in verifying the integrity of the React components, and is in alignment with all the frontend use cases known and envisioned currently.
 

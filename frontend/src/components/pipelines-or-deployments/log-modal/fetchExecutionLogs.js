@@ -7,13 +7,13 @@ const fetchExecutionLogs = (
   setExecutionLogsTotalCount,
   setAlertDetails,
   page = 1,
-  pageSize = 10
+  pageSize = 10,
 ) => {
   const requestOptions = {
-    method: "GET",
+    method: 'GET',
     url: `/api/v1/unstract/${sessionDetails?.orgId}/pipeline/${selectedRow.id}/executions/`,
     headers: {
-      "X-CSRFToken": sessionDetails?.csrfToken,
+      'X-CSRFToken': sessionDetails?.csrfToken,
     },
     params: {
       page: page,

@@ -1,18 +1,18 @@
-import PropTypes from "prop-types";
-import { GoogleLoginButton } from "react-social-login-buttons";
-import { useEffect, useState } from "react";
-import { Typography } from "antd";
+import PropTypes from 'prop-types';
+import { GoogleLoginButton } from 'react-social-login-buttons';
+import { useEffect, useState } from 'react';
+import { Typography } from 'antd';
 
-import "./GoogleOAuthButton.css";
+import './GoogleOAuthButton.css';
 
 const GoogleOAuthButton = ({ handleOAuth, status }) => {
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
   useEffect(() => {
-    if (status === "success") {
-      setText("Authenticated");
+    if (status === 'success') {
+      setText('Authenticated');
       return;
     }
-    setText("Sign in with Google");
+    setText('Sign in with Google');
   }, [status]);
 
   return (

@@ -1,7 +1,7 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import { RjsfFormLayout } from "../../../layouts/rjsf-form-layout/RjsfFormLayout";
-import { CustomButton } from "../../widgets/custom-button/CustomButton";
+import { RjsfFormLayout } from '../../../layouts/rjsf-form-layout/RjsfFormLayout';
+import { CustomButton } from '../../widgets/custom-button/CustomButton';
 
 function SettingsForm({
   spec,

@@ -1,23 +1,23 @@
-import { Tabs, Tooltip } from "antd";
-import { useEffect, useState } from "react";
-import { TableOutlined, UnorderedListOutlined } from "@ant-design/icons";
+import { Tabs, Tooltip } from 'antd';
+import { useEffect, useState } from 'react';
+import { TableOutlined, UnorderedListOutlined } from '@ant-design/icons';
 
-import { getSequenceNumber, promptType } from "../../../helpers/GetStaticData";
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler";
-import { useAlertStore } from "../../../store/alert-store";
-import { useCustomToolStore } from "../../../store/custom-tool-store";
-import { useSessionStore } from "../../../store/session-store";
-import { CombinedOutput } from "../combined-output/CombinedOutput";
-import { DocumentParser } from "../document-parser/DocumentParser";
-import { Footer } from "../footer/Footer";
-import "./ToolsMain.css";
-import usePostHogEvents from "../../../hooks/usePostHogEvents";
-import { ToolsMainActionBtns } from "./ToolsMainActionBtns";
-import usePromptOutput from "../../../hooks/usePromptOutput";
+import { getSequenceNumber, promptType } from '../../../helpers/GetStaticData';
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler';
+import { useAlertStore } from '../../../store/alert-store';
+import { useCustomToolStore } from '../../../store/custom-tool-store';
+import { useSessionStore } from '../../../store/session-store';
+import { CombinedOutput } from '../combined-output/CombinedOutput';
+import { DocumentParser } from '../document-parser/DocumentParser';
+import { Footer } from '../footer/Footer';
+import './ToolsMain.css';
+import usePostHogEvents from '../../../hooks/usePostHogEvents';
+import { ToolsMainActionBtns } from './ToolsMainActionBtns';
+import usePromptOutput from '../../../hooks/usePromptOutput';
 
 function ToolsMain() {
-  const [activeKey, setActiveKey] = useState("1");
+  const [activeKey, setActiveKey] = useState('1');
   const [prompts, setPrompts] = useState([]);
   const [scrollToBottom, setScrollToBottom] = useState(false);
   const { sessionDetails } = useSessionStore();
@@ -38,23 +38,23 @@ function ToolsMain() {
 
   const items = [
     {
-      key: "1",
+      key: '1',
       label: isSimplePromptStudio ? (
         <Tooltip title="Fields">
           <UnorderedListOutlined />
         </Tooltip>
       ) : (
-        "Document Parser"
+        'Document Parser'
       ),
     },
     {
-      key: "2",
+      key: '2',
       label: isSimplePromptStudio ? (
         <Tooltip title="Combined Output">
           <TableOutlined />
         </Tooltip>
       ) : (
-        "Combined Output"
+        'Combined Output'
       ),
       disabled: prompts?.length === 0 || isMultiPassExtractLoading,
     },
@@ -66,14 +66,14 @@ function ToolsMain() {
       selectedDoc?.document_id,
       null,
       null,
-      singlePassExtractMode
+      singlePassExtractMode,
     )
       .then((res) => {
         const data = res?.data || [];
         updatePromptOutputState(data, true);
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "Failed to fetch prompt outputs"));
+        setAlertDetails(handleException(err, 'Failed to fetch prompt outputs'));
       });
   }, [selectedDoc, singlePassExtractMode]);
 
@@ -81,7 +81,7 @@ function ToolsMain() {
     const promptKey = `${details?.tool_name}_${len}`;
 
     const index = [...prompts].findIndex(
-      (item) => item?.prompt_key === promptKey
+      (item) => item?.prompt_key === promptKey,
     );
 
     if (index === -1) {
@@ -93,7 +93,7 @@ function ToolsMain() {
 
   const defaultPromptInstance = {
     prompt_key: getPromptKey(prompts?.length + 1),
-    prompt: "",
+    prompt: '',
     tool_id: details?.tool_id,
     prompt_type: promptType.prompt,
     profile_manager: defaultLlmProfile,
@@ -102,7 +102,7 @@ function ToolsMain() {
 
   const defaultNoteInstance = {
     prompt_key: getPromptKey(prompts?.length + 1),
-    prompt: "",
+    prompt: '',
     tool_id: details?.tool_id,
     prompt_type: promptType.notes,
     sequence_number: getSequenceNumber(prompts),
@@ -118,7 +118,7 @@ function ToolsMain() {
 
   const addPromptInstance = (type) => {
     try {
-      setPostHogCustomEvent("ps_prompt_added", {
+      setPostHogCustomEvent('ps_prompt_added', {
         info: `Clicked on + ${type} button`,
       });
     } catch (err) {
@@ -132,12 +132,12 @@ function ToolsMain() {
       body = { ...defaultNoteInstance };
     }
     const requestOptions = {
-      method: "POST",
+      method: 'POST',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/prompt-studio/prompt-studio-prompt/${details?.tool_id}/`,
 
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
-        "Content-Type": "application/json",
+        'X-CSRFToken': sessionDetails?.csrfToken,
+        'Content-Type': 'application/json',
       },
       data: body,
     };
@@ -148,12 +148,12 @@ function ToolsMain() {
         const modifiedDetails = { ...details };
         const modifiedPrompts = modifiedDetails?.prompts || [];
         modifiedPrompts.push(data);
-        modifiedDetails["prompts"] = modifiedPrompts;
+        modifiedDetails['prompts'] = modifiedPrompts;
         updateCustomTool({ details: modifiedDetails });
         setScrollToBottom(true);
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "Failed to add"));
+        setAlertDetails(handleException(err, 'Failed to add'));
       });
   };
 
@@ -173,14 +173,14 @@ function ToolsMain() {
         </div>
       </div>
       <div className="tools-main-body">
-        {activeKey === "1" && (
+        {activeKey === '1' && (
           <DocumentParser
             addPromptInstance={addPromptInstance}
             scrollToBottom={scrollToBottom}
             setScrollToBottom={setScrollToBottom}
           />
         )}
-        {activeKey === "2" && (
+        {activeKey === '2' && (
           <CombinedOutput docId={selectedDoc?.document_id} />
         )}
       </div>

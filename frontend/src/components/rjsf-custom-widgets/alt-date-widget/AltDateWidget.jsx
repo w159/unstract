@@ -1,12 +1,12 @@
-import { DatePicker } from "antd";
-import moment from "moment";
-import PropTypes from "prop-types";
+import { DatePicker } from 'antd';
+import moment from 'moment';
+import PropTypes from 'prop-types';
 
-import { RjsfWidgetLayout } from "../../../layouts/rjsf-widget-layout/RjsfWidgetLayout.jsx";
+import { RjsfWidgetLayout } from '../../../layouts/rjsf-widget-layout/RjsfWidgetLayout.jsx';
 
 const AltDateWidget = (props) => {
   const { id, value, onChange, label, schema, required, readonly } = props;
-  const description = schema?.description || "";
+  const description = schema?.description || '';
 
   const handleDateChange = (date) => {
     onChange(date?.toISOString());

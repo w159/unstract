@@ -1,15 +1,15 @@
-import { Modal } from "antd";
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { Modal } from 'antd';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 
-import { sourceTypes } from "../../../helpers/GetStaticData";
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { useAlertStore } from "../../../store/alert-store";
-import { useSessionStore } from "../../../store/session-store";
-import { AddSource } from "../add-source/AddSource";
-import { ListOfSources } from "../list-of-sources/ListOfSources";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler";
-import { SpinnerLoader } from "../../widgets/spinner-loader/SpinnerLoader";
+import { sourceTypes } from '../../../helpers/GetStaticData';
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { useAlertStore } from '../../../store/alert-store';
+import { useSessionStore } from '../../../store/session-store';
+import { AddSource } from '../add-source/AddSource';
+import { ListOfSources } from '../list-of-sources/ListOfSources';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler';
+import { SpinnerLoader } from '../../widgets/spinner-loader/SpinnerLoader';
 
 function AddSourceModal({
   open,
@@ -22,7 +22,7 @@ function AddSourceModal({
   const [selectedSourceId, setSelectedSourceId] = useState(null);
   const [metadata, setMetadata] = useState({});
   const [titles, setTitles] = useState({});
-  const [selectedSourceName, setSelectedSourceName] = useState("");
+  const [selectedSourceName, setSelectedSourceName] = useState('');
   const { sessionDetails } = useSessionStore();
   const { setAlertDetails } = useAlertStore();
   const axiosPrivate = useAxiosPrivate();
@@ -31,20 +31,20 @@ function AddSourceModal({
   const [sourcesList, setSourcesList] = useState([]);
 
   const disabledIdsByType = {
-    EMBEDDING: ["huggingface|90ec9ec2-1768-4d69-8fb1-c88b95de5e5a"],
-    LLM: ["replicate|2715ce84-05af-4ab4-b8e9-67ac3211b81e"],
+    EMBEDDING: ['huggingface|90ec9ec2-1768-4d69-8fb1-c88b95de5e5a'],
+    LLM: ['replicate|2715ce84-05af-4ab4-b8e9-67ac3211b81e'],
     VECTOR_DB: [],
   };
 
   useEffect(() => {
-    const addOrEdit = editItemId?.length ? "Edit" : "Add";
+    const addOrEdit = editItemId?.length ? 'Edit' : 'Add';
     setTitles({
-      input: addOrEdit + " Data Source",
-      output: addOrEdit + " Data Destination",
-      llm: addOrEdit + " LLM",
-      vector_db: addOrEdit + " Vector DB",
-      embedding: addOrEdit + " Embedding",
-      x2text: addOrEdit + " Text Extractor",
+      input: addOrEdit + ' Data Source',
+      output: addOrEdit + ' Data Destination',
+      llm: addOrEdit + ' LLM',
+      vector_db: addOrEdit + ' Vector DB',
+      embedding: addOrEdit + ' Embedding',
+      x2text: addOrEdit + ' Text Extractor',
     });
 
     if (editItemId?.length) {
@@ -68,7 +68,7 @@ function AddSourceModal({
 
   useEffect(() => {
     const selectedSource = sourcesList.find(
-      (item) => item?.id === selectedSourceId
+      (item) => item?.id === selectedSourceId,
     );
     setSelectedSourceName(selectedSource?.name);
   }, [selectedSourceId]);
@@ -83,7 +83,7 @@ function AddSourceModal({
     }
 
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url,
     };
 
@@ -94,12 +94,12 @@ function AddSourceModal({
         if (isConnector) {
           setSelectedSourceId(data?.connector_id);
           const connectorMetadata = data?.connector_metadata;
-          connectorMetadata["connectorName"] = data?.connector_name;
+          connectorMetadata['connectorName'] = data?.connector_name;
           setMetadata(connectorMetadata);
         } else {
           setSelectedSourceId(data?.adapter_id);
           const adapterMetadata = data?.adapter_metadata;
-          adapterMetadata["adapter_name"] = data?.adapter_name;
+          adapterMetadata['adapter_name'] = data?.adapter_name;
           setMetadata(adapterMetadata);
         }
       })
@@ -119,7 +119,7 @@ function AddSourceModal({
     }
     // API to get the list of adapters.
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url,
     };
 
@@ -131,7 +131,7 @@ function AddSourceModal({
         const updatedSources = sources?.map((source) => ({
           ...source,
           isDisabled: disabledIdsByType[source?.adapter_type]?.includes(
-            source?.id
+            source?.id,
           ),
         }));
         setSourcesList(updatedSources || []);

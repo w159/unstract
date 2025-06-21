@@ -1,15 +1,15 @@
-import PropTypes from "prop-types";
-import { Button } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import PropTypes from 'prop-types';
+import { Button } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 
-import "./Footer.css";
-import { FooterLayout } from "../footer-layout/FooterLayout";
-import { promptType } from "../../../helpers/GetStaticData";
-import { useCustomToolStore } from "../../../store/custom-tool-store";
+import './Footer.css';
+import { FooterLayout } from '../footer-layout/FooterLayout';
+import { promptType } from '../../../helpers/GetStaticData';
+import { useCustomToolStore } from '../../../store/custom-tool-store';
 
 function Footer({ activeKey, addPromptInstance }) {
   const { isPublicSource } = useCustomToolStore();
-  if (activeKey === "1") {
+  if (activeKey === '1') {
     return (
       <FooterLayout>
         <div className="tool-ide-main-footer">

@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios from 'axios';
 
 async function makeApiCall(method, url, data, csrfToken) {
   const headers = {
-    "X-CSRFToken": csrfToken,
+    'X-CSRFToken': csrfToken,
   };
 
   try {
@@ -20,13 +20,13 @@ export async function evaluateFeatureFlag(orgId, csrfToken, featureFlag) {
     flag_key: featureFlag,
   };
 
-  const response = await makeApiCall("POST", url, data, csrfToken);
+  const response = await makeApiCall('POST', url, data, csrfToken);
   return response?.flag_status ?? false;
 }
 
-export async function listFlags(orgId, csrfToken, namespace = "default") {
+export async function listFlags(orgId, csrfToken, namespace = 'default') {
   const url = `/api/v1/unstract/${orgId}/flags/?namespace=${namespace}`;
 
-  const response = await makeApiCall("GET", url, null, csrfToken);
+  const response = await makeApiCall('GET', url, null, csrfToken);
   return response.feature_flags.flags ?? {};
 }

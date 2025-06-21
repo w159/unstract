@@ -1,18 +1,18 @@
-import { CheckCircleFilled } from "@ant-design/icons";
-import { Button, Card, Col, Layout, Row, Space, Typography } from "antd";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { CheckCircleFilled } from '@ant-design/icons';
+import { Button, Card, Col, Layout, Row, Space, Typography } from 'antd';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import logo from "../../assets/UnstractLogoBlack.svg";
-import ConnectLLM from "../../assets/connect_llm.svg";
-import ConnectVectorDb from "../../assets/connect_vector_db.svg";
-import ConnectEmbedding from "../../assets/connect_embedding.svg";
-import ConnectTextExtractor from "../../assets/connect_x2text.svg";
-import { homePagePath, onboardCompleted } from "../../helpers/GetStaticData.js";
-import { useSessionStore } from "../../store/session-store.js";
-import { AddSourceModal } from "../input-output/add-source-modal/AddSourceModal.jsx";
-import { CustomButton } from "../widgets/custom-button/CustomButton.jsx";
-import "./onBoard.css";
+import logo from '../../assets/UnstractLogoBlack.svg';
+import ConnectLLM from '../../assets/connect_llm.svg';
+import ConnectVectorDb from '../../assets/connect_vector_db.svg';
+import ConnectEmbedding from '../../assets/connect_embedding.svg';
+import ConnectTextExtractor from '../../assets/connect_x2text.svg';
+import { homePagePath, onboardCompleted } from '../../helpers/GetStaticData.js';
+import { useSessionStore } from '../../store/session-store.js';
+import { AddSourceModal } from '../input-output/add-source-modal/AddSourceModal.jsx';
+import { CustomButton } from '../widgets/custom-button/CustomButton.jsx';
+import './onBoard.css';
 const { Content } = Layout;
 
 function OnBoard() {
@@ -33,35 +33,35 @@ function OnBoard() {
   const steps = [
     {
       id: 1,
-      title: "CONNECT AN LLM",
+      title: 'CONNECT AN LLM',
       icon: ConnectLLM,
-      type: "llm",
+      type: 'llm',
       description:
-        "Unstract harnesses Large Language Models (LLMs) to organize and analyze vast unstructured data, offering support for diverse LLMs from multiple providers.",
+        'Unstract harnesses Large Language Models (LLMs) to organize and analyze vast unstructured data, offering support for diverse LLMs from multiple providers.',
     },
     {
       id: 2,
-      title: "CONNECT A VECTOR DATABASE",
+      title: 'CONNECT A VECTOR DATABASE',
       icon: ConnectVectorDb,
-      type: "vector_db",
+      type: 'vector_db',
       description:
-        "Vector Databases locate text segments within unstructured source data, facilitating the retrieval of pertinent information for LLMs to process queries or structure unstructured data efficiently.",
+        'Vector Databases locate text segments within unstructured source data, facilitating the retrieval of pertinent information for LLMs to process queries or structure unstructured data efficiently.',
     },
     {
       id: 3,
-      title: "CHOOSE AN EMBEDDING MODEL",
+      title: 'CHOOSE AN EMBEDDING MODEL',
       icon: ConnectEmbedding,
-      type: "embedding",
+      type: 'embedding',
       description:
-        "Embedding models semantically map unstructured data for precise retrieval, impacting the quality of data organization and search relevance.",
+        'Embedding models semantically map unstructured data for precise retrieval, impacting the quality of data organization and search relevance.',
     },
     {
       id: 4,
-      title: "CONNECT A TEXT EXTRACTOR",
+      title: 'CONNECT A TEXT EXTRACTOR',
       icon: ConnectTextExtractor,
-      type: "x2text",
+      type: 'x2text',
       description:
-        "The Text Extractor extracts text from diverse unstructured documents, optimizing input for LLM comprehension, including OCR as needed, ensuring optimal understanding of content.",
+        'The Text Extractor extracts text from diverse unstructured documents, optimizing input for LLM comprehension, including OCR as needed, ensuring optimal understanding of content.',
     },
   ];
 
@@ -102,7 +102,7 @@ function OnBoard() {
                     </div>
                   </Col>
                   <Col span={17}>
-                    <Space direction="vertical" style={{ marginTop: "-5px" }}>
+                    <Space direction="vertical" style={{ marginTop: '-5px' }}>
                       <h3 className="text-title-style">{step.title}</h3>
                       <Typography.Text className="text-description-style">
                         {step.description}

@@ -1,4 +1,4 @@
-import { useSessionStore } from "../store/session-store";
+import { useSessionStore } from '../store/session-store';
 
 const useRequestUrl = () => {
   const { sessionDetails } = useSessionStore();
@@ -7,7 +7,7 @@ const useRequestUrl = () => {
     if (!url) return null;
 
     const baseUrl = `/api/v1/unstract/${sessionDetails?.orgId}/`;
-    return baseUrl + url.replace(/^\//, "");
+    return baseUrl + url.replace(/^\//, '');
   };
 
   return { getUrl };

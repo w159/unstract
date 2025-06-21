@@ -3,20 +3,20 @@ import {
   DeleteOutlined,
   EditOutlined,
   PlusOutlined,
-} from "@ant-design/icons";
-import { Input, Modal, Space, Switch, Table, Tooltip, Typography } from "antd";
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+} from '@ant-design/icons';
+import { Input, Modal, Space, Switch, Table, Tooltip, Typography } from 'antd';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { useAlertStore } from "../../../store/alert-store";
-import { useSessionStore } from "../../../store/session-store";
-import { CustomButton } from "../../widgets/custom-button/CustomButton.jsx";
-import SpaceWrapper from "../../widgets/space-wrapper/SpaceWrapper.jsx";
-import { SpinnerLoader } from "../../widgets/spinner-loader/SpinnerLoader.jsx";
-import { DeleteModal } from "../delete-modal/DeleteModal.jsx";
-import "./ManageKeys.css";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler.jsx";
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { useAlertStore } from '../../../store/alert-store';
+import { useSessionStore } from '../../../store/session-store';
+import { CustomButton } from '../../widgets/custom-button/CustomButton.jsx';
+import SpaceWrapper from '../../widgets/space-wrapper/SpaceWrapper.jsx';
+import { SpinnerLoader } from '../../widgets/spinner-loader/SpinnerLoader.jsx';
+import { DeleteModal } from '../delete-modal/DeleteModal.jsx';
+import './ManageKeys.css';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler.jsx';
 
 const ManageKeys = ({
   isDialogOpen,
@@ -42,7 +42,7 @@ const ManageKeys = ({
   useEffect(() => {
     if (isNewKey) {
       setFormDetails({
-        description: "",
+        description: '',
         [type]: selectedApiRow?.id,
         is_active: true,
       });
@@ -100,8 +100,8 @@ const ManageKeys = ({
       .then((res) => {
         addTableData(res?.data);
         setAlertDetails({
-          type: "success",
-          content: "Key added successfully",
+          type: 'success',
+          content: 'Key added successfully',
         });
       })
       .catch((err) => {
@@ -118,8 +118,8 @@ const ManageKeys = ({
       .then((res) => {
         updateTableData(selectedKeyRow?.id, res?.data);
         setAlertDetails({
-          type: "success",
-          content: "Key updated successfully",
+          type: 'success',
+          content: 'Key updated successfully',
         });
       })
       .catch((err) => {
@@ -152,8 +152,8 @@ const ManageKeys = ({
       .then((res) => {
         deleteTableData(selectedKeyRow?.id);
         setAlertDetails({
-          type: "success",
-          content: "Key deleted successfully",
+          type: 'success',
+          content: 'Key deleted successfully',
         });
       })
       .catch((err) => {
@@ -184,10 +184,10 @@ const ManageKeys = ({
     setIsTableLoading(true);
     record.is_active = !record?.is_active;
     const requestOptions = {
-      method: "PUT",
+      method: 'PUT',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/api/keys/${record?.id}/`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
       data: record,
     };
@@ -195,8 +195,8 @@ const ManageKeys = ({
     axiosPrivate(requestOptions)
       .then((res) => {
         setAlertDetails({
-          type: "success",
-          content: "Status updated successfully",
+          type: 'success',
+          content: 'Status updated successfully',
         });
       })
       .catch((err) => {
@@ -212,28 +212,28 @@ const ManageKeys = ({
       .writeText(text)
       .then(() => {
         setAlertDetails({
-          type: "success",
-          content: "API key copied to clipboard",
+          type: 'success',
+          content: 'API key copied to clipboard',
         });
       })
       .catch((error) => {
         setAlertDetails({
-          type: "error",
-          content: "Copy failed",
+          type: 'error',
+          content: 'Copy failed',
         });
       });
   };
 
   const columns = [
     {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
+      title: 'Description',
+      dataIndex: 'description',
+      key: 'description',
     },
     {
-      title: "API Key",
-      dataIndex: "api_key",
-      key: "api_key",
+      title: 'API Key',
+      dataIndex: 'api_key',
+      key: 'api_key',
       render: (_, record) => (
         <Space direction="horizontal" className="action-items">
           <div>
@@ -252,10 +252,10 @@ const ManageKeys = ({
       ),
     },
     {
-      title: "Active",
-      key: "is_active",
-      dataIndex: "is_active",
-      align: "center",
+      title: 'Active',
+      key: 'is_active',
+      dataIndex: 'is_active',
+      align: 'center',
       render: (_, record) => (
         <Switch
           size="small"
@@ -267,9 +267,9 @@ const ManageKeys = ({
       ),
     },
     {
-      title: "Actions",
-      key: "pipeline_id",
-      align: "center",
+      title: 'Actions',
+      key: 'pipeline_id',
+      align: 'center',
       render: (_, record) => (
         <>
           <Space className="actions" onClick={() => openEditModal(record)}>
@@ -324,11 +324,11 @@ const ManageKeys = ({
       </Modal>
       {(isNewKey || isEditKey) && (
         <Modal
-          title={isNewKey ? "Add Key" : "Update Key"}
+          title={isNewKey ? 'Add Key' : 'Update Key'}
           centered
           open={isNewKey || isEditKey}
           onOk={isNewKey ? createKey : updateKey}
-          okText={isNewKey ? "Add" : "Update"}
+          okText={isNewKey ? 'Add' : 'Update'}
           okButtonProps={{ disabled: !canAdd }}
           onCancel={closeAddKey}
         >
@@ -337,8 +337,8 @@ const ManageKeys = ({
             <Input
               placeholder="Description"
               name="description"
-              onChange={(e) => onChangeHandler("description", e.target.value)}
-              value={formDetails.description || ""}
+              onChange={(e) => onChangeHandler('description', e.target.value)}
+              value={formDetails.description || ''}
             ></Input>
           </SpaceWrapper>
         </Modal>

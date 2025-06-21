@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   ArrowLeftOutlined,
   CalendarOutlined,
@@ -11,7 +11,7 @@ import {
   HourglassOutlined,
   InfoCircleFilled,
   SearchOutlined,
-} from "@ant-design/icons";
+} from '@ant-design/icons';
 import {
   Button,
   Card,
@@ -22,20 +22,20 @@ import {
   Tooltip,
   Typography,
   Input,
-} from "antd";
+} from 'antd';
 
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { useSessionStore } from "../../../store/session-store";
-import { useAlertStore } from "../../../store/alert-store";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler";
-import "./DetailedLogs.css";
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { useSessionStore } from '../../../store/session-store';
+import { useAlertStore } from '../../../store/alert-store';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler';
+import './DetailedLogs.css';
 import {
   formattedDateTime,
   formattedDateTimeWithSeconds,
-} from "../../../helpers/GetStaticData";
-import { LogModal } from "../log-modal/LogModal";
-import { FilterIcon } from "../filter-dropdown/FilterDropdown";
-import useRequestUrl from "../../../hooks/useRequestUrl";
+} from '../../../helpers/GetStaticData';
+import { LogModal } from '../log-modal/LogModal';
+import { FilterIcon } from '../filter-dropdown/FilterDropdown';
+import useRequestUrl from '../../../hooks/useRequestUrl';
 
 const DetailedLogs = () => {
   const { id, type } = useParams(); // Get the ID from the URL
@@ -59,10 +59,10 @@ const DetailedLogs = () => {
   const [ordering, setOrdering] = useState(null);
   const [columnsVisibility, setColumnsVisibility] = useState({});
   const [statusFilter, setStatusFilter] = useState(null);
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState('');
   const [searchTimeout, setSearchTimeout] = useState(null);
 
-  const filterOptions = ["COMPLETED", "PENDING", "ERROR", "EXECUTING"];
+  const filterOptions = ['COMPLETED', 'PENDING', 'ERROR', 'EXECUTING'];
 
   const fetchExecutionDetails = async (id) => {
     try {
@@ -103,7 +103,7 @@ const DetailedLogs = () => {
         return {
           key: `${index.toString()}-${item?.id}`,
           fileName: item?.file_name,
-          statusMessage: item?.status_msg || "Yet to be processed",
+          statusMessage: item?.status_msg || 'Yet to be processed',
           fileSize: item?.file_size,
           status: item?.status,
           executedAt: formattedDateTime(item?.created_at),
@@ -137,12 +137,12 @@ const DetailedLogs = () => {
       // Handle file status filter for MultipleChoiceFilter
       if (statusFilter && statusFilter.length > 0) {
         statusFilter.forEach((status) => {
-          searchParams.append("status", status);
+          searchParams.append('status', status);
         });
       }
 
       const response = await axiosPrivate.get(
-        `${url}?${searchParams.toString()}`
+        `${url}?${searchParams.toString()}`,
       );
       setPagination({
         current: page,
@@ -184,9 +184,9 @@ const DetailedLogs = () => {
 
   const columnsDetailedTable = [
     {
-      title: "Executed At",
-      dataIndex: "executedAt",
-      key: "executedAt",
+      title: 'Executed At',
+      dataIndex: 'executedAt',
+      key: 'executedAt',
       sorter: true,
       render: (_, record) => (
         <Tooltip title={record.executedAtWithSeconds}>
@@ -195,9 +195,9 @@ const DetailedLogs = () => {
       ),
     },
     {
-      title: "File Name",
-      dataIndex: "fileName",
-      key: "fileName",
+      title: 'File Name',
+      dataIndex: 'fileName',
+      key: 'fileName',
       filterDropdown: () => (
         <div className="search-container">
           <Input
@@ -209,18 +209,18 @@ const DetailedLogs = () => {
         </div>
       ),
       filterIcon: () => (
-        <SearchOutlined style={{ color: searchText ? "#1890ff" : undefined }} />
+        <SearchOutlined style={{ color: searchText ? '#1890ff' : undefined }} />
       ),
     },
     {
-      title: "Status Message",
-      dataIndex: "statusMessage",
-      key: "statusMessage",
+      title: 'Status Message',
+      dataIndex: 'statusMessage',
+      key: 'statusMessage',
     },
     {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
       filters: filterOptions.map((filter) => ({
         text: filter,
         value: filter,
@@ -228,28 +228,28 @@ const DetailedLogs = () => {
       filterIcon: (filtered) => <FilterIcon filtered={filtered} />,
     },
     {
-      title: "File Size",
-      dataIndex: "fileSize",
-      key: "fileSize",
+      title: 'File Size',
+      dataIndex: 'fileSize',
+      key: 'fileSize',
     },
     {
-      title: "Execution Time",
-      dataIndex: "executionTime",
-      key: "executionTime",
+      title: 'Execution Time',
+      dataIndex: 'executionTime',
+      key: 'executionTime',
     },
-    ...(type !== "API"
+    ...(type !== 'API'
       ? [
           {
-            title: "File Path",
-            dataIndex: "filePath",
-            key: "filePath",
+            title: 'File Path',
+            dataIndex: 'filePath',
+            key: 'filePath',
           },
         ]
       : []),
     {
-      title: "Action",
-      dataIndex: "action",
-      key: "action",
+      title: 'Action',
+      dataIndex: 'action',
+      key: 'action',
       render: (_, record) => (
         <Tooltip title="View logs">
           <Button
@@ -267,7 +267,7 @@ const DetailedLogs = () => {
     });
 
     if (sorter.order) {
-      const order = sorter.order === "ascend" ? "created_at" : "-created_at";
+      const order = sorter.order === 'ascend' ? 'created_at' : '-created_at';
       setOrdering(order);
     } else {
       setOrdering(null);
@@ -291,7 +291,7 @@ const DetailedLogs = () => {
 
   useEffect(() => {
     let interval = null;
-    if (executionDetails?.status === "EXECUTING") {
+    if (executionDetails?.status === 'EXECUTING') {
       interval = setInterval(() => {
         fetchExecutionDetails(id);
         fetchExecutionFiles(id, pagination.current);
@@ -319,7 +319,7 @@ const DetailedLogs = () => {
     }));
   };
   const columnsToShow = columnsDetailedTable.filter(
-    (col) => columnsVisibility[col.key]
+    (col) => columnsVisibility[col.key],
   );
   const menu = {
     items: columnsDetailedTable.map((col) => ({
@@ -344,7 +344,7 @@ const DetailedLogs = () => {
           icon={<ArrowLeftOutlined />}
           onClick={() => navigate(`/${sessionDetails?.orgName}/logs`)}
         />
-        {type} Session ID - {id}{" "}
+        {type} Session ID - {id}{' '}
       </Typography.Title>
       <Flex align="center" justify="space-between">
         <Flex className="pad-12">
@@ -364,9 +364,9 @@ const DetailedLogs = () => {
               <ClockCircleOutlined className="logging-card-icons" />
               <div>
                 <Typography className="logging-card-title">
-                  {executionDetails?.status.toLowerCase() === "executing"
-                    ? "Running for"
-                    : "Ran for"}
+                  {executionDetails?.status.toLowerCase() === 'executing'
+                    ? 'Running for'
+                    : 'Ran for'}
                 </Typography>
                 <Typography>{executionDetails?.ranFor}</Typography>
               </div>
@@ -377,13 +377,13 @@ const DetailedLogs = () => {
               <FileTextOutlined className="logging-card-icons" />
               <div>
                 <Typography className="logging-card-title">
-                  {executionDetails?.status.toLowerCase() === "executing"
-                    ? "Processing files"
-                    : "Processed files"}{" "}
-                  -{" "}
+                  {executionDetails?.status.toLowerCase() === 'executing'
+                    ? 'Processing files'
+                    : 'Processed files'}{' '}
+                  -{' '}
                   <Tooltip title="Total files">
                     <span className="status-container">
-                      <FileTextOutlined className="gen-index-progress" />{" "}
+                      <FileTextOutlined className="gen-index-progress" />{' '}
                       {executionDetails?.totalFiles}
                     </span>
                   </Tooltip>
@@ -391,13 +391,13 @@ const DetailedLogs = () => {
                 <span>
                   <Tooltip title="Successful files">
                     <span className="status-container">
-                      <InfoCircleFilled className="gen-index-success" />{" "}
+                      <InfoCircleFilled className="gen-index-success" />{' '}
                       {executionDetails?.successfulFiles}
                     </span>
                   </Tooltip>
                   <Tooltip title="Failed files">
                     <span className="status-container">
-                      <CloseCircleFilled className="gen-index-fail" />{" "}
+                      <CloseCircleFilled className="gen-index-fail" />{' '}
                       {executionDetails?.failedFiles}
                     </span>
                   </Tooltip>
@@ -407,7 +407,7 @@ const DetailedLogs = () => {
                         executionDetails?.failedFiles) >
                       0 && (
                       <span className="status-container">
-                        <HourglassOutlined className="gen-index-progress" />{" "}
+                        <HourglassOutlined className="gen-index-progress" />{' '}
                         {executionDetails?.totalFiles -
                           (executionDetails?.successfulFiles +
                             executionDetails?.failedFiles)}
@@ -430,7 +430,7 @@ const DetailedLogs = () => {
       <div className="settings-layout">
         <Dropdown
           menu={menu}
-          trigger={["click"]}
+          trigger={['click']}
           className="column-filter-dropdown"
         >
           <Button icon={<DownOutlined />}>Show/Hide Columns</Button>
@@ -441,7 +441,7 @@ const DetailedLogs = () => {
           pagination={{ ...pagination }}
           loading={loading}
           onChange={handleTableChange}
-          sortDirections={["ascend", "descend", "ascend"]}
+          sortDirections={['ascend', 'descend', 'ascend']}
           scroll={{ y: 55 * 10 }}
         />
       </div>
@@ -450,7 +450,7 @@ const DetailedLogs = () => {
         fileId={selectedRecord?.executionId}
         logDescModalOpen={logDescModalOpen}
         setLogDescModalOpen={setLogDescModalOpen}
-        filterParams={{ executionTime: "event_time" }}
+        filterParams={{ executionTime: 'event_time' }}
       />
     </>
   );

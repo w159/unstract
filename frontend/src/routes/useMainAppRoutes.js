@@ -1,26 +1,26 @@
-import { Route } from "react-router-dom";
+import { Route } from 'react-router-dom';
 
-import { OnBoardPage } from "../pages/OnBoardPage.jsx";
-import { FullPageLayout } from "../layouts/fullpage-payout/FullPageLayout.jsx";
-import { ToolsSettingsPage } from "../pages/ToolsSettingsPage.jsx";
-import { SettingsPage } from "../pages/SettingsPage.jsx";
-import { PlatformSettings } from "../components/settings/platform/PlatformSettings.jsx";
-import { RequireAdmin } from "../components/helpers/auth/RequireAdmin.js";
-import { UsersPage } from "../pages/UsersPage.jsx";
-import { InviteEditUserPage } from "../pages/InviteEditUserPage.jsx";
-import { DefaultTriad } from "../components/settings/default-triad/DefaultTriad.jsx";
-import { PageLayout } from "../layouts/page-layout/PageLayout.jsx";
-import { ProfilePage } from "../pages/ProfilePage.jsx";
-import { DeploymentsPage } from "../pages/DeploymentsPage.jsx";
-import { WorkflowsPage } from "../pages/WorkflowsPage.jsx";
-import { ProjectHelper } from "../components/helpers/project/ProjectHelper.js";
-import { AgencyPage } from "../pages/AgencyPage.jsx";
-import { CustomTools } from "../pages/CustomTools.jsx";
-import { CustomToolsHelper } from "../components/helpers/custom-tools/CustomToolsHelper.js";
-import { ToolIdePage } from "../pages/ToolIdePage.jsx";
-import { OutputAnalyzerPage } from "../pages/OutputAnalyzerPage.jsx";
-import { LogsPage } from "../pages/LogsPage.jsx";
-import { deploymentTypes } from "../helpers/GetStaticData.js";
+import { OnBoardPage } from '../pages/OnBoardPage.jsx';
+import { FullPageLayout } from '../layouts/fullpage-payout/FullPageLayout.jsx';
+import { ToolsSettingsPage } from '../pages/ToolsSettingsPage.jsx';
+import { SettingsPage } from '../pages/SettingsPage.jsx';
+import { PlatformSettings } from '../components/settings/platform/PlatformSettings.jsx';
+import { RequireAdmin } from '../components/helpers/auth/RequireAdmin.js';
+import { UsersPage } from '../pages/UsersPage.jsx';
+import { InviteEditUserPage } from '../pages/InviteEditUserPage.jsx';
+import { DefaultTriad } from '../components/settings/default-triad/DefaultTriad.jsx';
+import { PageLayout } from '../layouts/page-layout/PageLayout.jsx';
+import { ProfilePage } from '../pages/ProfilePage.jsx';
+import { DeploymentsPage } from '../pages/DeploymentsPage.jsx';
+import { WorkflowsPage } from '../pages/WorkflowsPage.jsx';
+import { ProjectHelper } from '../components/helpers/project/ProjectHelper.js';
+import { AgencyPage } from '../pages/AgencyPage.jsx';
+import { CustomTools } from '../pages/CustomTools.jsx';
+import { CustomToolsHelper } from '../components/helpers/custom-tools/CustomToolsHelper.js';
+import { ToolIdePage } from '../pages/ToolIdePage.jsx';
+import { OutputAnalyzerPage } from '../pages/OutputAnalyzerPage.jsx';
+import { LogsPage } from '../pages/LogsPage.jsx';
+import { deploymentTypes } from '../helpers/GetStaticData.js';
 
 let RequirePlatformAdmin;
 let PlatformAdminPage;
@@ -39,57 +39,57 @@ let UnstractSubscriptionCheck;
 
 try {
   RequirePlatformAdmin =
-    require("../plugins/frictionless-onboard/RequirePlatformAdmin.jsx").RequirePlatformAdmin;
+    require('../plugins/frictionless-onboard/RequirePlatformAdmin.jsx').RequirePlatformAdmin;
   PlatformAdminPage =
-    require("../plugins/frictionless-onboard/platform-admin-page/PlatformAdminPage.jsx").PlatformAdminPage;
+    require('../plugins/frictionless-onboard/platform-admin-page/PlatformAdminPage.jsx').PlatformAdminPage;
 } catch (err) {
   // Do nothing, Not-found Page will be triggered.
 }
 
 try {
   AppDeployments =
-    require("../plugins/app-deployment/AppDeployments.jsx").AppDeployments;
+    require('../plugins/app-deployment/AppDeployments.jsx').AppDeployments;
   ChatAppPage =
-    require("../plugins/app-deployment/chat-app/ChatAppPage.jsx").ChatAppPage;
+    require('../plugins/app-deployment/chat-app/ChatAppPage.jsx').ChatAppPage;
   ChatAppLayout =
-    require("../plugins/app-deployment/chat-app/ChatAppLayout.jsx").ChatAppLayout;
+    require('../plugins/app-deployment/chat-app/ChatAppLayout.jsx').ChatAppLayout;
 } catch (err) {
   // Do nothing, Not-found Page will be triggered.
 }
 
 try {
   ManualReviewSettings =
-    require("../plugins/manual-review/settings/Settings.jsx").ManualReviewSettings;
+    require('../plugins/manual-review/settings/Settings.jsx').ManualReviewSettings;
 } catch (err) {
   // Do nothing, Not-found Page will be triggered.
 }
 
 try {
   OnboardProduct =
-    require("../plugins/onboard-product/OnboardProduct.jsx").OnboardProduct;
-  PRODUCT_NAMES = require("../plugins/llm-whisperer/helper.js").PRODUCT_NAMES;
+    require('../plugins/onboard-product/OnboardProduct.jsx').OnboardProduct;
+  PRODUCT_NAMES = require('../plugins/llm-whisperer/helper.js').PRODUCT_NAMES;
 } catch (err) {
   // Do nothing.
 }
 
 try {
   ManualReviewPage =
-    require("../plugins/manual-review/page/ManualReviewPage.jsx").ManualReviewPage;
+    require('../plugins/manual-review/page/ManualReviewPage.jsx').ManualReviewPage;
   ReviewLayout =
-    require("../plugins/manual-review/review-layout/ReviewLayout.jsx").ReviewLayout;
+    require('../plugins/manual-review/review-layout/ReviewLayout.jsx').ReviewLayout;
   SimpleManualReviewPage =
-    require("../plugins/manual-review/page/simple/SimpleManualReviewPage.jsx").SimpleManualReviewPage;
+    require('../plugins/manual-review/page/simple/SimpleManualReviewPage.jsx').SimpleManualReviewPage;
 } catch (err) {
   // Do nothing, Not-found Page will be triggered.
 }
 
 try {
   UnstractSubscriptionPage =
-    require("../plugins/unstract-subscription/pages/UnstractSubscriptionPage.jsx").UnstractSubscriptionPage;
+    require('../plugins/unstract-subscription/pages/UnstractSubscriptionPage.jsx').UnstractSubscriptionPage;
   UnstractUsagePage =
-    require("../plugins/unstract-subscription/pages/UnstractUsagePage.jsx").UnstractUsagePage;
+    require('../plugins/unstract-subscription/pages/UnstractUsagePage.jsx').UnstractUsagePage;
   UnstractSubscriptionCheck =
-    require("../plugins/unstract-subscription/components/UnstractSubscriptionCheck.jsx").UnstractSubscriptionCheck;
+    require('../plugins/unstract-subscription/components/UnstractSubscriptionCheck.jsx').UnstractSubscriptionCheck;
 } catch (err) {
   // Do nothing, Not-found Page will be triggered.
 }

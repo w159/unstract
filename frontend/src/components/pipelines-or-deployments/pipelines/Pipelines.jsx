@@ -11,7 +11,7 @@ import {
   KeyOutlined,
   CloudDownloadOutlined,
   CopyOutlined,
-} from "@ant-design/icons";
+} from '@ant-design/icons';
 import {
   Button,
   Dropdown,
@@ -20,33 +20,33 @@ import {
   Switch,
   Tooltip,
   Typography,
-} from "antd";
-import PropTypes from "prop-types";
-import { useEffect, useState, useCallback } from "react";
-import cronstrue from "cronstrue";
+} from 'antd';
+import PropTypes from 'prop-types';
+import { useEffect, useState, useCallback } from 'react';
+import cronstrue from 'cronstrue';
 
 import {
   deploymentApiTypes,
   deploymentsStaticContent,
   displayURL,
-} from "../../../helpers/GetStaticData";
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate.js";
-import { useAlertStore } from "../../../store/alert-store.js";
-import { useSessionStore } from "../../../store/session-store.js";
-import { Layout } from "../../deployments/layout/Layout.jsx";
-import { SpinnerLoader } from "../../widgets/spinner-loader/SpinnerLoader.jsx";
-import { DeleteModal } from "../delete-modal/DeleteModal.jsx";
-import { LogsModal } from "../log-modal/LogsModal.jsx";
-import { EtlTaskDeploy } from "../etl-task-deploy/EtlTaskDeploy.jsx";
-import "./Pipelines.css";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler.jsx";
-import { pipelineService } from "../pipeline-service.js";
-import { ManageKeys } from "../../deployments/manage-keys/ManageKeys.jsx";
-import usePipelineHelper from "../../../hooks/usePipelineHelper.js";
-import { NotificationModal } from "../notification-modal/NotificationModal.jsx";
-import { usePromptStudioStore } from "../../../store/prompt-studio-store";
-import { PromptStudioModal } from "../../common/PromptStudioModal";
-import { usePromptStudioService } from "../../api/prompt-studio-service";
+} from '../../../helpers/GetStaticData';
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate.js';
+import { useAlertStore } from '../../../store/alert-store.js';
+import { useSessionStore } from '../../../store/session-store.js';
+import { Layout } from '../../deployments/layout/Layout.jsx';
+import { SpinnerLoader } from '../../widgets/spinner-loader/SpinnerLoader.jsx';
+import { DeleteModal } from '../delete-modal/DeleteModal.jsx';
+import { LogsModal } from '../log-modal/LogsModal.jsx';
+import { EtlTaskDeploy } from '../etl-task-deploy/EtlTaskDeploy.jsx';
+import './Pipelines.css';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler.jsx';
+import { pipelineService } from '../pipeline-service.js';
+import { ManageKeys } from '../../deployments/manage-keys/ManageKeys.jsx';
+import usePipelineHelper from '../../../hooks/usePipelineHelper.js';
+import { NotificationModal } from '../notification-modal/NotificationModal.jsx';
+import { usePromptStudioStore } from '../../../store/prompt-studio-store';
+import { PromptStudioModal } from '../../common/PromptStudioModal';
+import { usePromptStudioService } from '../../api/prompt-studio-service';
 
 function Pipelines({ type }) {
   const [tableData, setTableData] = useState([]);
@@ -62,7 +62,7 @@ function Pipelines({ type }) {
   const [openLogsModal, setOpenLogsModal] = useState(false);
   const [executionLogs, setExecutionLogs] = useState([]);
   const [executionLogsTotalCount, setExecutionLogsTotalCount] = useState(0);
-  const { fetchExecutionLogs } = require("../log-modal/fetchExecutionLogs.js");
+  const { fetchExecutionLogs } = require('../log-modal/fetchExecutionLogs.js');
   const [openManageKeysModal, setOpenManageKeysModal] = useState(false);
   const [apiKeys, setApiKeys] = useState([]);
   const pipelineApiService = pipelineService();
@@ -88,7 +88,7 @@ function Pipelines({ type }) {
       setExecutionLogsTotalCount,
       setAlertDetails,
       page,
-      pageSize
+      pageSize,
     );
   };
 
@@ -104,7 +104,7 @@ function Pipelines({ type }) {
   const getPipelineList = () => {
     setTableLoading(true);
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${
         sessionDetails?.orgId
       }/pipeline/?type=${type.toUpperCase()}`,
@@ -126,7 +126,7 @@ function Pipelines({ type }) {
     const body = { ...params, pipeline_type: type.toUpperCase() };
     const pipelineId = params?.pipeline_id;
     const fieldsToUpdate = {
-      last_run_status: "processing",
+      last_run_status: 'processing',
     };
     handleLoaderInTableData(fieldsToUpdate, pipelineId);
 
@@ -136,13 +136,13 @@ function Pipelines({ type }) {
         fieldsToUpdate.last_run_status = data?.last_run_status;
         fieldsToUpdate.last_run_time = data?.last_run_time;
         setAlertDetails({
-          type: "success",
-          content: "Pipeline Sync Initiated",
+          type: 'success',
+          content: 'Pipeline Sync Initiated',
         });
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "Failed to sync."));
-        fieldsToUpdate.last_run_status = "FAILURE";
+        setAlertDetails(handleException(err, 'Failed to sync.'));
+        fieldsToUpdate.last_run_status = 'FAILURE';
         fieldsToUpdate.last_run_time = new Date().toISOString();
       })
       .finally(() => {
@@ -152,23 +152,23 @@ function Pipelines({ type }) {
 
   const handleStatusRefresh = (pipelineId) => {
     const fieldsToUpdate = {
-      last_run_status: "processing",
+      last_run_status: 'processing',
     };
     handleLoaderInTableData(fieldsToUpdate, pipelineId);
 
     getPipelineData(pipelineId)
       .then((res) => {
         const data = res?.data;
-        fieldsToUpdate["last_run_status"] = data?.last_run_status;
-        fieldsToUpdate["last_run_time"] = data?.last_run_time;
+        fieldsToUpdate['last_run_status'] = data?.last_run_status;
+        fieldsToUpdate['last_run_time'] = data?.last_run_time;
       })
       .catch((err) => {
         setAlertDetails(
-          handleException(err, `Failed to update pipeline status.`)
+          handleException(err, `Failed to update pipeline status.`),
         );
         const date = new Date();
-        fieldsToUpdate["last_run_status"] = "FAILURE";
-        fieldsToUpdate["last_run_time"] = date.toISOString();
+        fieldsToUpdate['last_run_status'] = 'FAILURE';
+        fieldsToUpdate['last_run_time'] = date.toISOString();
       })
       .finally(() => {
         handleLoaderInTableData(fieldsToUpdate, pipelineId);
@@ -187,27 +187,26 @@ function Pipelines({ type }) {
 
   const handleSyncApiReq = async (body) => {
     const requestOptions = {
-      method: "POST",
+      method: 'POST',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/pipeline/execute/`,
       headers: {
-        "Content-Type": "application/json",
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'Content-Type': 'application/json',
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
       data: body,
     };
 
-    return axiosPrivate(requestOptions)
-      .then((res) => res);
+    return axiosPrivate(requestOptions).then((res) => res);
   };
 
   const handleEnablePipeline = (value, id) => {
     const body = { active: value, pipeline_id: id };
     const requestOptions = {
-      method: "PATCH",
+      method: 'PATCH',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/pipeline/${id}/`,
       headers: {
-        "Content-Type": "application/json",
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'Content-Type': 'application/json',
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
       data: body,
     };
@@ -215,10 +214,10 @@ function Pipelines({ type }) {
       .then(() => {
         getPipelineList();
         setAlertDetails({
-          type: "success",
+          type: 'success',
           content: value
-            ? "Pipeline Enabled Successfully"
-            : "Pipeline Disabled Successfully",
+            ? 'Pipeline Enabled Successfully'
+            : 'Pipeline Disabled Successfully',
         });
       })
       .catch((err) => {
@@ -228,10 +227,10 @@ function Pipelines({ type }) {
 
   const deletePipeline = () => {
     const requestOptions = {
-      method: "DELETE",
+      method: 'DELETE',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/pipeline/${selectedPorD.id}/`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
     };
     axiosPrivate(requestOptions)
@@ -239,8 +238,8 @@ function Pipelines({ type }) {
         setOpenDeleteModal(false);
         getPipelineList();
         setAlertDetails({
-          type: "success",
-          content: "Pipeline Deleted Successfully",
+          type: 'success',
+          content: 'Pipeline Deleted Successfully',
         });
       })
       .catch((err) => {
@@ -250,30 +249,29 @@ function Pipelines({ type }) {
 
   const getPipelineData = (pipelineId) => {
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/pipeline/${pipelineId}/`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
     };
-    return axiosPrivate(requestOptions)
-      .then((res) => res);
+    return axiosPrivate(requestOptions).then((res) => res);
   };
 
   const clearCache = () => {
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/workflow/${selectedPorD.workflow_id}/clear-cache/`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
     };
     axiosPrivate(requestOptions)
       .then(() => {
         setOpenDeleteModal(false);
         setAlertDetails({
-          type: "success",
-          content: "Pipeline Cache Cleared Successfully",
+          type: 'success',
+          content: 'Pipeline Cache Cleared Successfully',
         });
       })
       .catch((err) => {
@@ -283,18 +281,18 @@ function Pipelines({ type }) {
 
   const clearFileMarkers = () => {
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/workflow/${selectedPorD.workflow_id}/clear-file-marker/`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
     };
     axiosPrivate(requestOptions)
       .then(() => {
         setOpenDeleteModal(false);
         setAlertDetails({
-          type: "success",
-          content: "Pipeline File History Cleared Successfully",
+          type: 'success',
+          content: 'Pipeline File History Cleared Successfully',
         });
       })
       .catch((err) => {
@@ -304,7 +302,7 @@ function Pipelines({ type }) {
 
   const actionItems = [
     {
-      key: "1",
+      key: '1',
       label: (
         <Space
           direction="horizontal"
@@ -321,7 +319,7 @@ function Pipelines({ type }) {
       ),
     },
     {
-      key: "2",
+      key: '2',
       label: (
         <Space
           direction="horizontal"
@@ -334,7 +332,7 @@ function Pipelines({ type }) {
       ),
     },
     {
-      key: "3",
+      key: '3',
       label: (
         <Space
           direction="horizontal"
@@ -344,7 +342,7 @@ function Pipelines({ type }) {
               pipelineApiService,
               selectedPorD?.id,
               setApiKeys,
-              setOpenManageKeysModal
+              setOpenManageKeysModal,
             )
           }
         >
@@ -354,7 +352,7 @@ function Pipelines({ type }) {
       ),
     },
     {
-      key: "4",
+      key: '4',
       label: (
         <Space
           direction="horizontal"
@@ -369,7 +367,7 @@ function Pipelines({ type }) {
       ),
     },
     {
-      key: "5",
+      key: '5',
       label: (
         <Space
           direction="horizontal"
@@ -383,7 +381,7 @@ function Pipelines({ type }) {
               selectedPorD,
               setExecutionLogs,
               setExecutionLogsTotalCount,
-              setAlertDetails
+              setAlertDetails,
             );
           }}
         >
@@ -393,7 +391,7 @@ function Pipelines({ type }) {
       ),
     },
     {
-      key: "6",
+      key: '6',
       label: (
         <Space
           direction="horizontal"
@@ -406,7 +404,7 @@ function Pipelines({ type }) {
       ),
     },
     {
-      key: "7",
+      key: '7',
       label: (
         <Space
           direction="horizontal"
@@ -419,7 +417,7 @@ function Pipelines({ type }) {
       ),
     },
     {
-      key: "8",
+      key: '8',
       label: (
         <Space
           direction="horizontal"
@@ -436,7 +434,7 @@ function Pipelines({ type }) {
       ),
     },
     {
-      key: "9",
+      key: '9',
       label: (
         <Space
           direction="horizontal"
@@ -452,7 +450,7 @@ function Pipelines({ type }) {
 
   const columns = [
     {
-      title: "Source",
+      title: 'Source',
       render: (_, record) => (
         <div>
           <div>
@@ -463,12 +461,12 @@ function Pipelines({ type }) {
           </Typography.Text>
         </div>
       ),
-      key: "source",
-      align: "center",
+      key: 'source',
+      align: 'center',
     },
     {
-      title: "Pipeline",
-      key: "pipeline_name",
+      title: 'Pipeline',
+      key: 'pipeline_name',
       render: (_, record) => (
         <>
           <Typography.Text strong>{record?.pipeline_name}</Typography.Text>
@@ -478,10 +476,10 @@ function Pipelines({ type }) {
           </Typography.Text>
         </>
       ),
-      align: "center",
+      align: 'center',
     },
     {
-      title: "Destination",
+      title: 'Destination',
       render: (_, record) => (
         <div>
           <div>
@@ -492,12 +490,12 @@ function Pipelines({ type }) {
           </Typography.Text>
         </div>
       ),
-      key: "destination",
-      align: "center",
+      key: 'destination',
+      align: 'center',
     },
     {
-      title: "API Endpoint",
-      key: "api_endpoint",
+      title: 'API Endpoint',
+      key: 'api_endpoint',
       render: (_, record) => (
         <Space direction="horizontal" className="display-flex-space-between">
           <div>
@@ -517,16 +515,16 @@ function Pipelines({ type }) {
           </div>
         </Space>
       ),
-      align: "left",
+      align: 'left',
     },
     {
-      title: "Status of Previous Run",
-      dataIndex: "last_run_status",
-      key: "last_run_status",
-      align: "center",
+      title: 'Status of Previous Run',
+      dataIndex: 'last_run_status',
+      key: 'last_run_status',
+      align: 'center',
       render: (_, record) => (
         <>
-          {record.last_run_status === "processing" ? (
+          {record.last_run_status === 'processing' ? (
             <SpinnerLoader />
           ) : (
             <Space>
@@ -545,10 +543,10 @@ function Pipelines({ type }) {
       ),
     },
     {
-      title: "Previous Run At",
-      key: "last_run_time",
-      dataIndex: "last_run_time",
-      align: "center",
+      title: 'Previous Run At',
+      key: 'last_run_time',
+      dataIndex: 'last_run_time',
+      align: 'center',
       render: (_, record) => (
         <div>
           <Typography.Text className="p-or-d-typography" strong>
@@ -558,10 +556,10 @@ function Pipelines({ type }) {
       ),
     },
     {
-      title: "Frequency",
-      key: "last_run_time",
-      dataIndex: "last_run_time",
-      align: "center",
+      title: 'Frequency',
+      key: 'last_run_time',
+      dataIndex: 'last_run_time',
+      align: 'center',
       render: (_, record) => (
         <div>
           <Typography.Text className="p-or-d-typography" strong>
@@ -571,10 +569,10 @@ function Pipelines({ type }) {
       ),
     },
     {
-      title: "Enabled",
-      key: "active",
-      dataIndex: "active",
-      align: "center",
+      title: 'Enabled',
+      key: 'active',
+      dataIndex: 'active',
+      align: 'center',
       render: (_, record) => (
         <Switch
           checked={record.active}
@@ -585,15 +583,15 @@ function Pipelines({ type }) {
       ),
     },
     {
-      title: "Actions",
-      key: "pipeline_id",
-      align: "center",
+      title: 'Actions',
+      key: 'pipeline_id',
+      align: 'center',
       render: (_, record) => (
         <Dropdown
           menu={{ items: actionItems }}
           placement="bottomLeft"
           onOpenChange={() => setSelectedPorD(record)}
-          trigger={["click"]}
+          trigger={['click']}
         >
           <EllipsisOutlined className="p-or-d-actions cur-pointer" />
         </Dropdown>

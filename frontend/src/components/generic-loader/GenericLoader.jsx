@@ -1,7 +1,7 @@
-import { Typography } from "antd";
+import { Typography } from 'antd';
 
-import { Logo64 } from "../../assets";
-import "./GenericLoader.css";
+import { Logo64 } from '../../assets';
+import './GenericLoader.css';
 
 function GenericLoader() {
   return (

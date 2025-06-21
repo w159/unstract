@@ -1,4 +1,4 @@
-import { Login } from "../components/log-in/Login";
+import { Login } from '../components/log-in/Login';
 
 function LandingPage() {
   return <Login />;

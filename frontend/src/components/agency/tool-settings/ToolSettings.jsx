@@ -1,15 +1,15 @@
-import PropTypes from "prop-types";
-import { createRef, useEffect, useState } from "react";
+import PropTypes from 'prop-types';
+import { createRef, useEffect, useState } from 'react';
 
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { RjsfFormLayout } from "../../../layouts/rjsf-form-layout/RjsfFormLayout.jsx";
-import { useAlertStore } from "../../../store/alert-store";
-import { useSessionStore } from "../../../store/session-store";
-import { useToolSettingsStore } from "../../../store/tool-settings";
-import { useWorkflowStore } from "../../../store/workflow-store";
-import { CustomButton } from "../../widgets/custom-button/CustomButton.jsx";
-import "./ToolSettings.css";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler.jsx";
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { RjsfFormLayout } from '../../../layouts/rjsf-form-layout/RjsfFormLayout.jsx';
+import { useAlertStore } from '../../../store/alert-store';
+import { useSessionStore } from '../../../store/session-store';
+import { useToolSettingsStore } from '../../../store/tool-settings';
+import { useWorkflowStore } from '../../../store/workflow-store';
+import { CustomButton } from '../../widgets/custom-button/CustomButton.jsx';
+import './ToolSettings.css';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler.jsx';
 
 function ToolSettings({ spec, isSpecLoading }) {
   const formRef = createRef(null);
@@ -51,11 +51,11 @@ function ToolSettings({ spec, isSpecLoading }) {
     const metadata = { ...updatedFormData };
 
     const requestOptions = {
-      method: "PATCH",
+      method: 'PATCH',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/tool_instance/${toolSettings?.id}/`,
       headers: {
-        "Content-Type": "application/json",
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'Content-Type': 'application/json',
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
       data: { metadata },
     };
@@ -63,8 +63,8 @@ function ToolSettings({ spec, isSpecLoading }) {
       .then(() => {
         updateMetadata(toolSettings?.id, formData);
         setAlertDetails({
-          type: "success",
-          content: "Updated tool settings.",
+          type: 'success',
+          content: 'Updated tool settings.',
         });
       })
       .catch((err) => {

@@ -1,4 +1,4 @@
-import { ExecutionLogs } from "../components/logging/execution-logs/ExecutionLogs";
+import { ExecutionLogs } from '../components/logging/execution-logs/ExecutionLogs';
 
 function LogsPage() {
   return <ExecutionLogs />;

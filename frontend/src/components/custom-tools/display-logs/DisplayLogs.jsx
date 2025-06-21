@@ -1,10 +1,10 @@
-import { useEffect, useRef } from "react";
-import { Col, Row, Typography } from "antd";
+import { useEffect, useRef } from 'react';
+import { Col, Row, Typography } from 'antd';
 
-import "../../agency/display-logs/DisplayLogs.css";
-import { useSocketCustomToolStore } from "../../../store/socket-custom-tool";
-import { getDateTimeString } from "../../../helpers/GetStaticData";
-import CustomMarkdown from "../../helpers/custom-markdown/CustomMarkdown";
+import '../../agency/display-logs/DisplayLogs.css';
+import { useSocketCustomToolStore } from '../../../store/socket-custom-tool';
+import { getDateTimeString } from '../../../helpers/GetStaticData';
+import CustomMarkdown from '../../helpers/custom-markdown/CustomMarkdown';
 
 function DisplayLogs() {
   const bottomRef = useRef(null);
@@ -13,7 +13,7 @@ function DisplayLogs() {
   useEffect(() => {
     if (messages?.length) {
       // Scroll down to the lastest chat.
-      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+      bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages]);
 

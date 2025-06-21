@@ -1,8 +1,8 @@
-import PropTypes from "prop-types";
-import { Typography } from "antd";
+import PropTypes from 'prop-types';
+import { Typography } from 'antd';
 
-import { SpinnerLoader } from "../../widgets/spinner-loader/SpinnerLoader";
-import { EmptyState } from "../../widgets/empty-state/EmptyState";
+import { SpinnerLoader } from '../../widgets/spinner-loader/SpinnerLoader';
+import { EmptyState } from '../../widgets/empty-state/EmptyState';
 
 function DocumentViewer({
   children,
@@ -30,7 +30,7 @@ function DocumentViewer({
     return (
       <div className="height-100 display-flex-center display-flex-align-center">
         <Typography.Text>
-          {errMsg || "Failed to load the document"}
+          {errMsg || 'Failed to load the document'}
         </Typography.Text>
       </div>
     );

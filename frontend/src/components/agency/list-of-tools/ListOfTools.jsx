@@ -1,11 +1,11 @@
-import { Empty } from "antd";
-import PropTypes from "prop-types";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { Empty } from 'antd';
+import PropTypes from 'prop-types';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
-import { SpinnerLoader } from "../../widgets/spinner-loader/SpinnerLoader.jsx";
-import { ToolInfoCard } from "../tool-info-card/ToolInfoCard.jsx";
-import "./ListOfTools.css";
+import { SpinnerLoader } from '../../widgets/spinner-loader/SpinnerLoader.jsx';
+import { ToolInfoCard } from '../tool-info-card/ToolInfoCard.jsx';
+import './ListOfTools.css';
 
 function ListOfTools({ listOfTools, isLoading }) {
   if (isLoading) {

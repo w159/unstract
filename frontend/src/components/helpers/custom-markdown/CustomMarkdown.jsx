@@ -1,16 +1,16 @@
-import { useMemo } from "react";
-import { Typography } from "antd";
-import PropTypes from "prop-types";
+import { useMemo } from 'react';
+import { Typography } from 'antd';
+import PropTypes from 'prop-types';
 
 const { Text, Link, Paragraph } = Typography;
 
 const CustomMarkdown = ({
-  text = "",
+  text = '',
   renderNewLines = true,
   isSecondary = false,
   styleClassName,
 }) => {
-  const textType = isSecondary ? "secondary" : undefined;
+  const textType = isSecondary ? 'secondary' : undefined;
 
   /*
     Patterns with bounded quantifiers to prevent performance issues:
@@ -21,41 +21,41 @@ const CustomMarkdown = ({
     - New line: \n
   */
   const patterns = [
-    { type: "tripleCode", regex: /```\n([\s\S]*?)\n```/g },
-    { type: "inlineCode", regex: /`([^`]{1,100})`/g },
-    { type: "bold", regex: /\*\*([^*]{1,100})\*\*/g },
-    { type: "link", regex: /\[([^\]]{1,100})\]\(([^)]{1,200})\)/g },
-    { type: "newline", regex: /\n/g },
+    { type: 'tripleCode', regex: /```\n([\s\S]*?)\n```/g },
+    { type: 'inlineCode', regex: /`([^`]{1,100})`/g },
+    { type: 'bold', regex: /\*\*([^*]{1,100})\*\*/g },
+    { type: 'link', regex: /\[([^\]]{1,100})\]\(([^)]{1,200})\)/g },
+    { type: 'newline', regex: /\n/g },
   ];
 
   const renderToken = (type, content, url) => {
     switch (type) {
-      case "tripleCode":
+      case 'tripleCode':
         return (
           <Paragraph style={{ margin: 0 }}>
             <pre style={{ margin: 0 }}>{content}</pre>
           </Paragraph>
         );
-      case "inlineCode":
+      case 'inlineCode':
         return (
           <Text code type={textType}>
             {content}
           </Text>
         );
-      case "bold":
+      case 'bold':
         return (
           <Text strong type={textType}>
             {content}
           </Text>
         );
-      case "link":
+      case 'link':
         return (
           <Link href={url} target="_blank" rel="noopener noreferrer">
             {content}
           </Link>
         );
-      case "newline":
-        return renderNewLines ? <br /> : "\n";
+      case 'newline':
+        return renderNewLines ? <br /> : '\n';
       default:
         return content;
     }
@@ -68,7 +68,7 @@ const CustomMarkdown = ({
     patterns.forEach(({ type, regex }) => {
       const newElements = [];
       elements.forEach((element) => {
-        if (typeof element !== "string") {
+        if (typeof element !== 'string') {
           newElements.push(element);
           return;
         }

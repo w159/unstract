@@ -1,4 +1,4 @@
-import { InviteEditUser } from "../components/settings/invite/InviteEditUser.jsx";
+import { InviteEditUser } from '../components/settings/invite/InviteEditUser.jsx';
 
 function InviteEditUserPage() {
   return <InviteEditUser />;

@@ -7,24 +7,24 @@ import {
   PlayCircleOutlined,
   SyncOutlined,
   InfoCircleOutlined,
-} from "@ant-design/icons";
-import { useEffect, useState } from "react";
-import { Button, Checkbox, Col, Dropdown, Row, Tag, Tooltip } from "antd";
-import PropTypes from "prop-types";
+} from '@ant-design/icons';
+import { useEffect, useState } from 'react';
+import { Button, Checkbox, Col, Dropdown, Row, Tag, Tooltip } from 'antd';
+import PropTypes from 'prop-types';
 
 import {
   PROMPT_RUN_TYPES,
   promptStudioUpdateStatus,
-} from "../../../helpers/GetStaticData";
-import { ConfirmModal } from "../../widgets/confirm-modal/ConfirmModal";
-import { EditableText } from "../editable-text/EditableText";
-import { useCustomToolStore } from "../../../store/custom-tool-store";
-import { ExpandCardBtn } from "./ExpandCardBtn";
+} from '../../../helpers/GetStaticData';
+import { ConfirmModal } from '../../widgets/confirm-modal/ConfirmModal';
+import { EditableText } from '../editable-text/EditableText';
+import { useCustomToolStore } from '../../../store/custom-tool-store';
+import { ExpandCardBtn } from './ExpandCardBtn';
 
 let PromptRunBtnSps;
 try {
   PromptRunBtnSps =
-    require("../../../plugins/simple-prompt-studio/PromptRunBtnSps").PromptRunBtnSps;
+    require('../../../plugins/simple-prompt-studio/PromptRunBtnSps').PromptRunBtnSps;
 } catch {
   // The component will remain 'undefined' it is not available
 }
@@ -70,10 +70,10 @@ function Header({
   const handleDisablePrompt = (event) => {
     const check = event?.target?.checked;
     setIsDisablePrompt(check);
-    handleChange(check, promptDetails?.prompt_id, "active", true, true).catch(
+    handleChange(check, promptDetails?.prompt_id, 'active', true, true).catch(
       () => {
         setIsDisablePrompt(!check);
-      }
+      },
     );
   };
   const handleRequiredChange = (value) => {
@@ -82,9 +82,9 @@ function Header({
     handleChange(
       newValue,
       promptDetails?.prompt_id,
-      "required",
+      'required',
       true,
-      true
+      true,
     ).catch(() => {
       setRequired(promptDetails?.required || null); // Rollback state in case of error
     });
@@ -99,30 +99,30 @@ function Header({
       {
         label: (
           <Checkbox checked={isDisablePrompt} onChange={handleDisablePrompt}>
-            {isDisablePrompt ? "Enabled" : "Disabled"}
+            {isDisablePrompt ? 'Enabled' : 'Disabled'}
           </Checkbox>
         ),
-        key: "enable",
+        key: 'enable',
       },
       {
         label: (
           <div>
-            {["json", "table", "record"].indexOf(enforceType) === -1 && (
+            {['json', 'table', 'record'].indexOf(enforceType) === -1 && (
               <Checkbox
-                checked={required === "all"}
-                onChange={() => handleRequiredChange("all")}
+                checked={required === 'all'}
+                onChange={() => handleRequiredChange('all')}
               >
-                Value Required{" "}
+                Value Required{' '}
                 <Tooltip title="Marks this as a required field. Saving this record won't be allowed in Human Quality Review should this field be empty.">
                   <InfoCircleOutlined />
                 </Tooltip>
               </Checkbox>
             )}
-            {enforceType === "json" && (
+            {enforceType === 'json' && (
               <>
                 <Checkbox
-                  checked={required === "all"}
-                  onChange={() => handleRequiredChange("all")}
+                  checked={required === 'all'}
+                  onChange={() => handleRequiredChange('all')}
                 >
                   All JSON Values Required
                 </Checkbox>
@@ -130,8 +130,8 @@ function Header({
                   <InfoCircleOutlined />
                 </Tooltip>
                 <Checkbox
-                  checked={required === "any"}
-                  onChange={() => handleRequiredChange("any")}
+                  checked={required === 'any'}
+                  onChange={() => handleRequiredChange('any')}
                   className="required-checkbox-padding"
                 >
                   Atleast 1 JSON Value Required
@@ -143,7 +143,7 @@ function Header({
             )}
           </div>
         ),
-        key: "required",
+        key: 'required',
       },
       {
         label: (
@@ -154,7 +154,7 @@ function Header({
             <DeleteOutlined /> Delete
           </ConfirmModal>
         ),
-        key: "delete",
+        key: 'delete',
         disabled:
           isCoverageLoading ||
           isSinglePassExtractLoading ||
@@ -187,10 +187,10 @@ function Header({
       <Col span={12} className="display-flex-right">
         <div>
           {progressMsg?.message && (
-            <Tooltip title={progressMsg?.message || ""}>
+            <Tooltip title={progressMsg?.message || ''}>
               <Tag
                 icon={isCoverageLoading && <LoadingOutlined spin />}
-                color={progressMsg?.level === "ERROR" ? "error" : "processing"}
+                color={progressMsg?.level === 'ERROR' ? 'error' : 'processing'}
                 className="display-flex-align-center"
               >
                 <div className="tag-max-width ellipsis">
@@ -248,7 +248,7 @@ function Header({
                 onClick={() =>
                   handleRunBtnClick(
                     PROMPT_RUN_TYPES.RUN_ONE_PROMPT_ALL_LLMS_ONE_DOC,
-                    selectedDoc?.document_id
+                    selectedDoc?.document_id,
                   )
                 }
                 disabled={
@@ -271,7 +271,7 @@ function Header({
                 className="prompt-card-action-button"
                 onClick={() =>
                   handleRunBtnClick(
-                    PROMPT_RUN_TYPES.RUN_ONE_PROMPT_ALL_LLMS_ALL_DOCS
+                    PROMPT_RUN_TYPES.RUN_ONE_PROMPT_ALL_LLMS_ALL_DOCS,
                   )
                 }
                 disabled={
@@ -297,7 +297,7 @@ function Header({
             promptDetails={promptDetails}
           />
         )}
-        <Dropdown menu={{ items }} trigger={["click"]} placement="bottomLeft">
+        <Dropdown menu={{ items }} trigger={['click']} placement="bottomLeft">
           <Button
             size="small"
             type="text"

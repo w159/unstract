@@ -1,10 +1,10 @@
-import { Input } from "antd";
-import { useCallback, useEffect, useRef, useState } from "react";
-import PropTypes from "prop-types";
-import debounce from "lodash/debounce";
+import { Input } from 'antd';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
+import debounce from 'lodash/debounce';
 
-import "./EditableText.css";
-import { useCustomToolStore } from "../../../store/custom-tool-store";
+import './EditableText.css';
+import { useCustomToolStore } from '../../../store/custom-tool-store';
 function EditableText({
   isEditing,
   setIsEditing,
@@ -17,7 +17,7 @@ function EditableText({
   placeHolder,
   isCoverageLoading,
 }) {
-  const name = isTextarea ? "prompt" : "prompt_key";
+  const name = isTextarea ? 'prompt' : 'prompt_key';
   const [triggerHandleChange, setTriggerHandleChange] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const divRef = useRef(null);
@@ -29,11 +29,11 @@ function EditableText({
 
   useEffect(() => {
     // Attach the event listener when the component mounts
-    document.addEventListener("click", handleClickOutside);
+    document.addEventListener('click', handleClickOutside);
 
     // Clean up the event listener when the component unmounts
     return () => {
-      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener('click', handleClickOutside);
     };
   }, []);
 
@@ -51,7 +51,7 @@ function EditableText({
     debounce((event) => {
       setTriggerHandleChange(true);
     }, 1000),
-    []
+    [],
   );
 
   useEffect(() => {
@@ -78,8 +78,8 @@ function EditableText({
         placeholder={placeHolder}
         name={name}
         size="small"
-        style={{ backgroundColor: "transparent" }}
-        variant={`${!isEditing && !isHovered ? "borderless" : "outlined"}`}
+        style={{ backgroundColor: 'transparent' }}
+        variant={`${!isEditing && !isHovered ? 'borderless' : 'outlined'}`}
         autoSize={true}
         onMouseOver={() => setIsHovered(true)}
         onMouseOut={() => setIsHovered(false)}
@@ -100,8 +100,8 @@ function EditableText({
       placeholder="Enter Key"
       name={name}
       size="small"
-      style={{ backgroundColor: "transparent" }}
-      variant={`${!isEditing && !isHovered ? "borderless" : "outlined"}`}
+      style={{ backgroundColor: 'transparent' }}
+      variant={`${!isEditing && !isHovered ? 'borderless' : 'outlined'}`}
       autoSize={true}
       onMouseOver={() => setIsHovered(true)}
       onMouseOut={() => setIsHovered(false)}

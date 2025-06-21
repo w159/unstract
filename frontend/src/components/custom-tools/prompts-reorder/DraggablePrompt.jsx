@@ -1,11 +1,11 @@
-import { memo, useRef } from "react";
-import PropTypes from "prop-types";
-import { useDrag, useDrop } from "react-dnd";
-import "./PromptsReorder.css";
-import { Card, Typography } from "antd";
+import { memo, useRef } from 'react';
+import PropTypes from 'prop-types';
+import { useDrag, useDrop } from 'react-dnd';
+import './PromptsReorder.css';
+import { Card, Typography } from 'antd';
 
 const ItemTypes = {
-  PROMPT: "prompt",
+  PROMPT: 'prompt',
 };
 
 function DraggablePrompt({ prompt, index, movePrompt, onDrop, cancelDrag }) {
@@ -64,7 +64,7 @@ function DraggablePrompt({ prompt, index, movePrompt, onDrop, cancelDrag }) {
     <Card
       ref={ref}
       className={`draggable-prompt prompt-card-bg-col1 ${
-        isDragging ? "dragging" : ""
+        isDragging ? 'dragging' : ''
       }`}
       data-handler-id={handlerId}
     >

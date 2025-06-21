@@ -1,9 +1,9 @@
-import { Col, Row, Typography } from "antd";
-import PropTypes from "prop-types";
+import { Col, Row, Typography } from 'antd';
+import PropTypes from 'prop-types';
 
-import { InputPlaceholder, OutputPlaceholder } from "../../../assets";
-import "./InputOutput.css";
-import { MarkdownRenderer } from "../markdown-renderer/MarkdownRenderer";
+import { InputPlaceholder, OutputPlaceholder } from '../../../assets';
+import './InputOutput.css';
+import { MarkdownRenderer } from '../markdown-renderer/MarkdownRenderer';
 
 function InputOutput({ input, output }) {
   if (!input && !output) {
@@ -11,12 +11,12 @@ function InputOutput({ input, output }) {
       <div className="wf-input-output-layout wf-input-output-placeholder wf-input-output-box">
         <Row className="display-flex-center">
           <Col>
-            <div style={{ padding: "5px" }}>
+            <div style={{ padding: '5px' }}>
               <InputPlaceholder />
             </div>
           </Col>
           <Col>
-            <div style={{ padding: "5px" }}>
+            <div style={{ padding: '5px' }}>
               <OutputPlaceholder />
             </div>
           </Col>

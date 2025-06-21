@@ -1,7 +1,7 @@
-import { Typography } from "antd";
+import { Typography } from 'antd';
 
-import { IslandLayout } from "../../../layouts/island-layout/IslandLayout.jsx";
-import "./Unauthorized.css";
+import { IslandLayout } from '../../../layouts/island-layout/IslandLayout.jsx';
+import './Unauthorized.css';
 
 function Unauthorized() {
   return (

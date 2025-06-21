@@ -1,10 +1,10 @@
-import { Select } from "antd";
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { Select } from 'antd';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 
-import { RjsfWidgetLayout } from "../../../layouts/rjsf-widget-layout/RjsfWidgetLayout.jsx";
+import { RjsfWidgetLayout } from '../../../layouts/rjsf-widget-layout/RjsfWidgetLayout.jsx';
 
-import "./ArrayField.css";
+import './ArrayField.css';
 
 const ArrayField = (props) => {
   const { schema, formData, onChange, required, readonly } = props;

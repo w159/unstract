@@ -1,5 +1,5 @@
-import { Space } from "antd";
-import PropTypes from "prop-types";
+import { Space } from 'antd';
+import PropTypes from 'prop-types';
 
 const SpaceWrapper = ({ children }) => {
   return (

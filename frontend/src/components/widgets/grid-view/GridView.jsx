@@ -1,13 +1,13 @@
-import { Card, Dropdown, Popconfirm, Typography } from "antd";
-import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
-import "./GridView.css";
+import { Card, Dropdown, Popconfirm, Typography } from 'antd';
+import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
+import './GridView.css';
 import {
   DeleteOutlined,
   EditOutlined,
   MoreOutlined,
   QuestionCircleOutlined,
-} from "@ant-design/icons";
+} from '@ant-design/icons';
 
 function GridView({ listOfTools, handleEdit, handleDelete }) {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ function GridView({ listOfTools, handleEdit, handleDelete }) {
             <Card
               key={item?.tool_id}
               title={item?.tool_name}
-              style={{ width: "100%" }}
+              style={{ width: '100%' }}
               size="small"
               type="inner"
               hoverable
@@ -30,8 +30,8 @@ function GridView({ listOfTools, handleEdit, handleDelete }) {
                   menu={{
                     items: [
                       {
-                        label: "Edit",
-                        key: "edit",
+                        label: 'Edit',
+                        key: 'edit',
                         icon: <EditOutlined />,
                         onClick: (event) => handleEdit(event, item?.tool_id),
                       },
@@ -45,7 +45,7 @@ function GridView({ listOfTools, handleEdit, handleDelete }) {
                             icon={
                               <QuestionCircleOutlined
                                 style={{
-                                  color: "#dc4446",
+                                  color: '#dc4446',
                                 }}
                               />
                             }
@@ -56,20 +56,20 @@ function GridView({ listOfTools, handleEdit, handleDelete }) {
                             <Typography.Text type="danger">
                               <DeleteOutlined
                                 style={{
-                                  color: "#dc4446",
-                                  marginInlineEnd: "8px",
+                                  color: '#dc4446',
+                                  marginInlineEnd: '8px',
                                 }}
                               />
                               Delete
                             </Typography.Text>
                           </Popconfirm>
                         ),
-                        key: "delete",
+                        key: 'delete',
                         onClick: (event) => event.domEvent.stopPropagation(),
                       },
                     ],
                   }}
-                  trigger={["click"]}
+                  trigger={['click']}
                   placement="bottomRight"
                   onClick={(evt) => evt.stopPropagation()}
                 >
@@ -79,7 +79,7 @@ function GridView({ listOfTools, handleEdit, handleDelete }) {
             >
               <div className="grid-view-card-content">
                 <Typography.Paragraph type="secondary">
-                  {item?.description || "No description"}
+                  {item?.description || 'No description'}
                 </Typography.Paragraph>
               </div>
             </Card>

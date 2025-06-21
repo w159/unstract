@@ -4,15 +4,15 @@ import {
   pollForCompletion,
   PROMPT_RUN_API_STATUSES,
   PROMPT_RUN_TYPES,
-} from "../helpers/GetStaticData";
-import { useAlertStore } from "../store/alert-store";
-import { useCustomToolStore } from "../store/custom-tool-store";
-import { usePromptRunQueueStore } from "../store/prompt-run-queue-store";
-import { usePromptRunStatusStore } from "../store/prompt-run-status-store";
-import { useSessionStore } from "../store/session-store";
-import { useAxiosPrivate } from "./useAxiosPrivate";
-import { useExceptionHandler } from "./useExceptionHandler";
-import usePromptOutput from "./usePromptOutput";
+} from '../helpers/GetStaticData';
+import { useAlertStore } from '../store/alert-store';
+import { useCustomToolStore } from '../store/custom-tool-store';
+import { usePromptRunQueueStore } from '../store/prompt-run-queue-store';
+import { usePromptRunStatusStore } from '../store/prompt-run-status-store';
+import { useSessionStore } from '../store/session-store';
+import { useAxiosPrivate } from './useAxiosPrivate';
+import { useExceptionHandler } from './useExceptionHandler';
+import usePromptOutput from './usePromptOutput';
 
 const usePromptRun = () => {
   const { pushPromptRunApi, freeActiveApi } = usePromptRunQueueStore();
@@ -29,7 +29,7 @@ const usePromptRun = () => {
   const makeApiRequest = (requestOptions) => axiosPrivate(requestOptions);
 
   const runPromptApi = (api) => {
-    const [promptId, docId, profileId] = api.split("__");
+    const [promptId, docId, profileId] = api.split('__');
     const runId = generateUUID();
 
     const body = {
@@ -40,11 +40,11 @@ const usePromptRun = () => {
     };
 
     const requestOptions = {
-      method: "POST",
+      method: 'POST',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/prompt-studio/fetch_response/${details?.tool_id}`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
-        "Content-Type": "application/json",
+        'X-CSRFToken': sessionDetails?.csrfToken,
+        'Content-Type': 'application/json',
       },
       data: body,
     };
@@ -58,7 +58,7 @@ const usePromptRun = () => {
       requestOptions,
       maxWaitTime,
       pollingInterval,
-      makeApiRequest
+      makeApiRequest,
     )
       .then((res) => {
         if (docId !== selectedDoc?.document_id) return;
@@ -68,7 +68,7 @@ const usePromptRun = () => {
       })
       .catch((err) => {
         setAlertDetails(
-          handleException(err, "Failed to generate prompt output")
+          handleException(err, 'Failed to generate prompt output'),
         );
       })
       .finally(() => {
@@ -105,7 +105,7 @@ const usePromptRun = () => {
         docId,
         profileId,
         null,
-        false
+        false,
       );
       const statusKey = generateApiRunStatusId(docId, profileId);
       promptRunApiStatus[promptId][statusKey] = PROMPT_RUN_API_STATUSES.RUNNING;
@@ -119,7 +119,7 @@ const usePromptRun = () => {
     const promptRunApiStatus = {};
 
     promptApis.forEach((apiDetails) => {
-      const [promptId, docId, profileId] = apiDetails.split("__");
+      const [promptId, docId, profileId] = apiDetails.split('__');
       const statusKey = generateApiRunStatusId(docId, profileId);
 
       if (!promptRunApiStatus[promptId]) {
@@ -137,7 +137,7 @@ const usePromptRun = () => {
     promptRunType,
     promptId = null,
     profileId = null,
-    docId = null
+    docId = null,
   ) => {
     const promptIds = promptId
       ? [promptId]
@@ -152,31 +152,31 @@ const usePromptRun = () => {
 
     const paramsMap = {
       [PROMPT_RUN_TYPES.RUN_ONE_PROMPT_ONE_LLM_ONE_DOC]: {
-        requiredParams: ["promptId", "profileId", "docId"],
+        requiredParams: ['promptId', 'profileId', 'docId'],
         prompts: [promptId],
         profiles: [profileId],
         docs: [docId],
       },
       [PROMPT_RUN_TYPES.RUN_ONE_PROMPT_ONE_LLM_ALL_DOCS]: {
-        requiredParams: ["promptId", "profileId"],
+        requiredParams: ['promptId', 'profileId'],
         prompts: [promptId],
         profiles: [profileId],
         docs: docIds,
       },
       [PROMPT_RUN_TYPES.RUN_ONE_PROMPT_ALL_LLMS_ONE_DOC]: {
-        requiredParams: ["promptId", "docId"],
+        requiredParams: ['promptId', 'docId'],
         prompts: [promptId],
         profiles: profileIds,
         docs: [docId],
       },
       [PROMPT_RUN_TYPES.RUN_ONE_PROMPT_ALL_LLMS_ALL_DOCS]: {
-        requiredParams: ["promptId"],
+        requiredParams: ['promptId'],
         prompts: [promptId],
         profiles: profileIds,
         docs: docIds,
       },
       [PROMPT_RUN_TYPES.RUN_ALL_PROMPTS_ALL_LLMS_ONE_DOC]: {
-        requiredParams: ["docId"],
+        requiredParams: ['docId'],
         prompts: promptIds,
         profiles: profileIds,
         docs: [docId],
@@ -194,7 +194,7 @@ const usePromptRun = () => {
 
     const paramValues = { promptId, profileId, docId };
     const missingParams = params.requiredParams.filter(
-      (param) => !paramValues[param]
+      (param) => !paramValues[param],
     );
 
     if (missingParams.length > 0) return;
@@ -202,7 +202,7 @@ const usePromptRun = () => {
     ({ apiRequestsToQueue, promptRunApiStatus } = prepareApiRequests(
       params.prompts,
       params.profiles,
-      params.docs
+      params.docs,
     ));
 
     addPromptStatus(promptRunApiStatus);

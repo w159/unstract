@@ -1,13 +1,13 @@
-import { Table, Modal, Button } from "antd";
-import PropTypes from "prop-types";
-import { useState } from "react";
+import { Table, Modal, Button } from 'antd';
+import PropTypes from 'prop-types';
+import { useState } from 'react';
 
-import { useSessionStore } from "../../../store/session-store.js";
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate.js";
-import { useAlertStore } from "../../../store/alert-store.js";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler.jsx";
-import "./LogsModel.css";
-import CustomMarkdown from "../../helpers/custom-markdown/CustomMarkdown.jsx";
+import { useSessionStore } from '../../../store/session-store.js';
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate.js';
+import { useAlertStore } from '../../../store/alert-store.js';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler.jsx';
+import './LogsModel.css';
+import CustomMarkdown from '../../helpers/custom-markdown/CustomMarkdown.jsx';
 
 const LogsModal = ({
   open,
@@ -27,10 +27,10 @@ const LogsModal = ({
 
   const fetchLogDetails = async (logId, page = 1, pageSize = 10) => {
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/workflow/execution/${logId}/logs/`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
       params: {
         page: page,
@@ -63,14 +63,14 @@ const LogsModal = ({
 
   const logColumns = [
     {
-      title: "Executed At",
-      dataIndex: "created_at",
-      key: "created_at",
+      title: 'Executed At',
+      dataIndex: 'created_at',
+      key: 'created_at',
     },
     {
-      title: "Execution ID",
-      dataIndex: "execution_id",
-      key: "execution_id",
+      title: 'Execution ID',
+      dataIndex: 'execution_id',
+      key: 'execution_id',
       render: (text, record) => {
         return (
           <Button
@@ -83,34 +83,34 @@ const LogsModal = ({
       },
     },
     {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
       render: (level) => <span className={level?.toLowerCase()}>{level}</span>,
     },
   ];
 
   const logDetailsColumns = [
     {
-      title: "Event Time",
-      dataIndex: "event_time",
-      key: "event_time",
+      title: 'Event Time',
+      dataIndex: 'event_time',
+      key: 'event_time',
     },
     {
-      title: "Event Stage",
-      dataIndex: "stage",
-      key: "stage",
+      title: 'Event Stage',
+      dataIndex: 'stage',
+      key: 'stage',
     },
     {
-      title: "Log Level",
-      dataIndex: "level",
-      key: "level",
+      title: 'Log Level',
+      dataIndex: 'level',
+      key: 'level',
       render: (level) => <span className={level?.toLowerCase()}>{level}</span>,
     },
     {
-      title: "Log",
-      dataIndex: "log",
-      key: "log",
+      title: 'Log',
+      dataIndex: 'log',
+      key: 'log',
     },
   ];
 

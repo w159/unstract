@@ -1,10 +1,10 @@
-import { Button, Col, Row, Segmented, Typography } from "antd";
-import "./ToolNavBar.css";
-import Search from "antd/es/input/Search";
-import { ArrowLeftOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
-import { debounce } from "lodash";
-import PropTypes from "prop-types";
+import { Button, Col, Row, Segmented, Typography } from 'antd';
+import './ToolNavBar.css';
+import Search from 'antd/es/input/Search';
+import { ArrowLeftOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+import { debounce } from 'lodash';
+import PropTypes from 'prop-types';
 
 function ToolNavBar({
   title,
@@ -36,9 +36,9 @@ function ToolNavBar({
           <Typography
             style={{
               fontWeight: 600,
-              fontSize: "18px",
-              display: "inline",
-              lineHeight: "24px",
+              fontSize: '18px',
+              display: 'inline',
+              lineHeight: '24px',
             }}
           >
             {title}

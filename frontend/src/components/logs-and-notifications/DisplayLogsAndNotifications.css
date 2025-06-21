@@ -35,7 +35,7 @@
 }
 
 .tool-logs-table .ant-table {
-  font-family: Consolas, "Courier New", monospace;
+  font-family: Consolas, 'Courier New', monospace;
   font-size: 12px !important;
   background-color: #fff;
 }

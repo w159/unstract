@@ -1,56 +1,56 @@
-import { Button, Form, Input, Select, Space } from "antd";
-import PropTypes from "prop-types";
-import { getBackendErrorDetail } from "../../../helpers/GetStaticData";
-import { useEffect, useState } from "react";
+import { Button, Form, Input, Select, Space } from 'antd';
+import PropTypes from 'prop-types';
+import { getBackendErrorDetail } from '../../../helpers/GetStaticData';
+import { useEffect, useState } from 'react';
 
 const DEFAULT_FORM_DETAILS = {
-  name: "",
-  authorization_type: "BEARER",
-  notification_type: "WEBHOOK",
-  platform: "SLACK",
-  authorization_header: "",
-  authorization_key: "",
+  name: '',
+  authorization_type: 'BEARER',
+  notification_type: 'WEBHOOK',
+  platform: 'SLACK',
+  authorization_header: '',
+  authorization_key: '',
   is_active: false,
   max_retries: 0,
-  pipeline: "",
-  api: "",
-  url: "",
+  pipeline: '',
+  api: '',
+  url: '',
 };
 
 const NOTIFICATION_TYPE_ITEMS = [
   {
-    value: "WEBHOOK",
-    label: "WEBHOOK",
+    value: 'WEBHOOK',
+    label: 'WEBHOOK',
   },
 ];
 
 const PLATFORM_TYPES = [
   {
-    value: "SLACK",
-    label: "SLACK",
+    value: 'SLACK',
+    label: 'SLACK',
   },
   {
-    value: "API",
-    label: "API",
+    value: 'API',
+    label: 'API',
   },
 ];
 
 const AUTHORIZATION_TYPES = [
   {
-    value: "BEARER",
-    label: "BEARER",
+    value: 'BEARER',
+    label: 'BEARER',
   },
   {
-    value: "API_KEY",
-    label: "API_KEY",
+    value: 'API_KEY',
+    label: 'API_KEY',
   },
   {
-    value: "CUSTOM_HEADER",
-    label: "CUSTOM_HEADER",
+    value: 'CUSTOM_HEADER',
+    label: 'CUSTOM_HEADER',
   },
   {
-    value: "NONE",
-    label: "NONE",
+    value: 'NONE',
+    label: 'NONE',
   },
 ];
 
@@ -94,7 +94,7 @@ function CreateNotification({
     setBackendErrors((prevErrors) => {
       if (prevErrors) {
         const updatedErrors = prevErrors.errors.filter(
-          (error) => error.attr !== changedFieldName
+          (error) => error.attr !== changedFieldName,
         );
         return { ...prevErrors, errors: updatedErrors };
       }
@@ -117,42 +117,42 @@ function CreateNotification({
     setFormDetails((prevDetails) => ({
       ...prevDetails,
       authorization_type: value,
-      authorization_key: value === "NONE" ? "" : prevDetails.authorization_key,
+      authorization_key: value === 'NONE' ? '' : prevDetails.authorization_key,
       authorization_header:
-        value === "CUSTOM_HEADER" ? prevDetails.authorization_header : "",
+        value === 'CUSTOM_HEADER' ? prevDetails.authorization_header : '',
     }));
   };
 
   const formItems = [
     {
-      label: "Name",
-      name: "name",
-      rules: [{ required: true, message: "Please enter name" }],
+      label: 'Name',
+      name: 'name',
+      rules: [{ required: true, message: 'Please enter name' }],
       component: <Input />,
     },
     {
-      label: "URL",
-      name: "url",
-      rules: [{ required: true, message: "Please enter URL" }],
+      label: 'URL',
+      name: 'url',
+      rules: [{ required: true, message: 'Please enter URL' }],
       component: <Input />,
       tooltip:
-        "Provide the URL associated with this item. This field is required.",
+        'Provide the URL associated with this item. This field is required.',
     },
     {
-      label: "Notification Type",
-      name: "notification_type",
+      label: 'Notification Type',
+      name: 'notification_type',
       component: <Select options={NOTIFICATION_TYPE_ITEMS} />,
-      tooltip: "Select the type of notification you want to send.",
+      tooltip: 'Select the type of notification you want to send.',
     },
     {
-      label: "Platform",
-      name: "platform",
+      label: 'Platform',
+      name: 'platform',
       component: <Select options={PLATFORM_TYPES} />,
-      tooltip: "Choose the platform where the notification will be used.",
+      tooltip: 'Choose the platform where the notification will be used.',
     },
     {
-      label: "Authorization Type",
-      name: "authorization_type",
+      label: 'Authorization Type',
+      name: 'authorization_type',
       component: (
         <Select
           options={AUTHORIZATION_TYPES}
@@ -160,37 +160,37 @@ function CreateNotification({
         />
       ),
       tooltip:
-        "Select the type of authorization required for this notification.",
+        'Select the type of authorization required for this notification.',
     },
     {
-      label: "Authorization Header",
-      name: "authorization_header",
+      label: 'Authorization Header',
+      name: 'authorization_header',
       component: <Input />,
-      tooltip: "Enter the custom authorization header needed for requests.",
+      tooltip: 'Enter the custom authorization header needed for requests.',
       rules:
-        formDetails.authorization_type === "CUSTOM_HEADER"
-          ? [{ required: true, message: "Authorization Header is required" }]
+        formDetails.authorization_type === 'CUSTOM_HEADER'
+          ? [{ required: true, message: 'Authorization Header is required' }]
           : [],
-      hidden: formDetails.authorization_type !== "CUSTOM_HEADER",
+      hidden: formDetails.authorization_type !== 'CUSTOM_HEADER',
     },
     {
-      label: "Authorization Key",
-      name: "authorization_key",
+      label: 'Authorization Key',
+      name: 'authorization_key',
       component: <Input />,
       tooltip:
-        "Provide the authorization key used to validate the notification.",
+        'Provide the authorization key used to validate the notification.',
       rules:
-        formDetails.authorization_type !== "NONE"
-          ? [{ required: true, message: "Authorization key is required" }]
+        formDetails.authorization_type !== 'NONE'
+          ? [{ required: true, message: 'Authorization key is required' }]
           : [],
-      hidden: formDetails.authorization_type === "NONE",
+      hidden: formDetails.authorization_type === 'NONE',
     },
     {
-      label: "Max Retries",
-      name: "max_retries",
+      label: 'Max Retries',
+      name: 'max_retries',
       component: <Input type="number" />,
       tooltip:
-        "Specify the maximum number of times the notification should be retried if it fails.",
+        'Specify the maximum number of times the notification should be retried if it fails.',
     },
   ];
 
@@ -210,21 +210,21 @@ function CreateNotification({
               label={label}
               name={name}
               rules={rules}
-              tooltip={tooltip || ""}
+              tooltip={tooltip || ''}
               validateStatus={
-                getBackendErrorDetail(name, backendErrors) ? "error" : ""
+                getBackendErrorDetail(name, backendErrors) ? 'error' : ''
               }
               help={getBackendErrorDetail(name, backendErrors)}
             >
               {component}
             </Form.Item>
-          )
+          ),
       )}
       <Form.Item className="display-flex-right">
         <Space>
           <Button onClick={() => setIsForm(false)}>Cancel</Button>
           <Button type="primary" htmlType="submit" loading={isLoading}>
-            {editDetails ? "Update" : "Create"} Notification
+            {editDetails ? 'Update' : 'Create'} Notification
           </Button>
         </Space>
       </Form.Item>

@@ -1,27 +1,27 @@
-import PropTypes from "prop-types";
-import { useEffect, useRef, useState } from "react";
+import PropTypes from 'prop-types';
+import { useEffect, useRef, useState } from 'react';
 
-import "./DocumentParser.css";
-import { promptType } from "../../../helpers/GetStaticData";
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { useAlertStore } from "../../../store/alert-store";
-import { useCustomToolStore } from "../../../store/custom-tool-store";
-import { useSessionStore } from "../../../store/session-store";
-import { EmptyState } from "../../widgets/empty-state/EmptyState";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler";
-import { PromptCardWrapper } from "../prompt-card/PromptCardWrapper";
-import { usePromptOutputStore } from "../../../store/prompt-output-store";
+import './DocumentParser.css';
+import { promptType } from '../../../helpers/GetStaticData';
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { useAlertStore } from '../../../store/alert-store';
+import { useCustomToolStore } from '../../../store/custom-tool-store';
+import { useSessionStore } from '../../../store/session-store';
+import { EmptyState } from '../../widgets/empty-state/EmptyState';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler';
+import { PromptCardWrapper } from '../prompt-card/PromptCardWrapper';
+import { usePromptOutputStore } from '../../../store/prompt-output-store';
 
 let promptCardService;
 let promptPatchApiSps;
 let SpsPromptsEmptyState;
 try {
   promptCardService =
-    require("../../../plugins/prompt-card/prompt-card-service").promptCardService;
+    require('../../../plugins/prompt-card/prompt-card-service').promptCardService;
   promptPatchApiSps =
-    require("../../../plugins/simple-prompt-studio/helper").promptPatchApiSps;
+    require('../../../plugins/simple-prompt-studio/helper').promptPatchApiSps;
   SpsPromptsEmptyState =
-    require("../../../plugins/simple-prompt-studio/SpsPromptsEmptyState").SpsPromptsEmptyState;
+    require('../../../plugins/simple-prompt-studio/SpsPromptsEmptyState').SpsPromptsEmptyState;
 } catch {
   // The component will remain null of it is not available
 }
@@ -56,7 +56,7 @@ function DocumentParser({
   }
 
   useEffect(() => {
-    const outputTypeData = getDropdownItems("output_type") || {};
+    const outputTypeData = getDropdownItems('output_type') || {};
     const dropdownList1 = Object.keys(outputTypeData)?.map((item) => {
       return { value: outputTypeData[item] };
     });
@@ -83,9 +83,9 @@ function DocumentParser({
             return updatedPromptsCopy[itemPromptId];
           }
           return item;
-        }
+        },
       );
-      modifiedDetails["prompts"] = modifiedPrompts;
+      modifiedDetails['prompts'] = modifiedPrompts;
       updateCustomTool({ details: modifiedDetails });
     };
   }, []);
@@ -97,7 +97,7 @@ function DocumentParser({
   useEffect(() => {
     if (scrollToBottom) {
       // Scroll down to the lastest chat.
-      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+      bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
       setScrollToBottom(false);
     }
   }, [scrollToBottom]);
@@ -109,7 +109,7 @@ function DocumentParser({
   const handleChangePromptCard = async (name, value, promptId) => {
     const promptsAndNotes = details?.prompts || [];
 
-    if (name === "prompt_key") {
+    if (name === 'prompt_key') {
       // Return if the prompt or the prompt key is empty
       if (!value) {
         return;
@@ -117,13 +117,13 @@ function DocumentParser({
     }
 
     const index = promptsAndNotes.findIndex(
-      (item) => item?.prompt_id === promptId
+      (item) => item?.prompt_id === promptId,
     );
 
     if (index === -1) {
       setAlertDetails({
-        type: "error",
-        content: "Prompt not found",
+        type: 'error',
+        content: 'Prompt not found',
       });
       return;
     }
@@ -134,16 +134,16 @@ function DocumentParser({
       [`${name}`]: value,
     };
 
-    let url = promptUrl(promptDetails?.prompt_id + "/");
+    let url = promptUrl(promptDetails?.prompt_id + '/');
     if (isSimplePromptStudio) {
       url = promptPatchApiSps(promptDetails?.prompt_id);
     }
     const requestOptions = {
-      method: "PATCH",
+      method: 'PATCH',
       url,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
-        "Content-Type": "application/json",
+        'X-CSRFToken': sessionDetails?.csrfToken,
+        'Content-Type': 'application/json',
       },
       data: body,
     };
@@ -151,20 +151,20 @@ function DocumentParser({
     return axiosPrivate(requestOptions)
       .then((res) => res)
       .catch((err) => {
-        setAlertDetails(handleException(err, "Failed to update"));
+        setAlertDetails(handleException(err, 'Failed to update'));
       });
   };
 
   const handleDelete = (promptId) => {
-    let url = promptUrl(promptId + "/");
+    let url = promptUrl(promptId + '/');
     if (isSimplePromptStudio) {
       url = promptPatchApiSps(promptId);
     }
     const requestOptions = {
-      method: "DELETE",
+      method: 'DELETE',
       url,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
     };
 
@@ -172,17 +172,17 @@ function DocumentParser({
       .then(() => {
         const modifiedDetails = { ...details };
         const modifiedPrompts = [...(modifiedDetails?.prompts || [])].filter(
-          (item) => item?.prompt_id !== promptId
+          (item) => item?.prompt_id !== promptId,
         );
-        modifiedDetails["prompts"] = modifiedPrompts;
+        modifiedDetails['prompts'] = modifiedPrompts;
         updateCustomTool({ details: modifiedDetails });
         setAlertDetails({
-          type: "success",
-          content: "Deleted successfully",
+          type: 'success',
+          content: 'Deleted successfully',
         });
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "Failed to delete"));
+        setAlertDetails(handleException(err, 'Failed to delete'));
       });
   };
 

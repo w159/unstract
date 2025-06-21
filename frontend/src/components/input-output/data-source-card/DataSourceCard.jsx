@@ -1,8 +1,8 @@
-import { Card, Image, Typography } from "antd";
-import PropTypes from "prop-types";
+import { Card, Image, Typography } from 'antd';
+import PropTypes from 'prop-types';
 
-import "./DataSourceCard.css";
-import usePostHogEvents from "../../../hooks/usePostHogEvents";
+import './DataSourceCard.css';
+import usePostHogEvents from '../../../hooks/usePostHogEvents';
 
 function DataSourceCard({ srcDetails, setSelectedSourceId, type }) {
   const { posthogEventText, setPostHogCustomEvent } = usePostHogEvents();
@@ -16,7 +16,7 @@ function DataSourceCard({ srcDetails, setSelectedSourceId, type }) {
 
     try {
       setPostHogCustomEvent(posthogEventText[type], {
-        info: "Clicked on the adapters card",
+        info: 'Clicked on the adapters card',
         adapter_name: srcDetails?.name,
       });
     } catch (err) {
@@ -29,7 +29,7 @@ function DataSourceCard({ srcDetails, setSelectedSourceId, type }) {
       size="small"
       type="inner"
       bordered={true}
-      className={`ds-card ${srcDetails?.isDisabled ? "disabled" : ""}`}
+      className={`ds-card ${srcDetails?.isDisabled ? 'disabled' : ''}`}
       onClick={handleSelectSource}
     >
       <div className="cover-container">

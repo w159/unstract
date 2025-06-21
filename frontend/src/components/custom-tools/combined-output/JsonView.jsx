@@ -1,10 +1,10 @@
-import PropTypes from "prop-types";
-import Prism from "prismjs";
-import { useEffect } from "react";
-import TabPane from "antd/es/tabs/TabPane";
-import { Tabs } from "antd";
+import PropTypes from 'prop-types';
+import Prism from 'prismjs';
+import { useEffect } from 'react';
+import TabPane from 'antd/es/tabs/TabPane';
+import { Tabs } from 'antd';
 
-import { JsonViewBody } from "./JsonViewBody";
+import { JsonViewBody } from './JsonViewBody';
 
 function JsonView({
   combinedOutput,
@@ -25,7 +25,7 @@ function JsonView({
       <div className="combined-op-header">
         <Tabs activeKey={activeKey} onChange={handleTabChange} moreIcon={<></>}>
           {!isSinglePass && (
-            <TabPane tab={<span>Default</span>} key={"0"}></TabPane>
+            <TabPane tab={<span>Default</span>} key={'0'}></TabPane>
           )}
           {adapterData.map((adapter) => (
             <TabPane

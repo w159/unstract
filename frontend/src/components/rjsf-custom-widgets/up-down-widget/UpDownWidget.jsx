@@ -1,7 +1,7 @@
-import { InputNumber } from "antd";
-import PropTypes from "prop-types";
+import { InputNumber } from 'antd';
+import PropTypes from 'prop-types';
 
-import { RjsfWidgetLayout } from "../../../layouts/rjsf-widget-layout/RjsfWidgetLayout.jsx";
+import { RjsfWidgetLayout } from '../../../layouts/rjsf-widget-layout/RjsfWidgetLayout.jsx';
 
 const UpDownWidget = ({
   id,
@@ -12,7 +12,7 @@ const UpDownWidget = ({
   required,
   readonly,
 }) => {
-  const description = schema?.description || "";
+  const description = schema?.description || '';
   const handleNumberChange = (numberValue) => {
     onChange(numberValue);
   };

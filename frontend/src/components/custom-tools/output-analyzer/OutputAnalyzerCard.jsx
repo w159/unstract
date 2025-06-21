@@ -1,28 +1,28 @@
-import { Col, Divider, Flex, Row, Space, Typography } from "antd";
-import PropTypes from "prop-types";
-import { useEffect, useState, useMemo } from "react";
-import { useParams } from "react-router-dom";
+import { Col, Divider, Flex, Row, Space, Typography } from 'antd';
+import PropTypes from 'prop-types';
+import { useEffect, useState, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 
-import { base64toBlob } from "../../../helpers/GetStaticData";
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler";
-import { useAlertStore } from "../../../store/alert-store";
-import { useCustomToolStore } from "../../../store/custom-tool-store";
-import { useSessionStore } from "../../../store/session-store";
-import { CombinedOutput } from "../combined-output/CombinedOutput";
-import { DocumentViewer } from "../document-viewer/DocumentViewer";
-import { PdfViewer } from "../pdf-viewer/PdfViewer";
+import { base64toBlob } from '../../../helpers/GetStaticData';
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler';
+import { useAlertStore } from '../../../store/alert-store';
+import { useCustomToolStore } from '../../../store/custom-tool-store';
+import { useSessionStore } from '../../../store/session-store';
+import { CombinedOutput } from '../combined-output/CombinedOutput';
+import { DocumentViewer } from '../document-viewer/DocumentViewer';
+import { PdfViewer } from '../pdf-viewer/PdfViewer';
 
 let publicDocumentApi;
 try {
   publicDocumentApi =
-    require("../../../plugins/prompt-studio-public-share/helpers/PublicShareAPIs").publicDocumentApi;
+    require('../../../plugins/prompt-studio-public-share/helpers/PublicShareAPIs').publicDocumentApi;
 } catch {
   // The component will remain null if it is not available
 }
 
 function OutputAnalyzerCard({ doc, selectedPrompts, totalFields }) {
-  const [fileUrl, setFileUrl] = useState("");
+  const [fileUrl, setFileUrl] = useState('');
   const [isDocLoading, setIsDocLoading] = useState(false);
   const [filledFields, setFilledFields] = useState(0);
 
@@ -47,7 +47,7 @@ function OutputAnalyzerCard({ doc, selectedPrompts, totalFields }) {
   // Fetch the document file when the endpoint changes
   useEffect(() => {
     if (!fileUrlEndpoint) {
-      setFileUrl("");
+      setFileUrl('');
       return;
     }
 
@@ -55,11 +55,11 @@ function OutputAnalyzerCard({ doc, selectedPrompts, totalFields }) {
       setIsDocLoading(true);
       try {
         const res = await axiosPrivate.get(fileUrlEndpoint);
-        const base64String = res?.data?.data?.data || "";
+        const base64String = res?.data?.data?.data || '';
         const blob = base64toBlob(base64String);
         setFileUrl(URL.createObjectURL(blob));
       } catch (err) {
-        setAlertDetails(handleException(err, "Failed to load the document"));
+        setAlertDetails(handleException(err, 'Failed to load the document'));
       } finally {
         setIsDocLoading(false);
       }
@@ -70,7 +70,7 @@ function OutputAnalyzerCard({ doc, selectedPrompts, totalFields }) {
 
   // Calculate fill rate
   const fillRate = useMemo(() => {
-    if (totalFields === 0) return "0";
+    if (totalFields === 0) return '0';
     return ((filledFields / totalFields) * 100).toFixed(2);
   }, [filledFields, totalFields]);
 

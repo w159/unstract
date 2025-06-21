@@ -1,5 +1,5 @@
-import { Typography } from "antd";
-import PropTypes from "prop-types";
+import { Typography } from 'antd';
+import PropTypes from 'prop-types';
 
 const CustomFieldTemplate = (props) => {
   const { classNames, errors, children, help } = props;

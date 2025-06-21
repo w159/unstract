@@ -1,10 +1,10 @@
-import PropTypes from "prop-types";
-import { Typography } from "antd";
+import PropTypes from 'prop-types';
+import { Typography } from 'antd';
 
-import { ListView } from "../../widgets/list-view/ListView";
-import { SpinnerLoader } from "../../widgets/spinner-loader/SpinnerLoader.jsx";
-import "./ViewTools.css";
-import { EmptyState } from "../../widgets/empty-state/EmptyState.jsx";
+import { ListView } from '../../widgets/list-view/ListView';
+import { SpinnerLoader } from '../../widgets/spinner-loader/SpinnerLoader.jsx';
+import './ViewTools.css';
+import { EmptyState } from '../../widgets/empty-state/EmptyState.jsx';
 
 function ViewTools({
   isLoading,
@@ -28,8 +28,8 @@ function ViewTools({
   }
 
   if (isEmpty) {
-    let text = "No tools available";
-    let btnText = "New Tool";
+    let text = 'No tools available';
+    let btnText = 'New Tool';
     if (type) {
       text = `No ${type.toLowerCase()} available`;
       btnText = type;

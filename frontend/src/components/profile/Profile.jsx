@@ -1,7 +1,7 @@
-import { Button, Input, Space, Typography } from "antd";
-import "./Profile.css";
+import { Button, Input, Space, Typography } from 'antd';
+import './Profile.css';
 
-import { useSessionStore } from "../../store/session-store.js";
+import { useSessionStore } from '../../store/session-store.js';
 
 function Profile() {
   const { sessionDetails } = useSessionStore();

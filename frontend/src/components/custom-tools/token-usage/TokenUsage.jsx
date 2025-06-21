@@ -1,8 +1,8 @@
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 
-import { useTokenUsageStore } from "../../../store/token-usage-store";
-import { formatNumberWithCommas } from "../../../helpers/GetStaticData";
+import { useTokenUsageStore } from '../../../store/token-usage-store';
+import { formatNumberWithCommas } from '../../../helpers/GetStaticData';
 
 /**
  * TokenUsage component displays token usage details in a tag with a tooltip.
@@ -26,7 +26,7 @@ function TokenUsage({ tokenUsageId, isLoading }) {
 
   // If no tokens data is available, render nothing
   if (!tokens || !Object.keys(tokens)?.length || isLoading) {
-    return "NA";
+    return 'NA';
   }
 
   return formatNumberWithCommas(tokens?.total_tokens);

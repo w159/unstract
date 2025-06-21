@@ -1,19 +1,19 @@
-import { useState } from "react";
-import { Form, Input, Modal, Popover, Button } from "antd";
-import PropTypes from "prop-types";
-import EmojiPicker from "emoji-picker-react";
+import { useState } from 'react';
+import { Form, Input, Modal, Popover, Button } from 'antd';
+import PropTypes from 'prop-types';
+import EmojiPicker from 'emoji-picker-react';
 
-import { getBackendErrorDetail } from "../../../helpers/GetStaticData";
-import { useAlertStore } from "../../../store/alert-store";
-import "./AddCustomToolFormModal.css";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler";
+import { getBackendErrorDetail } from '../../../helpers/GetStaticData';
+import { useAlertStore } from '../../../store/alert-store';
+import './AddCustomToolFormModal.css';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler';
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 const defaultFromDetails = {
-  tool_name: "",
-  author: "",
-  description: "",
-  icon: "",
+  tool_name: '',
+  author: '',
+  description: '',
+  icon: '',
 };
 
 function AddCustomToolFormModal({
@@ -29,9 +29,9 @@ function AddCustomToolFormModal({
   const handleException = useExceptionHandler();
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [formDetails, setFormDetails] = useState(
-    isEdit ? { ...editItem } : { ...defaultFromDetails }
+    isEdit ? { ...editItem } : { ...defaultFromDetails },
   );
-  const [icon, setIcon] = useState(isEdit ? formDetails.icon : "");
+  const [icon, setIcon] = useState(isEdit ? formDetails.icon : '');
   const [backendErrors, setBackendErrors] = useState(null);
   const navigate = useNavigate();
 
@@ -55,7 +55,7 @@ function AddCustomToolFormModal({
     setBackendErrors((prevErrors) => {
       if (prevErrors) {
         const updatedErrors = prevErrors.errors.filter(
-          (error) => error.attr !== changedFieldName
+          (error) => error.attr !== changedFieldName,
         );
         return { ...prevErrors, errors: updatedErrors };
       }
@@ -69,15 +69,15 @@ function AddCustomToolFormModal({
     handleAddNewTool(body)
       .then((success) => {
         setAlertDetails({
-          type: "success",
-          content: `${isEdit ? "Updated" : "Added"} Successfully`,
+          type: 'success',
+          content: `${isEdit ? 'Updated' : 'Added'} Successfully`,
         });
         setOpen(false);
         clearFormDetails();
         navigate(success?.tool_id);
       })
       .catch((err) => {
-        handleException(err, "", setBackendErrors);
+        handleException(err, '', setBackendErrors);
       })
       .finally(() => {
         setIsLoading(false);
@@ -92,8 +92,8 @@ function AddCustomToolFormModal({
     <Modal
       title={
         isEdit
-          ? "Edit Prompt Studio project"
-          : "Create new Prompt Studio project"
+          ? 'Edit Prompt Studio project'
+          : 'Create new Prompt Studio project'
       }
       width={450}
       open={open}
@@ -104,7 +104,7 @@ function AddCustomToolFormModal({
       centered
       maskClosable={false}
       onOk={handleSubmit}
-      okText={isEdit ? "Update" : "Save"}
+      okText={isEdit ? 'Update' : 'Save'}
       okButtonProps={{
         loading: isLoading,
       }}
@@ -120,11 +120,11 @@ function AddCustomToolFormModal({
         <Form.Item
           label="Prompt Studio project name"
           name="tool_name"
-          rules={[{ required: true, message: "Please enter project name" }]}
+          rules={[{ required: true, message: 'Please enter project name' }]}
           validateStatus={
-            getBackendErrorDetail("tool_name", backendErrors) ? "error" : ""
+            getBackendErrorDetail('tool_name', backendErrors) ? 'error' : ''
           }
-          help={getBackendErrorDetail("tool_name", backendErrors)}
+          help={getBackendErrorDetail('tool_name', backendErrors)}
         >
           <Input />
         </Form.Item>
@@ -132,11 +132,11 @@ function AddCustomToolFormModal({
         <Form.Item
           label="Author/Org Name"
           name="author"
-          rules={[{ required: true, message: "Please enter Author/Org name" }]}
+          rules={[{ required: true, message: 'Please enter Author/Org name' }]}
           validateStatus={
-            getBackendErrorDetail("author", backendErrors) ? "error" : ""
+            getBackendErrorDetail('author', backendErrors) ? 'error' : ''
           }
-          help={getBackendErrorDetail("author", backendErrors)}
+          help={getBackendErrorDetail('author', backendErrors)}
         >
           <Input />
         </Form.Item>
@@ -144,17 +144,17 @@ function AddCustomToolFormModal({
         <Form.Item
           label="Description"
           name="description"
-          rules={[{ required: true, message: "Please enter description" }]}
+          rules={[{ required: true, message: 'Please enter description' }]}
           validateStatus={
-            getBackendErrorDetail("description", backendErrors) ? "error" : ""
+            getBackendErrorDetail('description', backendErrors) ? 'error' : ''
           }
-          help={getBackendErrorDetail("description", backendErrors)}
+          help={getBackendErrorDetail('description', backendErrors)}
         >
           <Input.TextArea
             rows={4}
             showCount={true}
             maxLength={200}
-            style={{ height: 100, resize: "none" }}
+            style={{ height: 100, resize: 'none' }}
           />
         </Form.Item>
 
@@ -163,7 +163,7 @@ function AddCustomToolFormModal({
             open={showEmojiPicker}
             placement="rightTop"
             arrow={false}
-            trigger={"click"}
+            trigger={'click'}
             className="emoji-modal"
             title={
               <EmojiPicker
@@ -177,7 +177,7 @@ function AddCustomToolFormModal({
             }
           >
             <Button onClick={() => setShowEmojiPicker((prev) => !prev)}>
-              {icon} {icon ? "Change" : "Choose"} Icon
+              {icon} {icon ? 'Change' : 'Choose'} Icon
             </Button>
           </Popover>
         </Form.Item>

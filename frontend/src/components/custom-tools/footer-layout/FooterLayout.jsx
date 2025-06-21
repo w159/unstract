@@ -1,6 +1,6 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import "./FooterLayout.css";
+import './FooterLayout.css';
 
 function FooterLayout({ children }) {
   return (

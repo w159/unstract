@@ -1,19 +1,19 @@
-import { Col, Row } from "antd";
-import { useEffect } from "react";
+import { Col, Row } from 'antd';
+import { useEffect } from 'react';
 
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler";
-import { useAlertStore } from "../../../store/alert-store";
-import { useCustomToolStore } from "../../../store/custom-tool-store";
-import { useSessionStore } from "../../../store/session-store";
-import { DocumentManager } from "../document-manager/DocumentManager";
-import { Header } from "../header/Header";
-import { SettingsModal } from "../settings-modal/SettingsModal";
-import { ToolsMain } from "../tools-main/ToolsMain";
-import "./ToolIde.css";
-import usePostHogEvents from "../../../hooks/usePostHogEvents.js";
-import { PageTitle } from "../../widgets/page-title/PageTitle.jsx";
-import { useToolIdeState, loadPlugins } from "../../../hooks/useToolIdeState";
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler';
+import { useAlertStore } from '../../../store/alert-store';
+import { useCustomToolStore } from '../../../store/custom-tool-store';
+import { useSessionStore } from '../../../store/session-store';
+import { DocumentManager } from '../document-manager/DocumentManager';
+import { Header } from '../header/Header';
+import { SettingsModal } from '../settings-modal/SettingsModal';
+import { ToolsMain } from '../tools-main/ToolsMain';
+import './ToolIde.css';
+import usePostHogEvents from '../../../hooks/usePostHogEvents.js';
+import { PageTitle } from '../../widgets/page-title/PageTitle.jsx';
+import { useToolIdeState, loadPlugins } from '../../../hooks/useToolIdeState';
 
 // Load plugins once at module level
 const {
@@ -42,7 +42,7 @@ function ToolIde() {
   const axiosPrivate = useAxiosPrivate();
   const handleException = useExceptionHandler();
   const { setPostHogCustomEvent } = usePostHogEvents();
-  
+
   // Use custom hook for state management
   const {
     openSettings,
@@ -64,8 +64,8 @@ function ToolIde() {
 
     if (indexDocs.includes(docId)) {
       setAlertDetails({
-        type: "error",
-        content: "This document is already getting indexed",
+        type: 'error',
+        content: 'This document is already getting indexed',
       });
       return;
     }
@@ -75,11 +75,11 @@ function ToolIde() {
     };
 
     const requestOptions = {
-      method: "POST",
+      method: 'POST',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/prompt-studio/index-document/${details?.tool_id}`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
-        "Content-Type": "application/json",
+        'X-CSRFToken': sessionDetails?.csrfToken,
+        'Content-Type': 'application/json',
       },
       data: body,
     };
@@ -88,13 +88,13 @@ function ToolIde() {
     return axiosPrivate(requestOptions)
       .then(() => {
         setAlertDetails({
-          type: "success",
+          type: 'success',
           content: `${doc?.document_name} - Indexed successfully`,
         });
 
         try {
-          setPostHogCustomEvent("intent_success_ps_indexed_file", {
-            info: "Indexing completed",
+          setPostHogCustomEvent('intent_success_ps_indexed_file', {
+            info: 'Indexing completed',
           });
         } catch (err) {
           // If an error occurs while setting custom posthog event, ignore it and continue
@@ -102,7 +102,7 @@ function ToolIde() {
       })
       .catch((err) => {
         setAlertDetails(
-          handleException(err, `${doc?.document_name} - Failed to index`)
+          handleException(err, `${doc?.document_name} - Failed to index`),
         );
       })
       .finally(() => {
@@ -112,11 +112,11 @@ function ToolIde() {
 
   const handleUpdateTool = async (body) => {
     const requestOptions = {
-      method: "PATCH",
+      method: 'PATCH',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/prompt-studio/${details?.tool_id}/`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
-        "Content-Type": "application/json",
+        'X-CSRFToken': sessionDetails?.csrfToken,
+        'Content-Type': 'application/json',
       },
       data: body,
     };
@@ -127,8 +127,8 @@ function ToolIde() {
   const validateDocChange = () => {
     if (isMultiPassExtractLoading) {
       setAlertDetails({
-        type: "error",
-        content: "Please wait for the run to complete",
+        type: 'error',
+        content: 'Please wait for the run to complete',
       });
       return false;
     }
@@ -137,7 +137,7 @@ function ToolIde() {
 
   const updateDocumentSelection = async (doc, prevSelectedDoc) => {
     const body = { output: doc?.document_id };
-    
+
     try {
       const res = await handleUpdateTool(body);
       const updatedToolData = res?.data;
@@ -145,7 +145,7 @@ function ToolIde() {
     } catch (err) {
       // Revert on error
       updateCustomTool({ selectedDoc: prevSelectedDoc });
-      setAlertDetails(handleException(err, "Failed to select the document"));
+      setAlertDetails(handleException(err, 'Failed to select the document'));
     }
   };
 
@@ -154,7 +154,7 @@ function ToolIde() {
 
     const prevSelectedDoc = selectedDoc;
     updateCustomTool({ selectedDoc: doc });
-    
+
     if (!isPublicSource) {
       updateDocumentSelection(doc, prevSelectedDoc);
     }
@@ -173,7 +173,7 @@ function ToolIde() {
         />
       </div>
       <div
-        className={isPublicSource ? "public-tool-ide-body" : "tool-ide-body"}
+        className={isPublicSource ? 'public-tool-ide-body' : 'tool-ide-body'}
       >
         <div className="tool-ide-body-2">
           <Row className="tool-ide-main">

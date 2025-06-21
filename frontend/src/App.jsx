@@ -1,21 +1,21 @@
-import { Button, ConfigProvider, notification, theme } from "antd";
-import { BrowserRouter } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
+import { Button, ConfigProvider, notification, theme } from 'antd';
+import { BrowserRouter } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 
-import { THEME } from "./helpers/GetStaticData.js";
-import { Router } from "./routes/Router.jsx";
-import { useAlertStore } from "./store/alert-store.js";
-import { useSessionStore } from "./store/session-store.js";
-import PostHogPageviewTracker from "./PostHogPageviewTracker.js";
-import { PageTitle } from "./components/widgets/page-title/PageTitle.jsx";
-import { useEffect } from "react";
-import CustomMarkdown from "./components/helpers/custom-markdown/CustomMarkdown.jsx";
-import { useSocketLogsStore } from "./store/socket-logs-store.js";
+import { THEME } from './helpers/GetStaticData.js';
+import { Router } from './routes/Router.jsx';
+import { useAlertStore } from './store/alert-store.js';
+import { useSessionStore } from './store/session-store.js';
+import PostHogPageviewTracker from './PostHogPageviewTracker.js';
+import { PageTitle } from './components/widgets/page-title/PageTitle.jsx';
+import { useEffect } from 'react';
+import CustomMarkdown from './components/helpers/custom-markdown/CustomMarkdown.jsx';
+import { useSocketLogsStore } from './store/socket-logs-store.js';
 
 let GoogleTagManagerHelper;
 try {
   GoogleTagManagerHelper =
-    require("./plugins/google-tag-manager-helper/GoogleTagManagerHelper.js").GoogleTagManagerHelper;
+    require('./plugins/google-tag-manager-helper/GoogleTagManagerHelper.js').GoogleTagManagerHelper;
 } catch {
   // The component will remain null of it is not available
 }
@@ -61,16 +61,16 @@ function App() {
     pushLogMessages([
       {
         timestamp: Math.floor(Date.now() / 1000),
-        level: alertDetails?.type ? alertDetails?.type.toUpperCase() : "",
+        level: alertDetails?.type ? alertDetails?.type.toUpperCase() : '',
         message: alertDetails.content,
-        type: "NOTIFICATION",
+        type: 'NOTIFICATION',
       },
     ]);
   }, [alertDetails]);
 
   return (
     <ConfigProvider
-      direction={window.direction || "ltr"}
+      direction={window.direction || 'ltr'}
       theme={{
         algorithm:
           sessionDetails.currentTheme === THEME.DARK
@@ -78,9 +78,9 @@ function App() {
             : defaultAlgorithm,
         components: {
           Button: {
-            colorPrimary: "#092C4C",
-            colorPrimaryHover: "#0e4274",
-            colorPrimaryActive: "#092C4C",
+            colorPrimary: '#092C4C',
+            colorPrimaryHover: '#0e4274',
+            colorPrimaryActive: '#092C4C',
           },
         },
       }}
@@ -88,7 +88,7 @@ function App() {
       <HelmetProvider>
         <BrowserRouter>
           <PostHogPageviewTracker />
-          <PageTitle title={"Unstract"} />
+          <PageTitle title={'Unstract'} />
           {GoogleTagManagerHelper && <GoogleTagManagerHelper />}
           {contextHolder}
           <Router />

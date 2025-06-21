@@ -1,5 +1,5 @@
-import { useMemo, lazy, Suspense } from "react";
-import PropTypes from "prop-types";
+import { useMemo, lazy, Suspense } from 'react';
+import PropTypes from 'prop-types';
 
 function LazyLoader(props) {
   const { component, componentName, loader, innerRef, ...rest } = props;
@@ -7,8 +7,8 @@ function LazyLoader(props) {
   const LazyLoadedComponent = useMemo(function memoizedComponent() {
     return lazy(() =>
       component().then((module) => {
-        return { default: module[componentName || "default"] };
-      })
+        return { default: module[componentName || 'default'] };
+      }),
     );
   }, []);
 

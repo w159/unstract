@@ -1,18 +1,18 @@
-import { Form, Input, Select } from "antd";
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Form, Input, Select } from 'antd';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { IslandLayout } from "../../../layouts/island-layout/IslandLayout.jsx";
-import { useAlertStore } from "../../../store/alert-store";
-import { useSessionStore } from "../../../store/session-store";
-import { CustomButton } from "../../widgets/custom-button/CustomButton.jsx";
-import { SpinnerLoader } from "../../widgets/spinner-loader/SpinnerLoader.jsx";
-import { TopBar } from "../../widgets/top-bar/TopBar.jsx";
-import "./InviteEditUser.css";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler.jsx";
-import usePostHogEvents from "../../../hooks/usePostHogEvents.js";
-import { homePagePath } from "../../../helpers/GetStaticData.js";
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { IslandLayout } from '../../../layouts/island-layout/IslandLayout.jsx';
+import { useAlertStore } from '../../../store/alert-store';
+import { useSessionStore } from '../../../store/session-store';
+import { CustomButton } from '../../widgets/custom-button/CustomButton.jsx';
+import { SpinnerLoader } from '../../widgets/spinner-loader/SpinnerLoader.jsx';
+import { TopBar } from '../../widgets/top-bar/TopBar.jsx';
+import './InviteEditUser.css';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler.jsx';
+import usePostHogEvents from '../../../hooks/usePostHogEvents.js';
+import { homePagePath } from '../../../helpers/GetStaticData.js';
 
 function InviteEditUser() {
   const axiosPrivate = useAxiosPrivate();
@@ -27,24 +27,24 @@ function InviteEditUser() {
   const [initialRole, setInitialRole] = useState();
   const { setPostHogCustomEvent } = usePostHogEvents();
 
-  const isInvite = location.pathname.split("/").slice(-1)[0] === "invite";
+  const isInvite = location.pathname.split('/').slice(-1)[0] === 'invite';
   const validateMessages = {
-    required: "required!",
+    required: 'required!',
     types: {
-      email: "Enter a valid email!",
-      number: "Enter a valid number!",
+      email: 'Enter a valid email!',
+      number: 'Enter a valid number!',
     },
   };
-  const USER_ROLE = "unstract_user";
+  const USER_ROLE = 'unstract_user';
 
   const getUserRoles = async () => {
     setLoading(true);
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/roles`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
-        "Content-Type": "application/json",
+        'X-CSRFToken': sessionDetails?.csrfToken,
+        'Content-Type': 'application/json',
       },
     };
     axiosPrivate(requestOptions)
@@ -54,11 +54,11 @@ function InviteEditUser() {
         setInitialRole(
           isInvite
             ? members.find((role) => role.name === USER_ROLE)
-            : members.find((role) => role.name === location.state.role)
+            : members.find((role) => role.name === location.state.role),
         );
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "Failed to load user roles"));
+        setAlertDetails(handleException(err, 'Failed to load user roles'));
       })
       .finally(() => {
         setLoading(false);
@@ -66,55 +66,55 @@ function InviteEditUser() {
   };
   const inviteUserToOrg = async (value) => {
     const requestOptions = {
-      method: "POST",
+      method: 'POST',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/users/invite/`,
       data: { users: [value] },
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
-        "Content-Type": "application/json",
+        'X-CSRFToken': sessionDetails?.csrfToken,
+        'Content-Type': 'application/json',
       },
     };
     axiosPrivate(requestOptions)
       .then((res) => {
         const message = res?.data?.message[0] || {};
         setAlertDetails({
-          type: message.status === "success" ? "success" : "error",
+          type: message.status === 'success' ? 'success' : 'error',
           content:
-            message.status === "success"
-              ? "Invited user successfully"
+            message.status === 'success'
+              ? 'Invited user successfully'
               : `Failed to invite user, ${message?.message}`,
         });
         navigate(`/${sessionDetails?.orgName}/users/`);
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "Failed to invite user"));
+        setAlertDetails(handleException(err, 'Failed to invite user'));
       })
       .finally(() => setSubmitLoading(false));
   };
 
   const updateUserRole = (user) => {
     const requestOptions = {
-      method: "POST",
+      method: 'POST',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/users/role/`,
       data: { ...user },
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
-        "Content-Type": "application/json",
+        'X-CSRFToken': sessionDetails?.csrfToken,
+        'Content-Type': 'application/json',
       },
     };
     axiosPrivate(requestOptions)
       .then((res) => {
         const response = res?.data || {};
         setAlertDetails({
-          type: response.status === "success" ? "success" : "error",
+          type: response.status === 'success' ? 'success' : 'error',
           content:
-            response.status === "success"
-              ? "User updated successfully"
-              : "Failed to update user",
+            response.status === 'success'
+              ? 'User updated successfully'
+              : 'Failed to update user',
         });
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "Failed to update user"));
+        setAlertDetails(handleException(err, 'Failed to update user'));
       })
       .finally(() => setSubmitLoading(false));
   };
@@ -134,14 +134,14 @@ function InviteEditUser() {
       const info = isInvite
         ? "Clicked on 'Invite' button"
         : "Clicked on 'Update' button";
-      setPostHogCustomEvent("intent_success_add_user", { info });
+      setPostHogCustomEvent('intent_success_add_user', { info });
     } catch (err) {
       // If an error occurs while setting custom posthog event, ignore it and continue
     }
   };
 
   const formatOptionLabel = (value) => {
-    return value.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+    return value.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
   };
 
   useEffect(() => {
@@ -154,7 +154,7 @@ function InviteEditUser() {
     <>
       <TopBar
         enableSearch={false}
-        title={isInvite ? "Invite User" : "Edit User"}
+        title={isInvite ? 'Invite User' : 'Edit User'}
       />
       <IslandLayout>
         <div className="invite-user-container">
@@ -169,8 +169,8 @@ function InviteEditUser() {
               validateMessages={validateMessages}
             >
               <Form.Item
-                name={["email"]}
-                rules={[{ type: "email", required: true }]}
+                name={['email']}
+                rules={[{ type: 'email', required: true }]}
                 initialValue={isInvite ? null : location.state.email}
               >
                 <Input placeholder="Email" disabled={!isInvite} />
@@ -198,7 +198,7 @@ function InviteEditUser() {
                   htmlType="submit"
                   loading={submitLoading}
                 >
-                  {isInvite ? "Invite" : "Update"}
+                  {isInvite ? 'Invite' : 'Update'}
                 </CustomButton>
               </div>
             </Form>

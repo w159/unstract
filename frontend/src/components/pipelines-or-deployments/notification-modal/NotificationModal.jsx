@@ -1,11 +1,11 @@
-import { Modal } from "antd";
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
-import { CreateNotification } from "./CreateNotification";
-import { DisplayNotifications } from "./DisplayNotifications";
-import { pipelineService } from "../pipeline-service";
-import { useAlertStore } from "../../../store/alert-store";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler";
+import { Modal } from 'antd';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
+import { CreateNotification } from './CreateNotification';
+import { DisplayNotifications } from './DisplayNotifications';
+import { pipelineService } from '../pipeline-service';
+import { useAlertStore } from '../../../store/alert-store';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler';
 
 function NotificationModal({ open, setOpen, type, id }) {
   const [isForm, setIsForm] = useState(false);
@@ -65,7 +65,7 @@ function NotificationModal({ open, setOpen, type, id }) {
         addNewRow(res?.data);
         setIsForm(false);
         setAlertDetails({
-          type: "success",
+          type: 'success',
           content: `Successfully created notification: ${body?.name}`,
         });
       })
@@ -85,7 +85,7 @@ function NotificationModal({ open, setOpen, type, id }) {
         updateRow(res?.data);
         setIsForm(false);
         setAlertDetails({
-          type: "success",
+          type: 'success',
           content: `Successfully updated notification: ${body?.name}`,
         });
       })
@@ -103,7 +103,7 @@ function NotificationModal({ open, setOpen, type, id }) {
       .then(() => {
         removeRow(id);
         setAlertDetails({
-          type: "success",
+          type: 'success',
           content: `Successfully delete: ${name}`,
         });
       })
@@ -124,7 +124,7 @@ function NotificationModal({ open, setOpen, type, id }) {
     setRows((prev) => {
       const updatedRows = [...prev];
       const index = updatedRows.findIndex(
-        (item) => item?.id === updatedRow?.id
+        (item) => item?.id === updatedRow?.id,
       );
       if (index !== -1) {
         updatedRows[index] = updatedRow;

@@ -1,35 +1,35 @@
-import { PlusOutlined } from "@ant-design/icons";
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { PlusOutlined } from '@ant-design/icons';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 
-import { IslandLayout } from "../../../layouts/island-layout/IslandLayout";
-import { AddSourceModal } from "../../input-output/add-source-modal/AddSourceModal";
-import "../../input-output/data-source-card/DataSourceCard.css";
-import "./ToolSettings.css";
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { useAlertStore } from "../../../store/alert-store";
-import { useSessionStore } from "../../../store/session-store";
-import { CustomButton } from "../../widgets/custom-button/CustomButton";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler";
-import { ToolNavBar } from "../../navigations/tool-nav-bar/ToolNavBar";
-import { ViewTools } from "../../custom-tools/view-tools/ViewTools";
-import { SharePermission } from "../../widgets/share-permission/SharePermission";
-import usePostHogEvents from "../../../hooks/usePostHogEvents";
+import { IslandLayout } from '../../../layouts/island-layout/IslandLayout';
+import { AddSourceModal } from '../../input-output/add-source-modal/AddSourceModal';
+import '../../input-output/data-source-card/DataSourceCard.css';
+import './ToolSettings.css';
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { useAlertStore } from '../../../store/alert-store';
+import { useSessionStore } from '../../../store/session-store';
+import { CustomButton } from '../../widgets/custom-button/CustomButton';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler';
+import { ToolNavBar } from '../../navigations/tool-nav-bar/ToolNavBar';
+import { ViewTools } from '../../custom-tools/view-tools/ViewTools';
+import { SharePermission } from '../../widgets/share-permission/SharePermission';
+import usePostHogEvents from '../../../hooks/usePostHogEvents';
 
 const titles = {
-  llm: "LLMs",
-  vector_db: "Vector DBs",
-  embedding: "Embeddings",
-  x2text: "Text Extractor",
-  ocr: "OCR",
+  llm: 'LLMs',
+  vector_db: 'Vector DBs',
+  embedding: 'Embeddings',
+  x2text: 'Text Extractor',
+  ocr: 'OCR',
 };
 
 const btnText = {
-  llm: "New LLM Profile",
-  vector_db: "New Vector DB Profile",
-  embedding: "New Embedding Profile",
-  x2text: "New Text Extractor",
-  ocr: "New OCR",
+  llm: 'New LLM Profile',
+  vector_db: 'New Vector DB Profile',
+  embedding: 'New Embedding Profile',
+  x2text: 'New Text Extractor',
+  ocr: 'New OCR',
 };
 
 function ToolSettings({ type }) {
@@ -59,7 +59,7 @@ function ToolSettings({ type }) {
 
   const getAdapters = () => {
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${
         sessionDetails?.orgId
       }/adapter?adapter_type=${type.toUpperCase()}`,
@@ -83,7 +83,7 @@ function ToolSettings({ type }) {
         if (tableRow?.id !== row?.id) {
           return tableRow;
         }
-        tableRow["adapter_name"] = row?.adapter_name;
+        tableRow['adapter_name'] = row?.adapter_name;
         return tableRow;
       });
       setTableRows(rowsModified);
@@ -96,10 +96,10 @@ function ToolSettings({ type }) {
 
   const handleDelete = (_event, adapter) => {
     const requestOptions = {
-      method: "DELETE",
+      method: 'DELETE',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/adapter/${adapter?.id}/`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
     };
 
@@ -109,8 +109,8 @@ function ToolSettings({ type }) {
         const filteredList = tableRows.filter((row) => row?.id !== adapter?.id);
         setTableRows(filteredList);
         setAlertDetails({
-          type: "success",
-          content: "Successfully deleted",
+          type: 'success',
+          content: 'Successfully deleted',
         });
       })
       .catch((err) => {
@@ -123,10 +123,10 @@ function ToolSettings({ type }) {
 
   const handleShare = (_event, adapter, isEdit) => {
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/adapter/users/${adapter.id}/`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
     };
     setIsShareLoading(true);
@@ -148,7 +148,7 @@ function ToolSettings({ type }) {
   const getAllUsers = () => {
     setIsShareLoading(true);
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/users/`,
     };
 
@@ -159,11 +159,11 @@ function ToolSettings({ type }) {
           users.map((user) => ({
             id: user?.id,
             email: user?.email,
-          }))
+          })),
         );
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "Failed to load"));
+        setAlertDetails(handleException(err, 'Failed to load'));
       })
       .finally(() => {
         setIsShareLoading(false);
@@ -172,10 +172,10 @@ function ToolSettings({ type }) {
 
   const onShare = (userIds, adapter) => {
     const requestOptions = {
-      method: "PATCH",
+      method: 'PATCH',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/adapter/${adapter?.id}/`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
       data: { shared_users: userIds },
     };
@@ -184,7 +184,7 @@ function ToolSettings({ type }) {
         setOpenSharePermissionModal(false);
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "Failed to load"));
+        setAlertDetails(handleException(err, 'Failed to load'));
       });
   };
 

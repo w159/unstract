@@ -1,34 +1,34 @@
-import { useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
+import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const useExceptionHandler = () => {
   const navigate = useNavigate();
   const handleException = (
     err,
-    errMessage = "Something went wrong",
+    errMessage = 'Something went wrong',
     setBackendErrors = undefined,
-    title = "Failed",
-    duration = 0
+    title = 'Failed',
+    duration = 0,
   ) => {
     if (!err) {
       return {
-        type: "error",
+        type: 'error',
         content: errMessage,
         title: title,
         duration: duration,
       };
     }
-    if (err.code === "ERR_NETWORK" && !navigator.onLine) {
+    if (err.code === 'ERR_NETWORK' && !navigator.onLine) {
       return {
-        type: "error",
-        content: "Please check your internet connection.",
+        type: 'error',
+        content: 'Please check your internet connection.',
         title: title,
         duration: duration,
       };
-    } else if (err.code === "ERR_CANCELED") {
+    } else if (err.code === 'ERR_CANCELED') {
       return {
-        type: "error",
-        content: "Request has been canceled.",
+        type: 'error',
+        content: 'Request has been canceled.',
         title: title,
         duration: duration,
       };
@@ -37,39 +37,39 @@ const useExceptionHandler = () => {
     if (err?.response?.data) {
       const { type, errors } = err.response.data;
       switch (type) {
-        case "validation_error":
+        case 'validation_error':
           // Handle validation errors
           if (setBackendErrors) {
             setBackendErrors(err?.response?.data);
           } else {
             return {
               title: title,
-              type: "error",
+              type: 'error',
               content: errors?.[0]?.detail ? errors[0].detail : errMessage,
               duration: duration,
             };
           }
           break;
-        case "subscription_error":
-          navigate("/subscription-expired");
+        case 'subscription_error':
+          navigate('/subscription-expired');
           return {
             title: title,
-            type: "error",
+            type: 'error',
             content: errors,
             duration: duration,
           };
-        case "client_error":
-        case "server_error":
+        case 'client_error':
+        case 'server_error':
           return {
             title: title,
-            type: "error",
+            type: 'error',
             content: errors?.[0]?.detail ? errors[0].detail : errMessage,
             duration: duration,
           };
         default:
           return {
             title: title,
-            type: "error",
+            type: 'error',
             content: errMessage,
             duration: duration,
           };
@@ -77,7 +77,7 @@ const useExceptionHandler = () => {
     } else {
       return {
         title: title,
-        type: "error",
+        type: 'error',
         content: errMessage,
         duration: duration,
       };

@@ -2,31 +2,31 @@ import {
   ArrowLeftOutlined,
   CopyOutlined,
   DeleteOutlined,
-} from "@ant-design/icons";
-import { Button, Col, Divider, Input, Radio, Row, Typography } from "antd";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+} from '@ant-design/icons';
+import { Button, Col, Divider, Input, Radio, Row, Typography } from 'antd';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { IslandLayout } from "../../../layouts/island-layout/IslandLayout.jsx";
-import { useAlertStore } from "../../../store/alert-store";
-import { useSessionStore } from "../../../store/session-store";
-import { ConfirmModal } from "../../widgets/confirm-modal/ConfirmModal.jsx";
-import "./PlatformSettings.css";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler.jsx";
-import usePostHogEvents from "../../../hooks/usePostHogEvents.js";
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { IslandLayout } from '../../../layouts/island-layout/IslandLayout.jsx';
+import { useAlertStore } from '../../../store/alert-store';
+import { useSessionStore } from '../../../store/session-store';
+import { ConfirmModal } from '../../widgets/confirm-modal/ConfirmModal.jsx';
+import './PlatformSettings.css';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler.jsx';
+import usePostHogEvents from '../../../hooks/usePostHogEvents.js';
 
 const defaultKeys = [
   {
     id: null,
-    keyName: "Key #1",
-    key: "",
+    keyName: 'Key #1',
+    key: '',
     isActive: true,
   },
   {
     id: null,
-    keyName: "Key #2",
-    key: "",
+    keyName: 'Key #2',
+    key: '',
     isActive: false,
   },
 ];
@@ -45,7 +45,7 @@ function PlatformSettings() {
 
   useEffect(() => {
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/platform/keys/`,
     };
 
@@ -73,8 +73,8 @@ function PlatformSettings() {
           } else {
             return {
               id: null,
-              keyName: "Key #" + (keyIndex + 1),
-              key: "",
+              keyName: 'Key #' + (keyIndex + 1),
+              key: '',
               isActive: false,
             };
           }
@@ -83,8 +83,8 @@ function PlatformSettings() {
         if (newKeys?.length === 1) {
           newKeys.push({
             id: null,
-            keyName: "Key #2",
-            key: "",
+            keyName: 'Key #2',
+            key: '',
             isActive: false,
           });
         }
@@ -92,7 +92,7 @@ function PlatformSettings() {
         setKeys(newKeys);
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "Failed to get the keys"));
+        setAlertDetails(handleException(err, 'Failed to get the keys'));
       });
   }, []);
 
@@ -104,24 +104,24 @@ function PlatformSettings() {
     };
 
     const url = `/api/v1/unstract/${sessionDetails?.orgId}/platform/keys/`;
-    let method = "POST";
+    let method = 'POST';
     if (details?.id?.length > 0) {
       // url += "/refresh";
-      body["id"] = details.id;
-      method = "PUT";
+      body['id'] = details.id;
+      method = 'PUT';
     } else {
       // url += "/generate";
-      body["is_active"] = activeKey === index;
+      body['is_active'] = activeKey === index;
     }
 
     try {
       if (details?.id?.length > 0) {
-        setPostHogCustomEvent("intent_api_key_refreshed", {
-          info: "API Key has been refreshed",
+        setPostHogCustomEvent('intent_api_key_refreshed', {
+          info: 'API Key has been refreshed',
         });
       } else {
-        setPostHogCustomEvent("intent_api_key_generation", {
-          info: "API Key has been generated",
+        setPostHogCustomEvent('intent_api_key_generation', {
+          info: 'API Key has been generated',
         });
       }
     } catch (err) {
@@ -132,8 +132,8 @@ function PlatformSettings() {
       method,
       url,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
-        "Content-Type": "application/json",
+        'X-CSRFToken': sessionDetails?.csrfToken,
+        'Content-Type': 'application/json',
       },
       data: body,
     };
@@ -148,7 +148,7 @@ function PlatformSettings() {
         setKeys(newKeys);
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "Failed to generate the key"));
+        setAlertDetails(handleException(err, 'Failed to generate the key'));
       })
       .finally(() => {
         setLoadingIndex(null);
@@ -163,10 +163,10 @@ function PlatformSettings() {
     }
 
     const requestOptions = {
-      method: "DELETE",
+      method: 'DELETE',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/platform/keys/${keyDetails?.id}/`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
     };
 
@@ -175,11 +175,11 @@ function PlatformSettings() {
       .then(() => {
         const newKeys = [...keys];
         newKeys[index].id = null;
-        newKeys[index].key = "";
+        newKeys[index].key = '';
         setKeys(newKeys);
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "Failed to delete"));
+        setAlertDetails(handleException(err, 'Failed to delete'));
       })
       .finally(() => {
         setDeletingIndex(null);
@@ -196,22 +196,22 @@ function PlatformSettings() {
     }
 
     const body = {
-      action: "ACTIVATE",
+      action: 'ACTIVATE',
     };
 
     const requestOptions = {
-      method: "PUT",
+      method: 'PUT',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/platform/keys/${keyDetails?.id}/`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
-        "Content-Type": "application/json",
+        'X-CSRFToken': sessionDetails?.csrfToken,
+        'Content-Type': 'application/json',
       },
       data: body,
     };
 
     axiosPrivate(requestOptions).catch((err) => {
       setActiveKey(prevActiveKey);
-      setAlertDetails(handleException(err, "Failed to set active key"));
+      setAlertDetails(handleException(err, 'Failed to set active key'));
     });
   };
 
@@ -220,14 +220,14 @@ function PlatformSettings() {
       .writeText(text)
       .then(() => {
         setAlertDetails({
-          type: "success",
-          content: "Key copied to clipboard",
+          type: 'success',
+          content: 'Key copied to clipboard',
         });
       })
       .catch((error) => {
         setAlertDetails({
-          type: "error",
-          content: "Copy failed",
+          type: 'error',
+          content: 'Copy failed',
         });
       });
   };
@@ -296,8 +296,8 @@ function PlatformSettings() {
                               onClick={() => handleGenerate(keyIndex)}
                             >
                               {keyDetails?.id?.length > 0
-                                ? "Refresh"
-                                : "Generate"}
+                                ? 'Refresh'
+                                : 'Generate'}
                             </Button>
                           </Col>
                           <Col>

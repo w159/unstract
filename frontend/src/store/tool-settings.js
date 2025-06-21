@@ -1,9 +1,9 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 const STORE_VARIABLES = {
   toolSettings: {
-    id: "",
-    tool_id: "",
+    id: '',
+    tool_id: '',
   },
 };
 

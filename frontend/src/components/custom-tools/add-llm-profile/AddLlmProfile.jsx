@@ -1,4 +1,4 @@
-import { ArrowLeftOutlined, CaretRightOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, CaretRightOutlined } from '@ant-design/icons';
 import {
   Button,
   Col,
@@ -10,20 +10,20 @@ import {
   Space,
   Typography,
   theme,
-} from "antd";
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+} from 'antd';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 
-import { getBackendErrorDetail } from "../../../helpers/GetStaticData";
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler";
-import { useAlertStore } from "../../../store/alert-store";
-import { useCustomToolStore } from "../../../store/custom-tool-store";
-import { useSessionStore } from "../../../store/session-store";
-import { CustomButton } from "../../widgets/custom-button/CustomButton";
-import SpaceWrapper from "../../widgets/space-wrapper/SpaceWrapper";
-import "./AddLlmProfile.css";
-import usePostHogEvents from "../../../hooks/usePostHogEvents";
+import { getBackendErrorDetail } from '../../../helpers/GetStaticData';
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler';
+import { useAlertStore } from '../../../store/alert-store';
+import { useCustomToolStore } from '../../../store/custom-tool-store';
+import { useSessionStore } from '../../../store/session-store';
+import { CustomButton } from '../../widgets/custom-button/CustomButton';
+import SpaceWrapper from '../../widgets/space-wrapper/SpaceWrapper';
+import './AddLlmProfile.css';
+import usePostHogEvents from '../../../hooks/usePostHogEvents';
 
 function AddLlmProfile({
   editLlmProfileId,
@@ -42,7 +42,7 @@ function AddLlmProfile({
   const [x2TextItems, setX2TextItems] = useState([]);
   const [activeKey, setActiveKey] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [modalTitle, setModalTitle] = useState("");
+  const [modalTitle, setModalTitle] = useState('');
   const [areAdaptersReady, setAreAdaptersReady] = useState(false);
   const { sessionDetails } = useSessionStore();
   const { details, getDropdownItems, llmProfiles, updateCustomTool } =
@@ -58,7 +58,7 @@ function AddLlmProfile({
 
   useEffect(() => {
     setAdaptorProfilesDropdown();
-    const data = getDropdownItems("retrieval_strategy");
+    const data = getDropdownItems('retrieval_strategy');
     if (!data) {
       return;
     }
@@ -81,20 +81,20 @@ function AddLlmProfile({
 
     setResetForm(true);
     setFormDetails({
-      profile_name: "",
-      llm: "",
+      profile_name: '',
+      llm: '',
       chunk_size: 0,
-      vector_store: "",
+      vector_store: '',
       chunk_overlap: 0,
-      embedding_model: "",
-      x2text: "",
-      retrieval_strategy: "simple",
+      embedding_model: '',
+      x2text: '',
+      retrieval_strategy: 'simple',
       similarity_top_k: 3,
-      section: "Default",
+      section: 'Default',
       prompt_studio_tool: details?.tool_id,
     });
 
-    setModalTitle("Add New LLM Profile");
+    setModalTitle('Add New LLM Profile');
     setActiveKey(false);
   }, []);
 
@@ -103,26 +103,26 @@ function AddLlmProfile({
       return;
     }
 
-    setModalTitle("Edit LLM Profile");
+    setModalTitle('Edit LLM Profile');
 
     const llmProfileDetails = [...llmProfiles].find(
-      (item) => item?.profile_id === editLlmProfileId
+      (item) => item?.profile_id === editLlmProfileId,
     );
 
     const llmItem = llmItems.find(
-      (item) => item?.label === llmProfileDetails?.llm
+      (item) => item?.label === llmProfileDetails?.llm,
     );
 
     const vectorDbItem = vectorDbItems.find(
-      (item) => item?.label === llmProfileDetails?.vector_store
+      (item) => item?.label === llmProfileDetails?.vector_store,
     );
 
     const embeddingItem = embeddingItems.find(
-      (item) => item?.label === llmProfileDetails?.embedding_model
+      (item) => item?.label === llmProfileDetails?.embedding_model,
     );
 
     const x2TextItem = x2TextItems.find(
-      (item) => item?.label === llmProfileDetails?.x2text
+      (item) => item?.label === llmProfileDetails?.x2text,
     );
 
     setResetForm(true);
@@ -153,8 +153,8 @@ function AddLlmProfile({
   const [maxTokenSize, setMaxTokenSize] = useState(0);
 
   const validateEmptyOrWhitespace = (_, value) => {
-    if (value && value.trim() === "") {
-      return Promise.reject(new Error("Please enter a non-whitespace value"));
+    if (value && value.trim() === '') {
+      return Promise.reject(new Error('Please enter a non-whitespace value'));
     }
     return Promise.resolve(); // Resolve if value is empty or contains only whitespaces
   };
@@ -171,7 +171,7 @@ function AddLlmProfile({
     setBackendErrors((prevErrors) => {
       if (prevErrors) {
         const updatedErrors = prevErrors.errors.filter(
-          (error) => error.attr !== changedFieldName
+          (error) => error.attr !== changedFieldName,
         );
         return { ...prevErrors, errors: updatedErrors };
       }
@@ -181,7 +181,7 @@ function AddLlmProfile({
 
   const setAdaptorProfilesDropdown = () => {
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/adapter`,
     };
 
@@ -190,7 +190,7 @@ function AddLlmProfile({
         const data = res?.data;
 
         data.forEach((item) => {
-          if (item?.adapter_type === "LLM") {
+          if (item?.adapter_type === 'LLM') {
             setLlmItems((prev) => {
               const newItems = [...prev];
               newItems.push({
@@ -200,7 +200,7 @@ function AddLlmProfile({
               return newItems;
             });
           }
-          if (item?.adapter_type === "VECTOR_DB") {
+          if (item?.adapter_type === 'VECTOR_DB') {
             setVectorDbItems((prev) => {
               const newItems = [...prev];
               newItems.push({
@@ -210,7 +210,7 @@ function AddLlmProfile({
               return newItems;
             });
           }
-          if (item?.adapter_type === "EMBEDDING") {
+          if (item?.adapter_type === 'EMBEDDING') {
             setEmbeddingItems((prev) => {
               const newItems = [...prev];
               newItems.push({
@@ -220,7 +220,7 @@ function AddLlmProfile({
               return newItems;
             });
           }
-          if (item?.adapter_type === "X2TEXT") {
+          if (item?.adapter_type === 'X2TEXT') {
             setX2TextItems((prev) => {
               const newItems = [...prev];
               newItems.push({
@@ -237,16 +237,16 @@ function AddLlmProfile({
         setAlertDetails(
           handleException(
             err,
-            "Failed to get the dropdown list for LLM Adapters"
-          )
+            'Failed to get the dropdown list for LLM Adapters',
+          ),
         );
       });
   };
 
   const getItems = (panelStyle) => [
     {
-      key: "1",
-      label: "Advanced Settings",
+      key: '1',
+      label: 'Advanced Settings',
       style: panelStyle,
       children: (
         <div>
@@ -254,11 +254,11 @@ function AddLlmProfile({
             label="Retrieval Strategy"
             name="retrieval_strategy"
             validateStatus={
-              getBackendErrorDetail("retrieval_strategy", backendErrors)
-                ? "error"
-                : ""
+              getBackendErrorDetail('retrieval_strategy', backendErrors)
+                ? 'error'
+                : ''
             }
-            help={getBackendErrorDetail("retrieval_strategy", backendErrors)}
+            help={getBackendErrorDetail('retrieval_strategy', backendErrors)}
           >
             <Select options={retrievalItems} />
           </Form.Item>
@@ -266,11 +266,11 @@ function AddLlmProfile({
             label="Matching count limit (similarity top-k)"
             name="similarity_top_k"
             validateStatus={
-              getBackendErrorDetail("similarity_top_k", backendErrors)
-                ? "error"
-                : ""
+              getBackendErrorDetail('similarity_top_k', backendErrors)
+                ? 'error'
+                : ''
             }
-            help={getBackendErrorDetail("similarity_top_k", backendErrors)}
+            help={getBackendErrorDetail('similarity_top_k', backendErrors)}
           >
             <Input type="number" />
           </Form.Item>
@@ -278,11 +278,11 @@ function AddLlmProfile({
             label="Limit-to Section"
             name="section"
             validateStatus={
-              getBackendErrorDetail("section", backendErrors) ? "error" : ""
+              getBackendErrorDetail('section', backendErrors) ? 'error' : ''
             }
-            help={getBackendErrorDetail("section", backendErrors)}
+            help={getBackendErrorDetail('section', backendErrors)}
           >
-            <Select options={[{ value: "Default" }]} />
+            <Select options={[{ value: 'Default' }]} />
           </Form.Item>
         </div>
       ),
@@ -291,16 +291,16 @@ function AddLlmProfile({
 
   const handleSubmit = () => {
     setLoading(true);
-    let method = "POST";
+    let method = 'POST';
     let url = `/api/v1/unstract/${sessionDetails?.orgId}/prompt-studio/profilemanager/${details?.tool_id}`;
 
     if (editLlmProfileId?.length) {
-      method = "PUT";
+      method = 'PUT';
       url = `/api/v1/unstract/${sessionDetails?.orgId}/prompt-studio/profile-manager/`;
       url += `${editLlmProfileId}/`;
     } else {
       try {
-        setPostHogCustomEvent("intent_success_ps_new_llm_profile", {
+        setPostHogCustomEvent('intent_success_ps_new_llm_profile', {
           info: "Clicked on 'Add' button",
         });
       } catch (err) {
@@ -312,8 +312,8 @@ function AddLlmProfile({
       method,
       url,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
-        "Content-Type": "application/json",
+        'X-CSRFToken': sessionDetails?.csrfToken,
+        'Content-Type': 'application/json',
       },
       data: formDetails,
     };
@@ -324,7 +324,7 @@ function AddLlmProfile({
         let newLlmProfiles = [...llmProfiles];
         if (editLlmProfileId) {
           newLlmProfiles = [...llmProfiles].map((item) =>
-            item?.profile_id === editLlmProfileId ? data : item
+            item?.profile_id === editLlmProfileId ? data : item,
           );
         } else {
           newLlmProfiles.push(data);
@@ -334,8 +334,8 @@ function AddLlmProfile({
         };
         updateCustomTool(updatedState);
         setAlertDetails({
-          type: "success",
-          content: "Saved successfully",
+          type: 'success',
+          content: 'Saved successfully',
         });
 
         if (newLlmProfiles?.length === 1) {
@@ -345,7 +345,7 @@ function AddLlmProfile({
         setIsAddLlm(false);
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "", setBackendErrors));
+        setAlertDetails(handleException(err, '', setBackendErrors));
       })
       .finally(() => {
         setLoading(false);
@@ -365,10 +365,10 @@ function AddLlmProfile({
       return null;
     }
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/adapter/info/${value}/`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
     };
 
@@ -376,7 +376,7 @@ function AddLlmProfile({
       .then((res) => {
         const data = res?.data;
         const contextWindowSize = data.context_window_size;
-        const chunkSize = form.getFieldValue("chunk_size");
+        const chunkSize = form.getFieldValue('chunk_size');
         setTokenSize(chunkSize > 0 ? calcTokenSize(chunkSize) : 0);
         setMaxTokenSize(contextWindowSize);
       })
@@ -384,8 +384,8 @@ function AddLlmProfile({
         setAlertDetails(
           handleException(
             err,
-            "Failed to get chunk size information for the requested LLM. Please proceed with a sane default."
-          )
+            'Failed to get chunk size information for the requested LLM. Please proceed with a sane default.',
+          ),
         );
       });
   };
@@ -426,16 +426,16 @@ function AddLlmProfile({
               rules={[
                 {
                   required: true,
-                  message: "Please enter the name",
+                  message: 'Please enter the name',
                 },
                 { validator: validateEmptyOrWhitespace },
               ]}
               validateStatus={
-                getBackendErrorDetail("profile_name", backendErrors)
-                  ? "error"
-                  : ""
+                getBackendErrorDetail('profile_name', backendErrors)
+                  ? 'error'
+                  : ''
               }
-              help={getBackendErrorDetail("profile_name", backendErrors)}
+              help={getBackendErrorDetail('profile_name', backendErrors)}
             >
               <Input />
             </Form.Item>
@@ -445,13 +445,13 @@ function AddLlmProfile({
                   label="LLM"
                   name="llm"
                   rules={[
-                    { required: true, message: "Please enter the LLM" },
+                    { required: true, message: 'Please enter the LLM' },
                     { validator: validateEmptyOrWhitespace },
                   ]}
                   validateStatus={
-                    getBackendErrorDetail("llm", backendErrors) ? "error" : ""
+                    getBackendErrorDetail('llm', backendErrors) ? 'error' : ''
                   }
-                  help={getBackendErrorDetail("llm", backendErrors)}
+                  help={getBackendErrorDetail('llm', backendErrors)}
                 >
                   <Select
                     options={llmItems}
@@ -466,7 +466,7 @@ function AddLlmProfile({
                     <>
                       Chunk Size
                       <Typography.Text type="secondary">
-                        {" "}
+                        {' '}
                         (Set to 0 if documents are small)
                       </Typography.Text>
                     </>
@@ -475,15 +475,15 @@ function AddLlmProfile({
                   rules={[
                     {
                       required: true,
-                      message: "Please enter the chunk size",
+                      message: 'Please enter the chunk size',
                     },
                   ]}
                   validateStatus={
-                    getBackendErrorDetail("chunk_size", backendErrors)
-                      ? "error"
-                      : ""
+                    getBackendErrorDetail('chunk_size', backendErrors)
+                      ? 'error'
+                      : ''
                   }
-                  help={getBackendErrorDetail("chunk_size", backendErrors)}
+                  help={getBackendErrorDetail('chunk_size', backendErrors)}
                   extra={`~= ${tokenSize}k tokens, Max: ${maxTokenSize}`}
                 >
                   <Input type="number" onChange={handleChunkSizeChange} />
@@ -498,16 +498,16 @@ function AddLlmProfile({
                   rules={[
                     {
                       required: true,
-                      message: "Please select the vector store",
+                      message: 'Please select the vector store',
                     },
                     { validator: validateEmptyOrWhitespace },
                   ]}
                   validateStatus={
-                    getBackendErrorDetail("vector_store", backendErrors)
-                      ? "error"
-                      : ""
+                    getBackendErrorDetail('vector_store', backendErrors)
+                      ? 'error'
+                      : ''
                   }
-                  help={getBackendErrorDetail("vector_store", backendErrors)}
+                  help={getBackendErrorDetail('vector_store', backendErrors)}
                 >
                   <Select options={vectorDbItems} />
                 </Form.Item>
@@ -520,15 +520,15 @@ function AddLlmProfile({
                   rules={[
                     {
                       required: true,
-                      message: "Please enter the overlap",
+                      message: 'Please enter the overlap',
                     },
                   ]}
                   validateStatus={
-                    getBackendErrorDetail("chunk_overlap", backendErrors)
-                      ? "error"
-                      : ""
+                    getBackendErrorDetail('chunk_overlap', backendErrors)
+                      ? 'error'
+                      : ''
                   }
-                  help={getBackendErrorDetail("chunk_overlap", backendErrors)}
+                  help={getBackendErrorDetail('chunk_overlap', backendErrors)}
                 >
                   <Input type="number" />
                 </Form.Item>
@@ -540,16 +540,16 @@ function AddLlmProfile({
               rules={[
                 {
                   required: true,
-                  message: "Please select the embedding model",
+                  message: 'Please select the embedding model',
                 },
                 { validator: validateEmptyOrWhitespace },
               ]}
               validateStatus={
-                getBackendErrorDetail("embedding_model", backendErrors)
-                  ? "error"
-                  : ""
+                getBackendErrorDetail('embedding_model', backendErrors)
+                  ? 'error'
+                  : ''
               }
-              help={getBackendErrorDetail("embedding_model", backendErrors)}
+              help={getBackendErrorDetail('embedding_model', backendErrors)}
             >
               <Select options={embeddingItems} />
             </Form.Item>
@@ -559,14 +559,14 @@ function AddLlmProfile({
               rules={[
                 {
                   required: true,
-                  message: "Please select the text extractor",
+                  message: 'Please select the text extractor',
                 },
                 { validator: validateEmptyOrWhitespace },
               ]}
               validateStatus={
-                getBackendErrorDetail("x2text", backendErrors) ? "error" : ""
+                getBackendErrorDetail('x2text', backendErrors) ? 'error' : ''
               }
-              help={getBackendErrorDetail("x2text", backendErrors)}
+              help={getBackendErrorDetail('x2text', backendErrors)}
             >
               <Select options={x2TextItems} />
             </Form.Item>
@@ -577,7 +577,7 @@ function AddLlmProfile({
                 background: token.colorBgContainer,
               }}
               items={getItems(panelStyle)}
-              activeKey={activeKey && "1"}
+              activeKey={activeKey && '1'}
               onChange={handleCollapse}
             />
           </div>
@@ -585,7 +585,7 @@ function AddLlmProfile({
         <Form.Item className="display-flex-right">
           <Space>
             <CustomButton type="primary" htmlType="submit" loading={loading}>
-              {editLlmProfileId ? "Update" : "Add"}
+              {editLlmProfileId ? 'Update' : 'Add'}
             </CustomButton>
           </Space>
         </Form.Item>

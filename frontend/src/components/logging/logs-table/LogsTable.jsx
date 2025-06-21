@@ -1,16 +1,16 @@
-import { Table, Tooltip, Typography } from "antd";
-import "./LogsTable.css";
-import { useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
+import { Table, Tooltip, Typography } from 'antd';
+import './LogsTable.css';
+import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import {
   CloseCircleFilled,
   HourglassOutlined,
   InfoCircleFilled,
-} from "@ant-design/icons";
+} from '@ant-design/icons';
 
-import { EmptyState } from "../../widgets/empty-state/EmptyState";
-import { logsStaticContent } from "../../../helpers/GetStaticData";
-import { useSessionStore } from "../../../store/session-store";
+import { EmptyState } from '../../widgets/empty-state/EmptyState';
+import { logsStaticContent } from '../../../helpers/GetStaticData';
+import { useSessionStore } from '../../../store/session-store';
 
 const LogsTable = ({
   tableData,
@@ -24,10 +24,10 @@ const LogsTable = ({
   const { sessionDetails } = useSessionStore();
   const columns = [
     {
-      title: "Executed At",
-      dataIndex: "executedAt",
-      key: "executedAt",
-      showSorterTooltip: { target: "full-header" },
+      title: 'Executed At',
+      dataIndex: 'executedAt',
+      key: 'executedAt',
+      showSorterTooltip: { target: 'full-header' },
       sorter: true,
       render: (_, record) => (
         <Tooltip title={record.executedAtWithSeconds}>
@@ -36,9 +36,9 @@ const LogsTable = ({
       ),
     },
     {
-      title: "Execution ID",
-      dataIndex: "executionId",
-      key: "executionId",
+      title: 'Execution ID',
+      dataIndex: 'executionId',
+      key: 'executionId',
       render: (text) => (
         <Typography.Link
           className="title-name-redirect"
@@ -49,11 +49,11 @@ const LogsTable = ({
       ),
     },
     {
-      title: "Execution Name",
-      dataIndex: "pipelineName",
-      key: "executionName",
+      title: 'Execution Name',
+      dataIndex: 'pipelineName',
+      key: 'executionName',
       render: (_, record) =>
-        activeTab === "WF" ? (
+        activeTab === 'WF' ? (
           <Typography.Text strong>{record?.workflowName}</Typography.Text>
         ) : (
           <>
@@ -66,20 +66,20 @@ const LogsTable = ({
         ),
     },
     {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
       render: (_, record) => (
         <span>
           <Tooltip title="Successful files">
             <span className="status-container">
-              <InfoCircleFilled className="gen-index-success" />{" "}
+              <InfoCircleFilled className="gen-index-success" />{' '}
               {record?.successfulFiles}
             </span>
           </Tooltip>
           <Tooltip title="Failed files">
             <span className="status-container">
-              <CloseCircleFilled className="gen-index-fail" />{" "}
+              <CloseCircleFilled className="gen-index-fail" />{' '}
               {record?.failedFiles}
             </span>
           </Tooltip>
@@ -88,7 +88,7 @@ const LogsTable = ({
               (record?.successfulFiles + record?.failedFiles) >
               0 && (
               <span className="status-container">
-                <HourglassOutlined className="gen-index-progress" />{" "}
+                <HourglassOutlined className="gen-index-progress" />{' '}
                 {record?.totalFiles -
                   (record?.successfulFiles + record?.failedFiles)}
               </span>
@@ -98,16 +98,16 @@ const LogsTable = ({
       ),
     },
     {
-      title: "Files Processed",
-      dataIndex: "filesProcessed",
-      key: "filesProcessed",
+      title: 'Files Processed',
+      dataIndex: 'filesProcessed',
+      key: 'filesProcessed',
       render: (text, record) => `${record?.processed}/${record?.totalFiles}`,
     },
     {
-      title: "Execution Time",
-      dataIndex: "executionTime",
-      key: "executionTime",
-      render: (_, record) => record?.execution_time || "-",
+      title: 'Execution Time',
+      dataIndex: 'executionTime',
+      key: 'executionTime',
+      render: (_, record) => record?.execution_time || '-',
     },
   ];
 
@@ -118,7 +118,7 @@ const LogsTable = ({
 
     if (sorter.order) {
       // Determine ascending or descending order
-      const order = sorter.order === "ascend" ? "created_at" : "-created_at";
+      const order = sorter.order === 'ascend' ? 'created_at' : '-created_at';
       setOrdering(order);
       setPagination((prev) => {
         return { ...prev, ...pagination, current: 1 };
@@ -137,7 +137,7 @@ const LogsTable = ({
       size="small"
       loading={loading}
       onChange={handleTableChange}
-      sortDirections={["ascend", "descend", "ascend"]}
+      sortDirections={['ascend', 'descend', 'ascend']}
       scroll={{ y: 55 * 10 }}
       locale={{
         emptyText: (
@@ -146,7 +146,7 @@ const LogsTable = ({
             btnText={`Add ${logsStaticContent[activeTab].addBtn}`}
             handleClick={() =>
               navigate(
-                `/${sessionDetails?.orgName}/${logsStaticContent[activeTab].route}`
+                `/${sessionDetails?.orgName}/${logsStaticContent[activeTab].route}`,
               )
             }
           />

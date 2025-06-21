@@ -1,9 +1,9 @@
-import Prism from "prismjs";
-import "prismjs/themes/prism.css";
-import PropTypes from "prop-types";
-import { useEffect } from "react";
+import Prism from 'prismjs';
+import 'prismjs/themes/prism.css';
+import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 
-import "./CodeSnippet.css";
+import './CodeSnippet.css';
 
 const CodeSnippet = ({ code }) => {
   useEffect(() => {

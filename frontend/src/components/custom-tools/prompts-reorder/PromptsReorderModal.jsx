@@ -1,7 +1,7 @@
-import { Modal } from "antd";
-import PropTypes from "prop-types";
+import { Modal } from 'antd';
+import PropTypes from 'prop-types';
 
-import { PromptsReorder } from "./PromptsReorder";
+import { PromptsReorder } from './PromptsReorder';
 
 function PromptsReorderModal({ open, setOpen, updateReorderedStatus }) {
   return (

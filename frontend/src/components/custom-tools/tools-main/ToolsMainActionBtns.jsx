@@ -1,23 +1,23 @@
-import { BarChartOutlined, UnorderedListOutlined } from "@ant-design/icons";
-import { Button, Space, Tooltip } from "antd";
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import { BarChartOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import { Button, Space, Tooltip } from 'antd';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 
-import { useCustomToolStore } from "../../../store/custom-tool-store";
-import usePostHogEvents from "../../../hooks/usePostHogEvents";
-import { useTokenUsageStore } from "../../../store/token-usage-store";
-import { RunAllPrompts } from "../prompt-card/RunAllPrompts";
-import { PromptsReorderModal } from "../prompts-reorder/PromptsReorderModal";
-import { useSessionStore } from "../../../store/session-store";
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { useAlertStore } from "../../../store/alert-store";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler";
+import { useCustomToolStore } from '../../../store/custom-tool-store';
+import usePostHogEvents from '../../../hooks/usePostHogEvents';
+import { useTokenUsageStore } from '../../../store/token-usage-store';
+import { RunAllPrompts } from '../prompt-card/RunAllPrompts';
+import { PromptsReorderModal } from '../prompts-reorder/PromptsReorderModal';
+import { useSessionStore } from '../../../store/session-store';
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { useAlertStore } from '../../../store/alert-store';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler';
 
 // Import single pass related components
 let RunSinglePassBtn;
 try {
   RunSinglePassBtn =
-    require("../../../plugins/run-single-pass-btn/RunSinglePassBtn").RunSinglePassBtn;
+    require('../../../plugins/run-single-pass-btn/RunSinglePassBtn').RunSinglePassBtn;
 } catch {
   // The variable will remain undefined if the component is not available
 }
@@ -26,7 +26,7 @@ try {
 let AddPromptBtn;
 try {
   AddPromptBtn =
-    require("../../../plugins/simple-prompt-studio/AddPromptBtn").AddPromptBtn;
+    require('../../../plugins/simple-prompt-studio/AddPromptBtn').AddPromptBtn;
 } catch {
   // The variable will remain undefined if the component is not available
 }
@@ -34,7 +34,7 @@ try {
 let ChallengeModal;
 try {
   ChallengeModal =
-    require("../../../plugins/challenge-modal/ChallengeModal").ChallengeModal;
+    require('../../../plugins/challenge-modal/ChallengeModal').ChallengeModal;
 } catch {
   // The component will remain undefined if it is not available
 }
@@ -64,14 +64,14 @@ function ToolsMainActionBtns() {
 
   const tokenUsageId = useMemo(
     () => `single_pass__${defaultLlmProfile}__${selectedDoc?.document_id}`,
-    [defaultLlmProfile, selectedDoc?.document_id]
+    [defaultLlmProfile, selectedDoc?.document_id],
   );
 
   const handleOutputAnalyzerBtnClick = useCallback(() => {
-    navigate("outputAnalyzer");
+    navigate('outputAnalyzer');
 
     try {
-      setPostHogCustomEvent("ps_output_analyser_seen", {
+      setPostHogCustomEvent('ps_output_analyser_seen', {
         info: "Clicked on 'Output Analyzer' button",
       });
     } catch (err) {
@@ -85,7 +85,7 @@ function ToolsMainActionBtns() {
 
   const getPromptDetails = useCallback(() => {
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/prompt-studio/${id}`,
     };
 
@@ -96,7 +96,7 @@ function ToolsMainActionBtns() {
         updateCustomTool({ details: data });
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "Failed to fetch prompt details"));
+        setAlertDetails(handleException(err, 'Failed to fetch prompt details'));
       })
       .finally(() => {
         setIsNewOrderLoading(false);

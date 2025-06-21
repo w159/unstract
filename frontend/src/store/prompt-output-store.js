@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 const defaultState = {
   promptOutputs: {},
@@ -15,13 +15,13 @@ const usePromptOutputStore = create((setState, getState) => ({
   },
   updatePromptOutput: (outputs) => {
     const existingState = { ...getState() };
-    let promptOutputs = existingState["promptOutputs"];
+    let promptOutputs = existingState['promptOutputs'];
     promptOutputs = { ...promptOutputs, ...outputs };
     setState({ promptOutputs });
   },
   deletePromptOutput: (key) => {
     const existingState = { ...getState() };
-    const promptOutputs = existingState["promptOutputs"];
+    const promptOutputs = existingState['promptOutputs'];
     delete promptOutputs[key];
     setState({ promptOutputs });
   },

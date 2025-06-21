@@ -2,7 +2,7 @@ import {
   DeleteOutlined,
   QuestionCircleOutlined,
   UserOutlined,
-} from "@ant-design/icons";
+} from '@ant-design/icons';
 import {
   Avatar,
   List,
@@ -11,15 +11,15 @@ import {
   Radio,
   Select,
   Typography,
-} from "antd";
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
-import "./ExportTool.css";
+} from 'antd';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
+import './ExportTool.css';
 
-import { SpinnerLoader } from "../../widgets/spinner-loader/SpinnerLoader";
+import { SpinnerLoader } from '../../widgets/spinner-loader/SpinnerLoader';
 
-const SHARE_ALL = "share_all";
-const SHARE_CUSTOM = "share_custom";
+const SHARE_ALL = 'share_all';
+const SHARE_CUSTOM = 'share_custom';
 
 function ExportTool({
   open,
@@ -45,7 +45,7 @@ function ExportTool({
     }
 
     const promptStudioUsers = toolDetails?.prompt_studio_users?.map((user) =>
-      user?.id?.toString()
+      user?.id?.toString(),
     );
 
     const filteredUsers = allUsers.filter((user) => {
@@ -66,7 +66,7 @@ function ExportTool({
     }
     const createdByUserId = toolDetails?.created_by?.toString();
     const promptStudioUsers = toolDetails?.prompt_studio_users?.map((user) =>
-      user?.id?.toString()
+      user?.id?.toString(),
     );
     setSelectedUsers(
       toolDetails.shared_users
@@ -76,17 +76,17 @@ function ExportTool({
             !promptStudioUsers.includes(userId) && createdByUserId !== userId
           );
         })
-        .map((user) => user?.id?.toString())
+        .map((user) => user?.id?.toString()),
     );
   }, [toolDetails]);
 
   const handleDeleteUser = (userId) => {
     setSelectedUsers((prevSelectedUsers) =>
-      prevSelectedUsers.filter((user) => user !== userId)
+      prevSelectedUsers.filter((user) => user !== userId),
     );
   };
   const filterOption = (input, option) =>
-    (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+    (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
   const onChange = (e) => {
     setSharingOption(e.target.value);
@@ -103,7 +103,7 @@ function ExportTool({
         <List
           dataSource={selectedUsers.map((userId) => {
             const user = allUsers.find(
-              (u) => u?.id.toString() === userId.toString()
+              (u) => u?.id.toString() === userId.toString(),
             );
             return {
               id: user?.id,
@@ -157,13 +157,13 @@ function ExportTool({
   return (
     toolDetails && (
       <Modal
-        title={"Export settings"}
+        title={'Export settings'}
         open={open}
         onCancel={() => setOpen(false)}
         maskClosable={false}
         centered
         closable={true}
-        okText={"Apply"}
+        okText={'Apply'}
         onOk={() =>
           onApply(selectedUsers, toolDetails, sharingOption === SHARE_ALL)
         }
@@ -189,7 +189,7 @@ function ExportTool({
               <Select
                 filterOption={filterOption}
                 showSearch
-                size={"middle"}
+                size={'middle'}
                 placeholder="Search"
                 className="export-permission-search"
                 onChange={(selectedUser) => {

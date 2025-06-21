@@ -1,10 +1,10 @@
-import { Table } from "antd";
-import PropTypes from "prop-types";
+import { Table } from 'antd';
+import PropTypes from 'prop-types';
 
-import { deploymentsStaticContent } from "../../../helpers/GetStaticData";
-import { IslandLayout } from "../../../layouts/island-layout/IslandLayout";
-import { EmptyState } from "../../widgets/empty-state/EmptyState";
-import { SpinnerLoader } from "../../widgets/spinner-loader/SpinnerLoader";
+import { deploymentsStaticContent } from '../../../helpers/GetStaticData';
+import { IslandLayout } from '../../../layouts/island-layout/IslandLayout';
+import { EmptyState } from '../../widgets/empty-state/EmptyState';
+import { SpinnerLoader } from '../../widgets/spinner-loader/SpinnerLoader';
 
 function Body({ type, columns, tableData, isTableLoading, openAddModal }) {
   if (isTableLoading) {

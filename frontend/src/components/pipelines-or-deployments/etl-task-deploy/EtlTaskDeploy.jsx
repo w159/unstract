@@ -1,27 +1,27 @@
-import { Form, Input, Modal, Select, Space, Typography, Button } from "antd";
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
-import { ScheduleOutlined, ClockCircleOutlined } from "@ant-design/icons";
-import cronstrue from "cronstrue";
+import { Form, Input, Modal, Select, Space, Typography, Button } from 'antd';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
+import { ScheduleOutlined, ClockCircleOutlined } from '@ant-design/icons';
+import cronstrue from 'cronstrue';
 
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate.js";
-import { useAlertStore } from "../../../store/alert-store";
-import { useSessionStore } from "../../../store/session-store";
-import { usePromptStudioStore } from "../../../store/prompt-studio-store";
-import CronGenerator from "../../cron-generator/CronGenerator.jsx";
-import { workflowService } from "../../workflows/workflow/workflow-service.js";
-import "./EtlTaskDeploy.css";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler.jsx";
-import { useWorkflowStore } from "../../../store/workflow-store.js";
-import { getBackendErrorDetail } from "../../../helpers/GetStaticData.js";
-import usePostHogEvents from "../../../hooks/usePostHogEvents.js";
-import { PromptStudioModal } from "../../common/PromptStudioModal";
-import { useCallback } from "react";
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate.js';
+import { useAlertStore } from '../../../store/alert-store';
+import { useSessionStore } from '../../../store/session-store';
+import { usePromptStudioStore } from '../../../store/prompt-studio-store';
+import CronGenerator from '../../cron-generator/CronGenerator.jsx';
+import { workflowService } from '../../workflows/workflow/workflow-service.js';
+import './EtlTaskDeploy.css';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler.jsx';
+import { useWorkflowStore } from '../../../store/workflow-store.js';
+import { getBackendErrorDetail } from '../../../helpers/GetStaticData.js';
+import usePostHogEvents from '../../../hooks/usePostHogEvents.js';
+import { PromptStudioModal } from '../../common/PromptStudioModal';
+import { useCallback } from 'react';
 
 const defaultFromDetails = {
-  pipeline_name: "",
-  workflow: "",
-  cron_string: "",
+  pipeline_name: '',
+  workflow: '',
+  cron_string: '',
 };
 
 const EtlTaskDeploy = ({
@@ -47,7 +47,7 @@ const EtlTaskDeploy = ({
   const { Option } = Select;
   const [workflowList, setWorkflowList] = useState([]);
   const [formDetails, setFormDetails] = useState(
-    isEdit ? { ...selectedRow } : { ...defaultFromDetails }
+    isEdit ? { ...selectedRow } : { ...defaultFromDetails },
   );
   const [isLoading, setLoading] = useState(false);
   const [openCronGenerator, setOpenCronGenerator] = useState(false);
@@ -87,7 +87,7 @@ const EtlTaskDeploy = ({
         setWorkflowList(res?.data);
       })
       .catch(() => {
-        console.error("Unable to get workflow list");
+        console.error('Unable to get workflow list');
       });
   };
 
@@ -103,7 +103,7 @@ const EtlTaskDeploy = ({
     setBackendErrors((prevErrors) => {
       if (prevErrors) {
         const updatedErrors = prevErrors.errors.filter(
-          (error) => error.attr !== changedFieldName
+          (error) => error.attr !== changedFieldName,
         );
         return { ...prevErrors, errors: updatedErrors };
       }
@@ -112,22 +112,22 @@ const EtlTaskDeploy = ({
   };
   const fetchWorkflows = (type) =>
     workflowApiService
-      .getWorkflowEndpointList("DESTINATION", type)
+      .getWorkflowEndpointList('DESTINATION', type)
       .then((res) =>
         res?.data.map((record) => ({
           ...record,
           id: record.workflow,
-        }))
+        })),
       )
       .catch(() => {
         return [];
       });
   const getWorkflows = () => {
-    const connectorType = type === "task" ? "FILESYSTEM" : "DATABASE";
+    const connectorType = type === 'task' ? 'FILESYSTEM' : 'DATABASE';
     setWorkflowList([]);
     fetchWorkflows(connectorType).then((data) => {
-      if (connectorType === "DATABASE") {
-        fetchWorkflows("MANUALREVIEW").then((manualReviewData) => {
+      if (connectorType === 'DATABASE') {
+        fetchWorkflows('MANUALREVIEW').then((manualReviewData) => {
           const combinedData = [...data, ...manualReviewData];
           setWorkflowList(combinedData);
         });
@@ -138,7 +138,7 @@ const EtlTaskDeploy = ({
   };
 
   useEffect(() => {
-    if (type === "app") {
+    if (type === 'app') {
       getWorkflowList();
     } else {
       getWorkflows();
@@ -155,7 +155,7 @@ const EtlTaskDeploy = ({
   };
 
   const setCronValue = (value) => {
-    const updatedValues = { ["cron_string"]: value };
+    const updatedValues = { ['cron_string']: value };
     setFormDetails({ ...formDetails, ...updatedValues });
   };
 
@@ -185,14 +185,14 @@ const EtlTaskDeploy = ({
 
   const updatePipeline = () => {
     const body = formDetails;
-    body["pipeline_type"] = type.toUpperCase();
+    body['pipeline_type'] = type.toUpperCase();
 
     const requestOptions = {
-      method: "PUT",
+      method: 'PUT',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/pipeline/${body?.id}/`,
       headers: {
-        "Content-Type": "application/json",
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'Content-Type': 'application/json',
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
       data: body,
     };
@@ -203,12 +203,12 @@ const EtlTaskDeploy = ({
         setOpen(false);
         clearFormDetails();
         setAlertDetails({
-          type: "success",
-          content: "Pipeline Updated Successfully",
+          type: 'success',
+          content: 'Pipeline Updated Successfully',
         });
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "", setBackendErrors));
+        setAlertDetails(handleException(err, '', setBackendErrors));
       })
       .finally(() => {
         setLoading(false);
@@ -218,7 +218,7 @@ const EtlTaskDeploy = ({
   const createPipeline = () => {
     try {
       const wf = workflowList.find(
-        (item) => item?.id === formDetails?.workflow
+        (item) => item?.id === formDetails?.workflow,
       );
       setPostHogCustomEvent(posthogDeploymentEventText[`${type}_success`], {
         info: "Clicked on 'Save and Deploy' button",
@@ -230,14 +230,14 @@ const EtlTaskDeploy = ({
     }
 
     const body = formDetails;
-    body["pipeline_type"] = type.toUpperCase();
+    body['pipeline_type'] = type.toUpperCase();
 
     const requestOptions = {
-      method: "POST",
+      method: 'POST',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/pipeline/`,
       headers: {
-        "Content-Type": "application/json",
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'Content-Type': 'application/json',
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
       data: body,
     };
@@ -255,12 +255,12 @@ const EtlTaskDeploy = ({
         setOpen(false);
         clearFormDetails();
         setAlertDetails({
-          type: "success",
-          content: "New Pipeline Created Successfully",
+          type: 'success',
+          content: 'New Pipeline Created Successfully',
         });
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "", setBackendErrors));
+        setAlertDetails(handleException(err, '', setBackendErrors));
       })
       .finally(() => {
         setLoading(false);
@@ -288,7 +288,7 @@ const EtlTaskDeploy = ({
         open={open}
         onOk={isEdit ? updatePipeline : createPipeline}
         onCancel={handleCancel}
-        okText={isEdit ? "Update and Deploy" : "Save and Deploy"}
+        okText={isEdit ? 'Update and Deploy' : 'Save and Deploy'}
         okButtonProps={{
           loading: isLoading,
         }}
@@ -306,13 +306,13 @@ const EtlTaskDeploy = ({
           <Form.Item
             label="Display Name"
             name="pipeline_name"
-            rules={[{ required: true, message: "Please enter display name" }]}
+            rules={[{ required: true, message: 'Please enter display name' }]}
             validateStatus={
-              getBackendErrorDetail("pipeline_name", backendErrors)
-                ? "error"
-                : ""
+              getBackendErrorDetail('pipeline_name', backendErrors)
+                ? 'error'
+                : ''
             }
-            help={getBackendErrorDetail("pipeline_name", backendErrors)}
+            help={getBackendErrorDetail('pipeline_name', backendErrors)}
           >
             <Input placeholder="Name" />
           </Form.Item>
@@ -321,11 +321,11 @@ const EtlTaskDeploy = ({
             <Form.Item
               label="Workflow"
               name="workflow"
-              rules={[{ required: true, message: "Please select an workflow" }]}
+              rules={[{ required: true, message: 'Please select an workflow' }]}
               validateStatus={
-                getBackendErrorDetail("workflow", backendErrors) ? "error" : ""
+                getBackendErrorDetail('workflow', backendErrors) ? 'error' : ''
               }
-              help={getBackendErrorDetail("workflow", backendErrors)}
+              help={getBackendErrorDetail('workflow', backendErrors)}
             >
               <Select>
                 {workflowList.map((workflow) => {
@@ -342,9 +342,9 @@ const EtlTaskDeploy = ({
             label="Cron Schedule"
             name="cron_string"
             validateStatus={
-              getBackendErrorDetail("cron_string", backendErrors) ? "error" : ""
+              getBackendErrorDetail('cron_string', backendErrors) ? 'error' : ''
             }
-            help={getBackendErrorDetail("cron_string", backendErrors)}
+            help={getBackendErrorDetail('cron_string', backendErrors)}
           >
             <div className="cron-string-div">
               <Input
@@ -366,7 +366,7 @@ const EtlTaskDeploy = ({
             </div>
             <div>
               <Typography.Text className="summary-text">
-                {summary || "Summary not available."}
+                {summary || 'Summary not available.'}
               </Typography.Text>
             </div>
           </Space>

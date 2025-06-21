@@ -1,13 +1,13 @@
-import { Form, Select, Space, Typography } from "antd";
-import PropTypes from "prop-types";
+import { Form, Select, Space, Typography } from 'antd';
+import PropTypes from 'prop-types';
 
-import CustomMarkdown from "../../helpers/custom-markdown/CustomMarkdown";
+import CustomMarkdown from '../../helpers/custom-markdown/CustomMarkdown';
 
 const { Option } = Select;
 const SelectWidget = (props) => {
   const { id, value, options, onChange, label, schema, rawErrors, readonly } =
     props;
-  const description = schema?.description || "";
+  const description = schema?.description || '';
 
   const handleSelectChange = (selectedValue) => {
     onChange(selectedValue);
@@ -15,7 +15,7 @@ const SelectWidget = (props) => {
   const hasError = rawErrors && rawErrors.length > 0;
 
   return (
-    <Form.Item className="width-100" validateStatus={hasError ? "error" : ""}>
+    <Form.Item className="width-100" validateStatus={hasError ? 'error' : ''}>
       <Space direction="vertical" className="width-100">
         <Typography.Text>{label}</Typography.Text>
         <div>

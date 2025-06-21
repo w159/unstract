@@ -1,18 +1,18 @@
-import { Col, Modal, Row, Tabs, Typography } from "antd";
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { Col, Modal, Row, Tabs, Typography } from 'antd';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 
-import { ListOfConnectors } from "../list-of-connectors/ListOfConnectors";
-import "./ConfigureConnectorModal.css";
-import { ConfigureFormsLayout } from "../configure-forms-layout/ConfigureFormsLayout";
-import { ManageFiles } from "../../input-output/manage-files/ManageFiles";
-import usePostHogEvents from "../../../hooks/usePostHogEvents";
+import { ListOfConnectors } from '../list-of-connectors/ListOfConnectors';
+import './ConfigureConnectorModal.css';
+import { ConfigureFormsLayout } from '../configure-forms-layout/ConfigureFormsLayout';
+import { ManageFiles } from '../../input-output/manage-files/ManageFiles';
+import usePostHogEvents from '../../../hooks/usePostHogEvents';
 
 let DBRules;
 
 try {
   DBRules =
-    require("../../../plugins/manual-review/db-rules/DBRules.jsx").DBRules;
+    require('../../../plugins/manual-review/db-rules/DBRules.jsx').DBRules;
 } catch {
   // The component will remain null of it is not available
 }
@@ -36,12 +36,12 @@ function ConfigureConnectorModal({
   setSelectedItemName,
   workflowDetails,
 }) {
-  const [activeKey, setActiveKey] = useState("1");
+  const [activeKey, setActiveKey] = useState('1');
   useEffect(() => {
-    if (connectorMetadata && connType === "FILESYSTEM") {
-      setActiveKey("2"); // If connector is already configured
+    if (connectorMetadata && connType === 'FILESYSTEM') {
+      setActiveKey('2'); // If connector is already configured
     } else {
-      setActiveKey("1"); // default value
+      setActiveKey('1'); // default value
     }
   }, [open, connectorMetadata]);
   const { setPostHogCustomEvent, posthogConnectorEventText } =
@@ -49,17 +49,17 @@ function ConfigureConnectorModal({
 
   const [tabItems, setTabItems] = useState([
     {
-      key: "1",
-      label: "Settings",
+      key: '1',
+      label: 'Settings',
       visible: true,
     },
     {
-      key: "2",
-      label: "File System",
+      key: '2',
+      label: 'File System',
       disabled:
         !connectorId ||
         connDetails?.connector_id !== selectedId ||
-        connType === "DATABASE",
+        connType === 'DATABASE',
       visible: false,
     },
   ]);
@@ -78,12 +78,12 @@ function ConfigureConnectorModal({
 
   useEffect(() => {
     const updatedTabItems = tabItems.map((item) => {
-      if (item.key === "2") {
-        item.visible = connType === "FILESYSTEM";
-      } else if (item.key === "MANUALREVIEW") {
+      if (item.key === '2') {
+        item.visible = connType === 'FILESYSTEM';
+      } else if (item.key === 'MANUALREVIEW') {
         item.disabled =
           !connectorId || connDetails?.connector_id !== selectedId;
-        item.visible = connType === "DATABASE" || connType === "MANUALREVIEW";
+        item.visible = connType === 'DATABASE' || connType === 'MANUALREVIEW';
       } else {
         item.visible = true;
       }
@@ -94,7 +94,7 @@ function ConfigureConnectorModal({
 
   useEffect(() => {
     const updatedTabItems = tabItems.map((item) => {
-      if (item.key === "MANUALREVIEW") {
+      if (item.key === 'MANUALREVIEW') {
         item.disabled =
           !connectorId || connDetails?.connector_id !== selectedId;
       }
@@ -106,11 +106,11 @@ function ConfigureConnectorModal({
   useEffect(() => {
     try {
       const tabOption =
-        require("../../../plugins/manual-review/connector-config-tab-mrq/ConnectorConfigTabMRQ").mrqTabs;
+        require('../../../plugins/manual-review/connector-config-tab-mrq/ConnectorConfigTabMRQ').mrqTabs;
       if (tabOption) {
-        tabOption["disabled"] =
+        tabOption['disabled'] =
           !connectorId || connDetails?.connector_id !== selectedId;
-        tabOption["visible"] = false;
+        tabOption['visible'] = false;
         setUpdatedTabOptions(tabOption);
       }
     } catch {
@@ -120,7 +120,7 @@ function ConfigureConnectorModal({
   const handleSelectItem = (e) => {
     const id = e.key;
     setSelectedId(id?.toString());
-    setActiveKey("1");
+    setActiveKey('1');
 
     const connectorData = [...filteredList].find((item) => item?.key === id);
     setSelectedItemName(connectorData?.label);
@@ -171,7 +171,7 @@ function ConfigureConnectorModal({
               onChange={onTabChange}
               moreIcon={<></>}
             />
-            {activeKey === "1" && (
+            {activeKey === '1' && (
               <ConfigureFormsLayout
                 selectedId={selectedId}
                 type={type}
@@ -188,10 +188,10 @@ function ConfigureConnectorModal({
                 selectedItemName={selectedItemName}
               />
             )}
-            {activeKey === "2" && connType === "FILESYSTEM" && (
+            {activeKey === '2' && connType === 'FILESYSTEM' && (
               <ManageFiles selectedItem={connectorId} />
             )}
-            {activeKey === "MANUALREVIEW" && DBRules && (
+            {activeKey === 'MANUALREVIEW' && DBRules && (
               <DBRules
                 connDetails={connDetails}
                 workflowDetails={workflowDetails}

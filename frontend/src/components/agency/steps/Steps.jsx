@@ -1,20 +1,20 @@
-import { Divider } from "antd";
-import PropTypes from "prop-types";
-import { useEffect } from "react";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { Divider } from 'antd';
+import PropTypes from 'prop-types';
+import { useEffect } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
-import { sourceTypes } from "../../../helpers/GetStaticData.js";
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { useAlertStore } from "../../../store/alert-store";
-import { useSessionStore } from "../../../store/session-store";
-import { useWorkflowStore } from "../../../store/workflow-store";
-import { SpinnerLoader } from "../../widgets/spinner-loader/SpinnerLoader.jsx";
-import { DsSettingsCard } from "../ds-settings-card/DsSettingsCard.jsx";
-import { StepCard } from "../step-card/StepCard.jsx";
-import "./Steps.css";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler.jsx";
-import usePostHogEvents from "../../../hooks/usePostHogEvents.js";
+import { sourceTypes } from '../../../helpers/GetStaticData.js';
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { useAlertStore } from '../../../store/alert-store';
+import { useSessionStore } from '../../../store/session-store';
+import { useWorkflowStore } from '../../../store/workflow-store';
+import { SpinnerLoader } from '../../widgets/spinner-loader/SpinnerLoader.jsx';
+import { DsSettingsCard } from '../ds-settings-card/DsSettingsCard.jsx';
+import { StepCard } from '../step-card/StepCard.jsx';
+import './Steps.css';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler.jsx';
+import usePostHogEvents from '../../../hooks/usePostHogEvents.js';
 
 function Steps({ setSteps, activeToolId, sourceMsg, destinationMsg }) {
   const workflowStore = useWorkflowStore();
@@ -41,7 +41,7 @@ function Steps({ setSteps, activeToolId, sourceMsg, destinationMsg }) {
 
   const canUpdateWorkflow = () => {
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/workflow/${projectId}/can-update/`,
     };
     axiosPrivate(requestOptions)
@@ -54,7 +54,7 @@ function Steps({ setSteps, activeToolId, sourceMsg, destinationMsg }) {
       })
       .catch((err) => {
         setAlertDetails(
-          handleException(err, "Failed to get can update status")
+          handleException(err, 'Failed to get can update status'),
         );
       });
   };
@@ -63,7 +63,7 @@ function Steps({ setSteps, activeToolId, sourceMsg, destinationMsg }) {
     const toolInstance = details?.tool_instances || [];
     if (fromIndex === undefined && funcName) {
       try {
-        setPostHogCustomEvent("wf_tool_drag_dropped", {
+        setPostHogCustomEvent('wf_tool_drag_dropped', {
           info: `Tool dragged and dropped`,
           tool_name: funcName,
         });
@@ -82,7 +82,7 @@ function Steps({ setSteps, activeToolId, sourceMsg, destinationMsg }) {
           setSteps(res);
         })
         .catch((err) => {
-          const msg = "Failed to re-order the tools.";
+          const msg = 'Failed to re-order the tools.';
           setAlertDetails(handleException(err, msg));
         });
     } else {
@@ -109,11 +109,11 @@ function Steps({ setSteps, activeToolId, sourceMsg, destinationMsg }) {
       tool_instances: toolInstances,
     };
     const requestOptions = {
-      method: "POST",
+      method: 'POST',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/tool_instance/reorder/`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
-        "Content-Type": "application/json",
+        'X-CSRFToken': sessionDetails?.csrfToken,
+        'Content-Type': 'application/json',
       },
       data: body,
     };
@@ -131,17 +131,17 @@ function Steps({ setSteps, activeToolId, sourceMsg, destinationMsg }) {
 
   const getWfEndpointDetails = () => {
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/workflow/${projectId}/endpoint/`,
     };
     axiosPrivate(requestOptions)
       .then((res) => {
         const data = res?.data || [];
         const sourceDetails = data.find(
-          (item) => item?.endpoint_type === "SOURCE"
+          (item) => item?.endpoint_type === 'SOURCE',
         );
         const destDetails = data.find(
-          (item) => item?.endpoint_type === "DESTINATION"
+          (item) => item?.endpoint_type === 'DESTINATION',
         );
         const body = {
           source: sourceDetails,
@@ -150,7 +150,7 @@ function Steps({ setSteps, activeToolId, sourceMsg, destinationMsg }) {
         updateWorkflow(body);
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "Failed to get endpoints"));
+        setAlertDetails(handleException(err, 'Failed to get endpoints'));
       });
   };
 
@@ -166,11 +166,11 @@ function Steps({ setSteps, activeToolId, sourceMsg, destinationMsg }) {
     };
 
     const requestOptions = {
-      method: "POST",
+      method: 'POST',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/tool_instance/`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
-        "Content-Type": "application/json",
+        'X-CSRFToken': sessionDetails?.csrfToken,
+        'Content-Type': 'application/json',
       },
       data: body,
     };
@@ -194,7 +194,7 @@ function Steps({ setSteps, activeToolId, sourceMsg, destinationMsg }) {
       </div>
       <div className="wf-steps-list">
         <div className="wf-steps-list-2">
-          {isLoading && loadingType === "GENERATE" ? (
+          {isLoading && loadingType === 'GENERATE' ? (
             <div className="wf-steps-layout">
               <SpinnerLoader />
             </div>

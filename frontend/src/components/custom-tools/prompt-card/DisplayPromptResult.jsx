@@ -1,17 +1,17 @@
-import { Space, Spin, Typography } from "antd";
-import PropTypes from "prop-types";
-import { InfoCircleFilled } from "@ant-design/icons";
-import { useEffect, useState } from "react";
+import { Space, Spin, Typography } from 'antd';
+import PropTypes from 'prop-types';
+import { InfoCircleFilled } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
 
 import {
   displayPromptResult,
   generateApiRunStatusId,
   generateUUID,
   PROMPT_RUN_API_STATUSES,
-} from "../../../helpers/GetStaticData";
-import "./PromptCard.css";
-import { useCustomToolStore } from "../../../store/custom-tool-store";
-import { SpinnerLoader } from "../../widgets/spinner-loader/SpinnerLoader";
+} from '../../../helpers/GetStaticData';
+import './PromptCard.css';
+import { useCustomToolStore } from '../../../store/custom-tool-store';
+import { SpinnerLoader } from '../../widgets/spinner-loader/SpinnerLoader';
 
 function DisplayPromptResult({
   output,
@@ -53,8 +53,8 @@ function DisplayPromptResult({
       displayPromptResult(
         output,
         isFormattingRequired,
-        details?.enable_highlight
-      )
+        details?.enable_highlight,
+      ),
     );
   }, [
     promptRunStatus,
@@ -73,7 +73,7 @@ function DisplayPromptResult({
       <Typography.Text className="prompt-not-ran">
         <span>
           <InfoCircleFilled className="info-circle-colored" />
-        </span>{" "}
+        </span>{' '}
         Yet to run
       </Typography.Text>
     );
@@ -85,28 +85,28 @@ function DisplayPromptResult({
         highlightData[key],
         promptDetails?.prompt_id,
         profileId,
-        confidenceData?.[key]
+        confidenceData?.[key],
       );
       setSelectedKey(keyPath);
     }
   };
 
   const isObject = (value) =>
-    typeof value === "object" && value !== null && !Array.isArray(value);
+    typeof value === 'object' && value !== null && !Array.isArray(value);
 
   const renderJson = (
     data,
     highlightData,
     confidenceData,
     indent = 0,
-    path = "",
-    isTable = false
+    path = '',
+    isTable = false,
   ) => {
     if (isTable) {
       const stringData =
-        typeof data === "string" ? data : JSON.stringify(data, null, 4);
-      const lines = stringData.split("\n");
-      const truncated = lines.slice(0, 25).join("\n");
+        typeof data === 'string' ? data : JSON.stringify(data, null, 4);
+      const lines = stringData.split('\n');
+      const truncated = lines.slice(0, 25).join('\n');
       return (
         <div>
           {truncated}
@@ -123,23 +123,23 @@ function DisplayPromptResult({
         </div>
       );
     }
-    if (typeof data === "object" && !details?.enable_highlight) {
+    if (typeof data === 'object' && !details?.enable_highlight) {
       return JSON.stringify(data, null, 4);
     }
 
-    if (typeof data === "string") {
+    if (typeof data === 'string') {
       return `"${data}"`;
     }
 
-    if (typeof data === "number" || typeof data === "boolean") {
+    if (typeof data === 'number' || typeof data === 'boolean') {
       return data.toString();
     }
 
     if (Array.isArray(data)) {
       return (
         <>
-          {"["}
-          <div style={{ paddingLeft: "20px" }}>
+          {'['}
+          <div style={{ paddingLeft: '20px' }}>
             {data?.map((item, index) => (
               <div key={generateUUID()}>
                 {renderJson(
@@ -148,13 +148,13 @@ function DisplayPromptResult({
                   confidenceData?.[index],
                   indent + 1,
                   `${path}[${index}]`,
-                  isTable
+                  isTable,
                 )}
-                {index < data.length - 1 ? "," : ""}
+                {index < data.length - 1 ? ',' : ''}
               </div>
             ))}
           </div>
-          {"]"}
+          {']'}
         </>
       );
     }
@@ -162,8 +162,8 @@ function DisplayPromptResult({
     if (isObject(data)) {
       return (
         <>
-          {"{"}
-          <div style={{ paddingLeft: "20px" }}>
+          {'{'}
+          <div style={{ paddingLeft: '20px' }}>
             {Object.entries(data).map(([key, value], index, array) => {
               const isClickable = !isObject(value) && !Array.isArray(value); // Only primitive values should be clickable
               const newPath = path ? `${path}.${key}` : key;
@@ -173,18 +173,18 @@ function DisplayPromptResult({
                   <Space wrap className="json-key">
                     {key}
                   </Space>
-                  {": "}
+                  {': '}
                   <Typography.Text
                     className={`prompt-output-result json-value ${
-                      isClickable && highlightData?.[key] ? "clickable" : ""
-                    } ${isSelected ? "selected" : ""}`}
+                      isClickable && highlightData?.[key] ? 'clickable' : ''
+                    } ${isSelected ? 'selected' : ''}`}
                     onClick={() => {
                       if (isClickable && highlightData?.[key]) {
                         handleClick(
                           highlightData,
                           confidenceData,
                           key,
-                          newPath
+                          newPath,
                         );
                       }
                     }}
@@ -195,15 +195,15 @@ function DisplayPromptResult({
                       confidenceData?.[key],
                       indent + 1,
                       newPath,
-                      isTable
+                      isTable,
                     )}
                   </Typography.Text>
-                  {index < array.length - 1 ? "," : ""}
+                  {index < array.length - 1 ? ',' : ''}
                 </div>
               );
             })}
           </div>
-          {"}"}
+          {'}'}
         </>
       );
     }
@@ -213,8 +213,8 @@ function DisplayPromptResult({
 
   return (
     <Typography.Paragraph className="prompt-card-display-output font-size-12">
-      {parsedOutput && typeof parsedOutput === "object" ? (
-        renderJson(parsedOutput, highlightData, confidenceData, 0, "", isTable)
+      {parsedOutput && typeof parsedOutput === 'object' ? (
+        renderJson(parsedOutput, highlightData, confidenceData, 0, '', isTable)
       ) : (
         <TextResult
           enableHighlight={details?.enable_highlight}
@@ -248,8 +248,8 @@ const TextResult = ({
         onSelectHighlight(highlightData, promptId, profileId, confidenceData)
       }
       className={`prompt-output-result json-value ${
-        highlightData ? "clickable" : ""
-      } ${selectedHighlight?.highlightedPrompt === promptId ? "selected" : ""}`}
+        highlightData ? 'clickable' : ''
+      } ${selectedHighlight?.highlightedPrompt === promptId ? 'selected' : ''}`}
     >
       {parsedOutput}
     </Typography.Text>

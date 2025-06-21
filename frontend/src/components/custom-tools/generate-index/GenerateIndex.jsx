@@ -2,38 +2,38 @@ import {
   CheckCircleFilled,
   CloseCircleFilled,
   ExclamationCircleFilled,
-} from "@ant-design/icons";
-import { Col, Row, Typography } from "antd";
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+} from '@ant-design/icons';
+import { Col, Row, Typography } from 'antd';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 
-import "./GenerateIndex.css";
+import './GenerateIndex.css';
 
 function GenerateIndex({ isGeneratingIndex, result }) {
-  const [text, setText] = useState("");
-  const [subText, setSubText] = useState("");
+  const [text, setText] = useState('');
+  const [subText, setSubText] = useState('');
 
   useEffect(() => {
     if (isGeneratingIndex) {
-      setText("Generating Index");
-      setSubText("The index will take some time to create.");
+      setText('Generating Index');
+      setSubText('The index will take some time to create.');
       return;
     }
 
-    if (result === "SUCCESS") {
-      setText("Successful Index");
-      setSubText("Index is ready for inspection.");
+    if (result === 'SUCCESS') {
+      setText('Successful Index');
+      setSubText('Index is ready for inspection.');
       return;
     }
 
-    if (result === "FAILED") {
-      setText("Failed to Index");
-      setSubText("Please try again");
+    if (result === 'FAILED') {
+      setText('Failed to Index');
+      setSubText('Please try again');
       return;
     }
 
-    setText("");
-    setSubText("");
+    setText('');
+    setSubText('');
   }, [isGeneratingIndex]);
 
   return (
@@ -46,7 +46,7 @@ function GenerateIndex({ isGeneratingIndex, result }) {
                 <ExclamationCircleFilled className="gen-index-progress gen-index-icon" />
               ) : (
                 <>
-                  {result === "SUCCESS" ? (
+                  {result === 'SUCCESS' ? (
                     <CheckCircleFilled className="gen-index-success gen-index-icon" />
                   ) : (
                     <CloseCircleFilled className="gen-index-fail gen-index-icon" />

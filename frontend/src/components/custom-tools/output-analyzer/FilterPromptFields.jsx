@@ -1,6 +1,6 @@
-import { Form, Checkbox } from "antd";
-import PropTypes from "prop-types";
-import React, { useEffect, useState, useCallback } from "react";
+import { Form, Checkbox } from 'antd';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState, useCallback } from 'react';
 
 const FilterPromptFields = React.memo(
   ({ isOpen, selectedPrompts, setSelectedPrompts }) => {
@@ -34,10 +34,10 @@ const FilterPromptFields = React.memo(
         ))}
       </Form>
     );
-  }
+  },
 );
 
-FilterPromptFields.displayName = "FilterPromptFields";
+FilterPromptFields.displayName = 'FilterPromptFields';
 
 FilterPromptFields.propTypes = {
   isOpen: PropTypes.bool.isRequired,

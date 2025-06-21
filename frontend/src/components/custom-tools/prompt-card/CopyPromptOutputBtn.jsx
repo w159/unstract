@@ -1,6 +1,6 @@
-import { CopyOutlined } from "@ant-design/icons";
-import { Button, Tooltip } from "antd";
-import PropTypes from "prop-types";
+import { CopyOutlined } from '@ant-design/icons';
+import { Button, Tooltip } from 'antd';
+import PropTypes from 'prop-types';
 
 function CopyPromptOutputBtn({ isDisabled, copyToClipboard }) {
   return (

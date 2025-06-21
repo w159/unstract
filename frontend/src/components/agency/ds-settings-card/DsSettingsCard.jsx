@@ -4,7 +4,7 @@ import {
   ImportOutlined,
   SettingOutlined,
   CheckCircleTwoTone,
-} from "@ant-design/icons";
+} from '@ant-design/icons';
 import {
   Button,
   Col,
@@ -14,34 +14,34 @@ import {
   Space,
   Tooltip,
   Typography,
-} from "antd";
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+} from 'antd';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 
-import { getMenuItem, titleCase } from "../../../helpers/GetStaticData";
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { useAlertStore } from "../../../store/alert-store";
-import { useSessionStore } from "../../../store/session-store";
-import { useWorkflowStore } from "../../../store/workflow-store";
-import SpaceWrapper from "../../widgets/space-wrapper/SpaceWrapper";
-import { ConfigureConnectorModal } from "../configure-connector-modal/ConfigureConnectorModal";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler";
-import "./DsSettingsCard.css";
+import { getMenuItem, titleCase } from '../../../helpers/GetStaticData';
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { useAlertStore } from '../../../store/alert-store';
+import { useSessionStore } from '../../../store/session-store';
+import { useWorkflowStore } from '../../../store/workflow-store';
+import SpaceWrapper from '../../widgets/space-wrapper/SpaceWrapper';
+import { ConfigureConnectorModal } from '../configure-connector-modal/ConfigureConnectorModal';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler';
+import './DsSettingsCard.css';
 
 const tooltip = {
-  input: "Data Source Settings",
-  output: "Data Destination Settings",
+  input: 'Data Source Settings',
+  output: 'Data Destination Settings',
 };
 
 const disabledIdsByType = {
   FILE_SYSTEM: [
-    "box|4d94d237-ce4b-45d8-8f34-ddeefc37c0bf",
-    "http|6fdea346-86e4-4383-9a21-132db7c9a576",
+    'box|4d94d237-ce4b-45d8-8f34-ddeefc37c0bf',
+    'http|6fdea346-86e4-4383-9a21-132db7c9a576',
   ],
 };
 
 const needToRemove = {
-  FILE_SYSTEM: ["pcs|b8cd25cd-4452-4d54-bd5e-e7d71459b702"],
+  FILE_SYSTEM: ['pcs|b8cd25cd-4452-4d54-bd5e-e7d71459b702'],
 };
 
 function DsSettingsCard({ type, endpointDetails, message }) {
@@ -59,20 +59,20 @@ function DsSettingsCard({ type, endpointDetails, message }) {
   const [specConfig, setSpecConfig] = useState({});
   const [isSpecConfigLoading, setIsSpecConfigLoading] = useState(false);
   const [formDataConfig, setFormDataConfig] = useState({});
-  const [selectedId, setSelectedId] = useState("");
-  const [selectedItemName, setSelectedItemName] = useState("");
+  const [selectedId, setSelectedId] = useState('');
+  const [selectedItemName, setSelectedItemName] = useState('');
   const [inputOptions, setInputOptions] = useState([
     {
-      value: "API",
-      label: "API",
+      value: 'API',
+      label: 'API',
     },
     {
-      value: "FILESYSTEM",
-      label: "File System",
+      value: 'FILESYSTEM',
+      label: 'File System',
     },
     {
-      value: "DATABASE",
-      label: "Database",
+      value: 'DATABASE',
+      label: 'Database',
     },
   ]);
 
@@ -104,7 +104,7 @@ function DsSettingsCard({ type, endpointDetails, message }) {
   useEffect(() => {
     try {
       const inputOption =
-        require("../../../plugins/dscard-input-options/AppDeploymentCardInputOptions").appDeploymentInputOption;
+        require('../../../plugins/dscard-input-options/AppDeploymentCardInputOptions').appDeploymentInputOption;
       if (flags.app_deployment && inputOption) {
         setUpdatedInputoptions(inputOption);
       }
@@ -114,26 +114,26 @@ function DsSettingsCard({ type, endpointDetails, message }) {
   }, []);
 
   useEffect(() => {
-    if (type === "output") {
-      if (source?.connection_type === "") {
+    if (type === 'output') {
+      if (source?.connection_type === '') {
         // Clear options when source is blank
         setOptions({});
       } else {
         // Filter options based on source connection type
-        const isAPI = source?.connection_type === "API";
+        const isAPI = source?.connection_type === 'API';
         const filteredOptions = inputOptions.filter((option) =>
-          isAPI ? option.value === "API" : option.value !== "API"
+          isAPI ? option.value === 'API' : option.value !== 'API',
         );
 
         setOptions(filteredOptions);
       }
     }
 
-    if (type === "input") {
+    if (type === 'input') {
       // Remove Database from Source Dropdown
       const filteredOptions = inputOptions.filter(
         (option) =>
-          option.value !== "DATABASE" && option.value !== "APPDEPLOYMENT"
+          option.value !== 'DATABASE' && option.value !== 'APPDEPLOYMENT',
       );
       setOptions(filteredOptions);
     }
@@ -161,7 +161,7 @@ function DsSettingsCard({ type, endpointDetails, message }) {
     [...listOfConnectors].forEach((item) => {
       if (
         endpointDetails?.connection_type &&
-        item?.connector_mode.split("_").join("") !==
+        item?.connector_mode.split('_').join('') !==
           endpointDetails?.connection_type
       ) {
         return;
@@ -173,11 +173,11 @@ function DsSettingsCard({ type, endpointDetails, message }) {
           sourceIcon(item?.icon),
           undefined,
           undefined,
-          item?.isDisabled
-        )
+          item?.isDisabled,
+        ),
       );
     });
-    setSelectedId("");
+    setSelectedId('');
     setFilteredList(menuItems);
 
     if (!endpointDetails?.id) {
@@ -186,7 +186,7 @@ function DsSettingsCard({ type, endpointDetails, message }) {
 
     setFormDataConfig(endpointDetails.configuration || {});
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/workflow/endpoint/${endpointDetails?.id}/settings/`,
     };
 
@@ -197,7 +197,7 @@ function DsSettingsCard({ type, endpointDetails, message }) {
         setSpecConfig(data?.schema || {});
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "Failed to load the spec"));
+        setAlertDetails(handleException(err, 'Failed to load the spec'));
       })
       .finally(() => {
         setIsSpecConfigLoading(false);
@@ -210,7 +210,7 @@ function DsSettingsCard({ type, endpointDetails, message }) {
     }
 
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${
         sessionDetails?.orgId
       }/supported_connectors/?type=${type.toUpperCase()}`,
@@ -227,14 +227,14 @@ function DsSettingsCard({ type, endpointDetails, message }) {
               !(
                 source.connector_mode === mode &&
                 idsToRemove.includes(source.id)
-              )
+              ),
           );
         });
 
         const updatedSources = data?.map((source) => ({
           ...source,
           isDisabled: disabledIdsByType[source?.connector_mode]?.includes(
-            source?.id
+            source?.id,
           ),
         }));
         setListOfConnectors(updatedSources || []);
@@ -253,11 +253,11 @@ function DsSettingsCard({ type, endpointDetails, message }) {
     const body = { ...destination, ...updatedData };
 
     const requestOptions = {
-      method: "PUT",
+      method: 'PUT',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/workflow/endpoint/${destination?.id}/`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
-        "Content-Type": "application/json",
+        'X-CSRFToken': sessionDetails?.csrfToken,
+        'Content-Type': 'application/json',
       },
       data: body,
     };
@@ -266,19 +266,19 @@ function DsSettingsCard({ type, endpointDetails, message }) {
       .then((res) => {
         const data = res?.data || {};
         const updatedData = {};
-        updatedData["destination"] = data;
+        updatedData['destination'] = data;
         updateWorkflow(updatedData);
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "Failed to update"));
+        setAlertDetails(handleException(err, 'Failed to update'));
       });
   };
 
   const updateDestination = () => {
     // Clear destination dropdown & data when input is switched
-    if (type === "input") {
+    if (type === 'input') {
       clearDestination({
-        connection_type: "",
+        connection_type: '',
         connector_instance: null,
       });
     }
@@ -288,11 +288,11 @@ function DsSettingsCard({ type, endpointDetails, message }) {
     const body = { ...endpointDetails, ...updatedData };
 
     const requestOptions = {
-      method: "PUT",
+      method: 'PUT',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/workflow/endpoint/${endpointDetails?.id}/`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
-        "Content-Type": "application/json",
+        'X-CSRFToken': sessionDetails?.csrfToken,
+        'Content-Type': 'application/json',
       },
       data: body,
     };
@@ -300,35 +300,35 @@ function DsSettingsCard({ type, endpointDetails, message }) {
       .then((res) => {
         const data = res?.data || {};
         const updatedData = {};
-        if (type === "input") {
-          updatedData["source"] = data;
+        if (type === 'input') {
+          updatedData['source'] = data;
         } else {
-          updatedData["destination"] = data;
+          updatedData['destination'] = data;
         }
         updateWorkflow(updatedData);
         if (showSuccess) {
           setAlertDetails({
-            type: "success",
-            content: "Successfully updated",
+            type: 'success',
+            content: 'Successfully updated',
           });
         }
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "Failed to update"));
+        setAlertDetails(handleException(err, 'Failed to update'));
       });
   };
 
   const getSourceDetails = () => {
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/connector/${endpointDetails?.connector_instance}/`,
     };
 
     axiosPrivate(requestOptions)
       .then((res) => {
         const data = res?.data;
-        data["connector_metadata"]["connectorName"] =
-          data?.connector_name || "";
+        data['connector_metadata']['connectorName'] =
+          data?.connector_name || '';
         setConnDetails(data);
         setSelectedId(data?.connector_id);
       })
@@ -349,7 +349,7 @@ function DsSettingsCard({ type, endpointDetails, message }) {
               <Tooltip
                 title={
                   !allowChangeEndpoint &&
-                  "Workflow used in API/Task/ETL deployment"
+                  'Workflow used in API/Task/ETL deployment'
                 }
               >
                 <Select
@@ -372,8 +372,8 @@ function DsSettingsCard({ type, endpointDetails, message }) {
               <Tooltip
                 title={`${
                   endpointDetails?.connection_type
-                    ? ""
-                    : "Select the connector type from the dropdown"
+                    ? ''
+                    : 'Select the connector type from the dropdown'
                 }`}
               >
                 <Button
@@ -382,8 +382,8 @@ function DsSettingsCard({ type, endpointDetails, message }) {
                   onClick={() => setOpenModal(true)}
                   disabled={
                     !endpointDetails?.connection_type ||
-                    connType === "API" ||
-                    connType === "APPDEPLOYMENT"
+                    connType === 'API' ||
+                    connType === 'APPDEPLOYMENT'
                   }
                 >
                   <SettingOutlined />
@@ -405,14 +405,14 @@ function DsSettingsCard({ type, endpointDetails, message }) {
                 </Space>
               ) : (
                 <>
-                  {connType === "API" || connType === "APPDEPLOYMENT" ? (
+                  {connType === 'API' || connType === 'APPDEPLOYMENT' ? (
                     <Typography.Text
                       className="font-size-12 display-flex-align-center"
                       ellipsis={{ rows: 1, expandable: false }}
                       type="secondary"
                     >
                       <CheckCircleTwoTone twoToneColor="#52c41a" />
-                      <span style={{ marginLeft: "5px" }}>
+                      <span style={{ marginLeft: '5px' }}>
                         {titleCase(type)} set to {connType} successfully
                       </span>
                     </Typography.Text>
@@ -423,7 +423,7 @@ function DsSettingsCard({ type, endpointDetails, message }) {
                       type="secondary"
                     >
                       <ExclamationCircleOutlined />
-                      <span style={{ marginLeft: "5px" }}>
+                      <span style={{ marginLeft: '5px' }}>
                         Connector not configured
                       </span>
                     </Typography.Text>

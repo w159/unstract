@@ -3,17 +3,17 @@ import {
   DeleteOutlined,
   EditOutlined,
   SyncOutlined,
-} from "@ant-design/icons";
-import { Button, Card, Col, Collapse, Row, Space, Tag, Tooltip } from "antd";
-import PropTypes from "prop-types";
-import "./NotesCard.css";
-import { useEffect, useState } from "react";
+} from '@ant-design/icons';
+import { Button, Card, Col, Collapse, Row, Space, Tag, Tooltip } from 'antd';
+import PropTypes from 'prop-types';
+import './NotesCard.css';
+import { useEffect, useState } from 'react';
 
-import { EditableText } from "../editable-text/EditableText";
-import { ConfirmModal } from "../../widgets/confirm-modal/ConfirmModal";
-import { promptStudioUpdateStatus } from "../../../helpers/GetStaticData";
-import { ExpandCardBtn } from "../prompt-card/ExpandCardBtn";
-import { handleUpdateStatus } from "../prompt-card/constants";
+import { EditableText } from '../editable-text/EditableText';
+import { ConfirmModal } from '../../widgets/confirm-modal/ConfirmModal';
+import { promptStudioUpdateStatus } from '../../../helpers/GetStaticData';
+import { ExpandCardBtn } from '../prompt-card/ExpandCardBtn';
+import { handleUpdateStatus } from '../prompt-card/constants';
 
 function NotesCard({
   promptDetails,
@@ -29,8 +29,8 @@ function NotesCard({
     promptId: null,
     status: null,
   });
-  const [promptKey, setPromptKey] = useState("");
-  const [promptText, setPromptText] = useState("");
+  const [promptKey, setPromptKey] = useState('');
+  const [promptText, setPromptText] = useState('');
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isEditingNote, setIsEditingNote] = useState(false);
   const [expandCard, setExpandCard] = useState(true);
@@ -55,7 +55,7 @@ function NotesCard({
     value,
     promptId,
     name,
-    isUpdateStatus = false
+    isUpdateStatus = false,
   ) => {
     const prevPromptDetailsState = { ...promptDetailsState };
 
@@ -66,7 +66,7 @@ function NotesCard({
       isUpdateStatus,
       promptId,
       promptStudioUpdateStatus.isUpdating,
-      setUpdateStatus
+      setUpdateStatus,
     );
     setPromptDetailsState(updatedPromptDetailsState);
 
@@ -81,7 +81,7 @@ function NotesCard({
           isUpdateStatus,
           promptId,
           promptStudioUpdateStatus.done,
-          setUpdateStatus
+          setUpdateStatus,
         );
       })
       .catch(() => {
@@ -170,9 +170,9 @@ function NotesCard({
         <Collapse
           className="prompt-card-collapse"
           ghost
-          activeKey={expandCard && "1"}
+          activeKey={expandCard && '1'}
         >
-          <Collapse.Panel key={"1"}>
+          <Collapse.Panel key={'1'}>
             <EditableText
               isEditing={isEditingNote}
               setIsEditing={setIsEditingNote}

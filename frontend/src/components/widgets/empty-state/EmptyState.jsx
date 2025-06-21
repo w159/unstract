@@ -1,8 +1,8 @@
-import PropTypes from "prop-types";
-import { Button, Space, Typography } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import PropTypes from 'prop-types';
+import { Button, Space, Typography } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 
-import { EmptyPlaceholder } from "../../../assets";
+import { EmptyPlaceholder } from '../../../assets';
 
 function EmptyState({ text, btnText, handleClick }) {
   return (

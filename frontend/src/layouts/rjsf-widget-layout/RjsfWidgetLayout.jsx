@@ -1,7 +1,7 @@
-import { Form, Typography } from "antd";
-import PropTypes from "prop-types";
-import "./RjsfWidgetLayout.css";
-import CustomMarkdown from "../../components/helpers/custom-markdown/CustomMarkdown";
+import { Form, Typography } from 'antd';
+import PropTypes from 'prop-types';
+import './RjsfWidgetLayout.css';
+import CustomMarkdown from '../../components/helpers/custom-markdown/CustomMarkdown';
 
 function RjsfWidgetLayout({ children, label, description, required }) {
   return (

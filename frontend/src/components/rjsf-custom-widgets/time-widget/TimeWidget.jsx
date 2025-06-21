@@ -1,8 +1,8 @@
-import { TimePicker } from "antd";
-import moment from "moment";
-import PropTypes from "prop-types";
+import { TimePicker } from 'antd';
+import moment from 'moment';
+import PropTypes from 'prop-types';
 
-import { RjsfWidgetLayout } from "../../../layouts/rjsf-widget-layout/RjsfWidgetLayout.jsx";
+import { RjsfWidgetLayout } from '../../../layouts/rjsf-widget-layout/RjsfWidgetLayout.jsx';
 
 const TimeWidget = ({
   id,
@@ -13,7 +13,7 @@ const TimeWidget = ({
   required,
   readonly,
 }) => {
-  const description = schema?.description || "";
+  const description = schema?.description || '';
   const handleTimeChange = (time) => {
     onChange(time?.toISOString());
   };

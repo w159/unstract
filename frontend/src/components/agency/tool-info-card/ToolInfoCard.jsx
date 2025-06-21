@@ -1,13 +1,13 @@
-import { Card, Col, Row, Typography } from "antd";
-import PropTypes from "prop-types";
-import { useDrag } from "react-dnd";
+import { Card, Col, Row, Typography } from 'antd';
+import PropTypes from 'prop-types';
+import { useDrag } from 'react-dnd';
 
-import "./ToolInfoCard.css";
-import { ToolIcon } from "../tool-icon/ToolIcon";
+import './ToolInfoCard.css';
+import { ToolIcon } from '../tool-icon/ToolIcon';
 
 function ToolInfoCard({ toolInfo }) {
   const [, ref] = useDrag({
-    type: "STEP",
+    type: 'STEP',
     item: { function_name: toolInfo?.function_name },
   });
 
@@ -25,7 +25,7 @@ function ToolInfoCard({ toolInfo }) {
             <Typography
               type="secondary"
               className="tool-info-typo-sec"
-              style={{ color: "#00A6ED", marginTop: "-2px" }}
+              style={{ color: '#00A6ED', marginTop: '-2px' }}
             >
               by Zipstack Inc
             </Typography>
@@ -33,7 +33,7 @@ function ToolInfoCard({ toolInfo }) {
               type="secondary"
               className="tool-info-typo-sec"
               ellipsis={{ rows: 2, expandable: false }}
-              style={{ marginTop: "2px" }}
+              style={{ marginTop: '2px' }}
             >
               {toolInfo?.description}
             </Typography.Paragraph>

@@ -1,5 +1,5 @@
-import { Modal, Space } from "antd";
-import PropTypes from "prop-types";
+import { Modal, Space } from 'antd';
+import PropTypes from 'prop-types';
 
 function ConfirmModal({
   children,
@@ -19,10 +19,10 @@ function ConfirmModal({
     }
 
     modal.confirm({
-      title: title || "Are you sure?",
-      content: content || "",
-      okText: okText || "Confirm",
-      cancelText: cancelText || "Cancel",
+      title: title || 'Are you sure?',
+      content: content || '',
+      okText: okText || 'Confirm',
+      cancelText: cancelText || 'Cancel',
       onOk: handleConfirm,
       centered: true,
     });

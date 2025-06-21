@@ -1,19 +1,19 @@
-import { Tabs } from "antd";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Tabs } from 'antd';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { useSessionStore } from "../../../store/session-store";
-import { useToolSettingsStore } from "../../../store/tool-settings";
-import { ToolSettings } from "../tool-settings/ToolSettings";
-import { Tools } from "../tools/Tools";
-import "./SidePanel.css";
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { useSessionStore } from '../../../store/session-store';
+import { useToolSettingsStore } from '../../../store/tool-settings';
+import { ToolSettings } from '../tool-settings/ToolSettings';
+import { Tools } from '../tools/Tools';
+import './SidePanel.css';
 
 function SidePanel() {
-  const [activeTabKey, setActiveTabKey] = useState("1");
+  const [activeTabKey, setActiveTabKey] = useState('1');
   const [spec, setSpec] = useState({});
   const [isSpecLoading, setSpecLoading] = useState(false);
-  const [toolId, setToolId] = useState("");
+  const [toolId, setToolId] = useState('');
   const { id } = useParams();
   const { toolSettings } = useToolSettingsStore();
   const { sessionDetails } = useSessionStore();
@@ -21,17 +21,17 @@ function SidePanel() {
 
   const items = [
     {
-      key: "1",
-      label: "Tools",
+      key: '1',
+      label: 'Tools',
     },
     {
-      key: "2",
-      label: "Tool Settings",
+      key: '2',
+      label: 'Tool Settings',
       disabled: toolId?.length === 0,
     },
     {
-      key: "3",
-      label: "Workflow Template",
+      key: '3',
+      label: 'Workflow Template',
       disabled: true,
     },
   ];
@@ -47,23 +47,23 @@ function SidePanel() {
   useEffect(() => {
     const toolSettingsId = toolSettings?.tool_id;
     if (!toolSettingsId) {
-      if (activeTabKey === "2") {
-        setActiveTabKey("1");
+      if (activeTabKey === '2') {
+        setActiveTabKey('1');
         setSpec({});
-        setToolId("");
+        setToolId('');
       }
       return;
     }
 
     if (toolSettingsId === toolId) {
-      setActiveTabKey("2");
+      setActiveTabKey('2');
       return;
     }
 
     if (toolSettingsId !== toolId) {
-      setActiveTabKey("2");
+      setActiveTabKey('2');
       const requestOptions = {
-        method: "GET",
+        method: 'GET',
         url: `/api/v1/unstract/${sessionDetails?.orgId}/tool_settings_schema/?function_name=${toolSettingsId}&workflow_id=${id}`,
       };
       setSpecLoading(true);
@@ -72,8 +72,8 @@ function SidePanel() {
           if (isObjectEmpty(res?.data?.properties)) {
             // Disable tool settings & switch to Tools tab - when custom tool is selected
             setSpec({});
-            setToolId("");
-            setActiveTabKey("1");
+            setToolId('');
+            setActiveTabKey('1');
           } else {
             setToolId(toolSettingsId);
             setSpec(res?.data);
@@ -99,8 +99,8 @@ function SidePanel() {
         />
       </div>
       <div className="sidepanel-content">
-        {activeTabKey === "1" && <Tools />}
-        {activeTabKey === "2" && (
+        {activeTabKey === '1' && <Tools />}
+        {activeTabKey === '2' && (
           <ToolSettings spec={spec} isSpecLoading={isSpecLoading} />
         )}
       </div>

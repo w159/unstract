@@ -1,6 +1,6 @@
-import { Component } from "react";
-import PropTypes from "prop-types";
-import { Typography } from "antd";
+import { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Typography } from 'antd';
 
 const { Text } = Typography;
 
@@ -11,7 +11,7 @@ class ErrorBoundary extends Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    console.error("Error ", error);
+    console.error('Error ', error);
     this.props.onError({ error, errorInfo });
     this.setState({ error });
   }

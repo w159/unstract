@@ -1,4 +1,4 @@
-import { Settings } from "../components/settings/settings/Settings";
+import { Settings } from '../components/settings/settings/Settings';
 
 function SettingsPage() {
   return <Settings />;

@@ -1,19 +1,19 @@
-import { CaretDownOutlined } from "@ant-design/icons";
-import { Tree, Typography } from "antd";
-import PropTypes from "prop-types";
-import { useEffect, useRef, useState } from "react";
+import { CaretDownOutlined } from '@ant-design/icons';
+import { Tree, Typography } from 'antd';
+import PropTypes from 'prop-types';
+import { useEffect, useRef, useState } from 'react';
 
-import { Document, Folder } from "../../../assets";
-import { formatBytes } from "../../../helpers/GetStaticData";
-import { inputService } from "../../input-output/input-output/input-service.js";
-import { SpinnerLoader } from "../../widgets/spinner-loader/SpinnerLoader.jsx";
+import { Document, Folder } from '../../../assets';
+import { formatBytes } from '../../../helpers/GetStaticData';
+import { inputService } from '../../input-output/input-output/input-service.js';
+import { SpinnerLoader } from '../../widgets/spinner-loader/SpinnerLoader.jsx';
 
-import "./FileSystem.css";
+import './FileSystem.css';
 
 const { DirectoryTree } = Tree;
 const { Text } = Typography;
 
-function FileExplorer({ selectedItem = "", data = [], loadingData, error }) {
+function FileExplorer({ selectedItem = '', data = [], loadingData, error }) {
   const inpService = inputService();
 
   const [tree, setTree] = useState([]);
@@ -21,7 +21,7 @@ function FileExplorer({ selectedItem = "", data = [], loadingData, error }) {
   const [selectedKeys, setSelectedKeys] = useState([]);
   const [autoExpandParent, setAutoExpandParent] = useState(true);
 
-  const uploadPathRef = useRef("");
+  const uploadPathRef = useRef('');
 
   useEffect(() => {
     const treeData = structuredClone(data);
@@ -57,7 +57,7 @@ function FileExplorer({ selectedItem = "", data = [], loadingData, error }) {
         let newTree = tree;
         if (path) {
           const targetNode = getTargetNode(path, newTree);
-          targetNode["children"] = res.data;
+          targetNode['children'] = res.data;
         } else {
           newTree = res.data;
         }
@@ -65,7 +65,7 @@ function FileExplorer({ selectedItem = "", data = [], loadingData, error }) {
       })
       .catch(() => {
         console.error(
-          `Unable to get files on "${selectedItem}" for the folder "${path}"`
+          `Unable to get files on "${selectedItem}" for the folder "${path}"`,
         );
       });
   }
@@ -73,7 +73,7 @@ function FileExplorer({ selectedItem = "", data = [], loadingData, error }) {
   function onSelect(selectedKeys, event) {
     setSelectedKeys(selectedKeys);
     if (event.node.isLeaf) {
-      uploadPathRef.current = "";
+      uploadPathRef.current = '';
     } else {
       uploadPathRef.current = event.node.key;
     }
@@ -157,29 +157,29 @@ function getTargetNode(key, treeData) {
 }
 
 function transformTree(tree) {
-  let key = "";
-  let title = "";
-  let isFile = "";
-  let modifiedDate = "";
-  let size = "";
+  let key = '';
+  let title = '';
+  let isFile = '';
+  let modifiedDate = '';
+  let size = '';
 
   tree.forEach((node) => {
     key = node.name;
-    title = key.split("/").at(-1);
-    isFile = node.type === "file";
-    modifiedDate = node.modified_at?.split(" ")[0] || "";
-    size = isFile ? formatBytes(node.size) : "";
+    title = key.split('/').at(-1);
+    isFile = node.type === 'file';
+    modifiedDate = node.modified_at?.split(' ')[0] || '';
+    size = isFile ? formatBytes(node.size) : '';
 
-    node["key"] = key;
-    node["icon"] = isFile ? <Document /> : <Folder />;
-    node["title"] = (
+    node['key'] = key;
+    node['icon'] = isFile ? <Document /> : <Folder />;
+    node['title'] = (
       <div className="fileText">
         <Text ellipsis>{title}</Text>
         <Text>{size}</Text>
         <Text>{modifiedDate}</Text>
       </div>
     );
-    node["isLeaf"] = isFile;
+    node['isLeaf'] = isFile;
 
     if (node.children) {
       transformTree(node.children);

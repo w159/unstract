@@ -1,44 +1,44 @@
-import { Button, Modal, Table, Tabs, Typography } from "antd";
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { Button, Modal, Table, Tabs, Typography } from 'antd';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 import {
   CheckCircleFilled,
   CloseCircleFilled,
   InfoCircleFilled,
-} from "@ant-design/icons";
-import { useNavigate, useParams } from "react-router-dom";
-import TabPane from "antd/es/tabs/TabPane";
+} from '@ant-design/icons';
+import { useNavigate, useParams } from 'react-router-dom';
+import TabPane from 'antd/es/tabs/TabPane';
 
-import { useCustomToolStore } from "../../../store/custom-tool-store";
-import { useSessionStore } from "../../../store/session-store";
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import "./OutputForDocModal.css";
+import { useCustomToolStore } from '../../../store/custom-tool-store';
+import { useSessionStore } from '../../../store/session-store';
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import './OutputForDocModal.css';
 import {
   displayPromptResult,
   getDocIdFromKey,
   getLLMModelNamesForProfiles,
-} from "../../../helpers/GetStaticData";
-import { SpinnerLoader } from "../../widgets/spinner-loader/SpinnerLoader";
-import { useAlertStore } from "../../../store/alert-store";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler";
-import { useTokenUsageStore } from "../../../store/token-usage-store";
-import { ProfileInfoBar } from "../profile-info-bar/ProfileInfoBar";
+} from '../../../helpers/GetStaticData';
+import { SpinnerLoader } from '../../widgets/spinner-loader/SpinnerLoader';
+import { useAlertStore } from '../../../store/alert-store';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler';
+import { useTokenUsageStore } from '../../../store/token-usage-store';
+import { ProfileInfoBar } from '../profile-info-bar/ProfileInfoBar';
 
 let publicOutputsApi;
 let publicAdapterApi;
 try {
   publicOutputsApi =
-    require("../../../plugins/prompt-studio-public-share/helpers/PublicShareAPIs").publicOutputsApi;
+    require('../../../plugins/prompt-studio-public-share/helpers/PublicShareAPIs').publicOutputsApi;
   publicAdapterApi =
-    require("../../../plugins/prompt-studio-public-share/helpers/PublicShareAPIs").publicAdapterApi;
+    require('../../../plugins/prompt-studio-public-share/helpers/PublicShareAPIs').publicAdapterApi;
 } catch {
   // The component will remain null of it is not available
 }
 
 const outputStatus = {
-  yet_to_process: "YET_TO_PROCESS",
-  success: "SUCCESS",
-  fail: "FAIL",
+  yet_to_process: 'YET_TO_PROCESS',
+  success: 'SUCCESS',
+  fail: 'FAIL',
 };
 
 const errorTypes = [null, undefined, false];
@@ -106,7 +106,7 @@ function OutputForDocModal({
 
     // Find the index of the selected document within the list
     const index = docs.findIndex(
-      (item) => item?.document_id === selectedDoc?.document_id
+      (item) => item?.document_id === selectedDoc?.document_id,
     );
 
     // If the selected document exists in the list and is not already at the top (index 0)
@@ -141,7 +141,7 @@ function OutputForDocModal({
       updatedPromptOutput,
       docId,
       key,
-      index
+      index,
     );
 
     if (index > -1) {
@@ -153,7 +153,7 @@ function OutputForDocModal({
 
   const findPromptOutputIndex = (updatedPromptOutput, docId) => {
     return updatedPromptOutput.findIndex(
-      (promptOutput) => promptOutput?.document_manager === docId
+      (promptOutput) => promptOutput?.document_manager === docId,
     );
   };
 
@@ -161,7 +161,7 @@ function OutputForDocModal({
     updatedPromptOutput,
     docId,
     key,
-    index
+    index,
   ) => {
     let promptOutputInstance = {};
 
@@ -169,9 +169,9 @@ function OutputForDocModal({
       promptOutputInstance = { ...updatedPromptOutput[index] };
     }
 
-    promptOutputInstance["document_manager"] = docId;
-    promptOutputInstance["output"] = docOutputs[key]?.output;
-    promptOutputInstance["isLoading"] = docOutputs[key]?.isLoading || false;
+    promptOutputInstance['document_manager'] = docId;
+    promptOutputInstance['output'] = docOutputs[key]?.output;
+    promptOutputInstance['isLoading'] = docOutputs[key]?.isLoading || false;
 
     return promptOutputInstance;
   };
@@ -179,7 +179,7 @@ function OutputForDocModal({
   const getAdapterInfo = () => {
     let url = `/api/v1/unstract/${sessionDetails.orgId}/adapter/?adapter_type=LLM`;
     if (isPublicSource) {
-      url = publicAdapterApi(id, "LLM");
+      url = publicAdapterApi(id, 'LLM');
     }
     axiosPrivate.get(url).then((res) => {
       const adapterList = res.data;
@@ -199,14 +199,14 @@ function OutputForDocModal({
         promptId,
         singlePassExtractMode,
         null,
-        profile
+        profile,
       );
     }
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
     };
     setIsLoading(true);
@@ -217,7 +217,7 @@ function OutputForDocModal({
       })
       .catch((err) => {
         setAlertDetails(
-          handleException(err, "Failed to loaded the prompt results")
+          handleException(err, 'Failed to loaded the prompt results'),
         );
       })
       .finally(() => {
@@ -254,31 +254,31 @@ function OutputForDocModal({
 
       if (output?.output === undefined) {
         status = outputStatus.yet_to_process;
-        message = "Yet to process";
+        message = 'Yet to process';
       }
       const isLoading = docOutputs.find((obj) => obj?.key === key)?.isLoading;
 
       const result = {
         key: item?.document_id,
         document: item?.document_name,
-        token_count: !singlePassExtractMode && (promptTokenUsage || "NA"),
+        token_count: !singlePassExtractMode && (promptTokenUsage || 'NA'),
         value: (
           <>
             {isLoading ? (
               <SpinnerLoader align="default" />
             ) : (
               <Typography.Text>
-                <span style={{ marginRight: "8px" }}>
+                <span style={{ marginRight: '8px' }}>
                   {status === outputStatus.yet_to_process && (
-                    <InfoCircleFilled style={{ color: "#F0AD4E" }} />
+                    <InfoCircleFilled style={{ color: '#F0AD4E' }} />
                   )}
                   {status === outputStatus.fail && (
-                    <CloseCircleFilled style={{ color: "#FF4D4F" }} />
+                    <CloseCircleFilled style={{ color: '#FF4D4F' }} />
                   )}
                   {status === outputStatus.success && (
-                    <CheckCircleFilled style={{ color: "#52C41A" }} />
+                    <CheckCircleFilled style={{ color: '#52C41A' }} />
                   )}
-                </span>{" "}
+                </span>{' '}
                 {message}
               </Typography.Text>
             )}
@@ -291,7 +291,7 @@ function OutputForDocModal({
   };
 
   const handleTabChange = (key) => {
-    if (key === "0") {
+    if (key === '0') {
       setSelectedProfile(profileId);
     } else {
       setSelectedProfile(adapterData[key - 1]?.profile_id);
@@ -300,20 +300,20 @@ function OutputForDocModal({
 
   const columns = [
     {
-      title: "Document Variants",
-      dataIndex: "document",
-      key: "document",
+      title: 'Document Variants',
+      dataIndex: 'document',
+      key: 'document',
     },
     !singlePassExtractMode && {
-      title: "Token Count",
-      dataIndex: "token_count",
-      key: "token_count",
+      title: 'Token Count',
+      dataIndex: 'token_count',
+      key: 'token_count',
       width: 200,
     },
     {
-      title: "Value",
-      dataIndex: "value",
-      key: "value",
+      title: 'Value',
+      dataIndex: 'value',
+      key: 'value',
       width: 600,
     },
   ].filter(Boolean);
@@ -337,20 +337,20 @@ function OutputForDocModal({
         <div className="output-doc-gap" />
         <div className="lmm-profile-outputs">
           <Tabs defaultActiveKey="0" onChange={handleTabChange}>
-            <TabPane tab={<span>Default</span>} key={"0"}></TabPane>
+            <TabPane tab={<span>Default</span>} key={'0'}></TabPane>
             {adapterData?.map((adapter, index) => (
               <TabPane
                 tab={<span>{adapter?.llm_model || adapter?.profile_name}</span>}
                 key={(index + 1)?.toString()}
               ></TabPane>
             ))}
-          </Tabs>{" "}
+          </Tabs>{' '}
           <ProfileInfoBar profileId={selectedProfile} profiles={llmProfiles} />
         </div>
         <div className="display-flex-right">
           <Button
             size="small"
-            onClick={() => navigate("outputAnalyzer")}
+            onClick={() => navigate('outputAnalyzer')}
             disabled={isMultiPassExtractLoading || isSinglePassExtractLoading}
           >
             View in Output Analyzer

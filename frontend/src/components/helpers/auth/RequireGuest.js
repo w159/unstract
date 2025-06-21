@@ -1,16 +1,16 @@
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 import {
   publicRoutes,
   onboardCompleted,
   homePagePath,
-} from "../../../helpers/GetStaticData";
-import { useSessionStore } from "../../../store/session-store";
+} from '../../../helpers/GetStaticData';
+import { useSessionStore } from '../../../store/session-store';
 let selectedProductStore;
 let isLlmWhisperer;
 let isVerticals;
 try {
-  selectedProductStore = require("../../../plugins/store/select-product-store.js");
+  selectedProductStore = require('../../../plugins/store/select-product-store.js');
 } catch {
   // do nothing
 }
@@ -23,16 +23,16 @@ const RequireGuest = () => {
   try {
     isLlmWhisperer =
       selectedProductStore.useSelectedProductStore(
-        (state) => state?.selectedProduct
-      ) === "llm-whisperer";
+        (state) => state?.selectedProduct,
+      ) === 'llm-whisperer';
   } catch (error) {
     // Do nothing
   }
   try {
     isVerticals =
       selectedProductStore.useSelectedProductStore(
-        (state) => state?.selectedProduct
-      ) === "verticals";
+        (state) => state?.selectedProduct,
+      ) === 'verticals';
   } catch (error) {
     // Do nothing
   }
@@ -46,8 +46,8 @@ const RequireGuest = () => {
     navigateTo = `/${orgName}/${homePagePath}`;
   }
   if (
-    sessionDetails.role === "unstract_reviewer" ||
-    sessionDetails.role === "unstract_supervisor"
+    sessionDetails.role === 'unstract_reviewer' ||
+    sessionDetails.role === 'unstract_supervisor'
   ) {
     navigateTo = `/${orgName}/review`;
   }

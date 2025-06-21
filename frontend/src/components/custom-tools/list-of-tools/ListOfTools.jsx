@@ -1,25 +1,25 @@
-import { PlusOutlined } from "@ant-design/icons";
-import { useEffect, useState } from "react";
+import { PlusOutlined } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
 
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { useAlertStore } from "../../../store/alert-store";
-import { useSessionStore } from "../../../store/session-store";
-import { CustomButton } from "../../widgets/custom-button/CustomButton";
-import { AddCustomToolFormModal } from "../add-custom-tool-form-modal/AddCustomToolFormModal";
-import { ViewTools } from "../view-tools/ViewTools";
-import "./ListOfTools.css";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler";
-import { ToolNavBar } from "../../navigations/tool-nav-bar/ToolNavBar";
-import { SharePermission } from "../../widgets/share-permission/SharePermission";
-import usePostHogEvents from "../../../hooks/usePostHogEvents.js";
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { useAlertStore } from '../../../store/alert-store';
+import { useSessionStore } from '../../../store/session-store';
+import { CustomButton } from '../../widgets/custom-button/CustomButton';
+import { AddCustomToolFormModal } from '../add-custom-tool-form-modal/AddCustomToolFormModal';
+import { ViewTools } from '../view-tools/ViewTools';
+import './ListOfTools.css';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler';
+import { ToolNavBar } from '../../navigations/tool-nav-bar/ToolNavBar';
+import { SharePermission } from '../../widgets/share-permission/SharePermission';
+import usePostHogEvents from '../../../hooks/usePostHogEvents.js';
 
 let OnboardMessagesModal;
 let slides;
 try {
   OnboardMessagesModal =
-    require("../../../plugins/onboarding-messages/OnboardMessagesModal.jsx").OnboardMessagesModal;
+    require('../../../plugins/onboarding-messages/OnboardMessagesModal.jsx').OnboardMessagesModal;
   slides =
-    require("../../../plugins/onboarding-messages/login-slides.jsx").LoginSlides;
+    require('../../../plugins/onboarding-messages/login-slides.jsx').LoginSlides;
 } catch (err) {
   OnboardMessagesModal = null;
   slides = [];
@@ -58,10 +58,10 @@ function ListOfTools() {
 
   const getListOfTools = () => {
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/prompt-studio/ `,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
     };
 
@@ -74,7 +74,7 @@ function ListOfTools() {
       })
       .catch((err) => {
         setAlertDetails(
-          handleException(err, "Failed to get the list of tools")
+          handleException(err, 'Failed to get the list of tools'),
         );
       })
       .finally(() => {
@@ -83,11 +83,11 @@ function ListOfTools() {
   };
 
   const handleAddNewTool = (body) => {
-    let method = "POST";
+    let method = 'POST';
     let url = `/api/v1/unstract/${sessionDetails?.orgId}/prompt-studio/`;
     const isEdit = editItem && Object.keys(editItem)?.length > 0;
     if (isEdit) {
-      method = "PATCH";
+      method = 'PATCH';
       url += `${editItem?.tool_id}/`;
     }
     return new Promise((resolve, reject) => {
@@ -95,8 +95,8 @@ function ListOfTools() {
         method,
         url,
         headers: {
-          "X-CSRFToken": sessionDetails?.csrfToken,
-          "Content-Type": "application/json",
+          'X-CSRFToken': sessionDetails?.csrfToken,
+          'Content-Type': 'application/json',
         },
         data: body,
       };
@@ -119,7 +119,7 @@ function ListOfTools() {
 
     if (isEdit) {
       tools = tools.map((item) =>
-        item?.tool_id === data?.tool_id ? data : item
+        item?.tool_id === data?.tool_id ? data : item,
       );
       setEditItem(null);
     } else {
@@ -130,7 +130,7 @@ function ListOfTools() {
 
   const handleEdit = (_event, tool) => {
     const editToolData = [...listOfTools].find(
-      (item) => item?.tool_id === tool.tool_id
+      (item) => item?.tool_id === tool.tool_id,
     );
     if (!editToolData) {
       return;
@@ -142,26 +142,26 @@ function ListOfTools() {
 
   const handleDelete = (_event, tool) => {
     const requestOptions = {
-      method: "DELETE",
+      method: 'DELETE',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/prompt-studio/${tool.tool_id}`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
     };
 
     axiosPrivate(requestOptions)
       .then(() => {
         const tools = [...listOfTools].filter(
-          (filterToll) => filterToll?.tool_id !== tool.tool_id
+          (filterToll) => filterToll?.tool_id !== tool.tool_id,
         );
         setListOfTools(tools);
         setAlertDetails({
-          type: "success",
+          type: 'success',
           content: `${tool?.tool_name} - Deleted successfully`,
         });
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "Failed to Delete"));
+        setAlertDetails(handleException(err, 'Failed to Delete'));
       });
   };
 
@@ -187,7 +187,7 @@ function ListOfTools() {
     showAddTool();
 
     try {
-      setPostHogCustomEvent("intent_new_ps_project", {
+      setPostHogCustomEvent('intent_new_ps_project', {
         info: "Clicked on '+ New Project' button",
       });
     } catch (err) {
@@ -209,10 +209,10 @@ function ListOfTools() {
 
   const handleShare = (_event, promptProject, isEdit) => {
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/prompt-studio/users/${promptProject?.tool_id}`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
     };
     setIsShareLoading(true);
@@ -234,7 +234,7 @@ function ListOfTools() {
   const getAllUsers = () => {
     setIsShareLoading(true);
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/users/`,
     };
 
@@ -245,11 +245,11 @@ function ListOfTools() {
           users.map((user) => ({
             id: user?.id,
             email: user?.email,
-          }))
+          })),
         );
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "Failed to load"));
+        setAlertDetails(handleException(err, 'Failed to load'));
       })
       .finally(() => {
         setIsShareLoading(false);
@@ -258,10 +258,10 @@ function ListOfTools() {
 
   const onShare = (userIds, adapter) => {
     const requestOptions = {
-      method: "PATCH",
+      method: 'PATCH',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/prompt-studio/${adapter?.tool_id}`,
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
+        'X-CSRFToken': sessionDetails?.csrfToken,
       },
       data: { shared_users: userIds },
     };
@@ -270,14 +270,14 @@ function ListOfTools() {
         setOpenSharePermissionModal(false);
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "Failed to load"));
+        setAlertDetails(handleException(err, 'Failed to load'));
       });
   };
 
   return (
     <>
       <ToolNavBar
-        title={"Prompt Studio"}
+        title={'Prompt Studio'}
         enableSearch
         onSearch={onSearch}
         searchList={listOfTools}

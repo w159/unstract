@@ -1,14 +1,14 @@
-import { Typography } from "antd";
-import PropTypes from "prop-types";
-import { useEffect, useMemo, useState } from "react";
+import { Typography } from 'antd';
+import PropTypes from 'prop-types';
+import { useEffect, useMemo, useState } from 'react';
 
-import { sourceTypes } from "../../../helpers/GetStaticData";
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { useAlertStore } from "../../../store/alert-store";
-import { useSessionStore } from "../../../store/session-store";
-import { EmptyState } from "../../widgets/empty-state/EmptyState";
-import { ConfigureDs } from "../configure-ds/ConfigureDs";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler";
+import { sourceTypes } from '../../../helpers/GetStaticData';
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { useAlertStore } from '../../../store/alert-store';
+import { useSessionStore } from '../../../store/session-store';
+import { EmptyState } from '../../widgets/empty-state/EmptyState';
+import { ConfigureDs } from '../configure-ds/ConfigureDs';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler';
 
 let transformLlmWhispererJsonSchema;
 let LLMW_V2_ID;
@@ -17,13 +17,13 @@ let unstractSubscriptionPlanStore;
 let llmWhipererAdapterSchema;
 try {
   transformLlmWhispererJsonSchema =
-    require("../../../plugins/unstract-subscription/helper/transformLlmWhispererJsonSchema").transformLlmWhispererJsonSchema;
+    require('../../../plugins/unstract-subscription/helper/transformLlmWhispererJsonSchema').transformLlmWhispererJsonSchema;
   LLMW_V2_ID =
-    require("../../../plugins/unstract-subscription/helper/transformLlmWhispererJsonSchema").LLMW_V2_ID;
+    require('../../../plugins/unstract-subscription/helper/transformLlmWhispererJsonSchema').LLMW_V2_ID;
   PLAN_TYPES =
-    require("../../../plugins/unstract-subscription/helper/constants").PLAN_TYPES;
-  unstractSubscriptionPlanStore = require("../../../plugins/store/unstract-subscription-plan-store");
-  llmWhipererAdapterSchema = require("../../../plugins/unstract-subscription/hooks/useLlmWhispererAdapterSchema.js");
+    require('../../../plugins/unstract-subscription/helper/constants').PLAN_TYPES;
+  unstractSubscriptionPlanStore = require('../../../plugins/store/unstract-subscription-plan-store');
+  llmWhipererAdapterSchema = require('../../../plugins/unstract-subscription/hooks/useLlmWhispererAdapterSchema.js');
 } catch (err) {
   // Ignore if not available
 }
@@ -44,7 +44,7 @@ function AddSource({
   const [spec, setSpec] = useState({});
   const [formData, setFormData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [oAuthProvider, setOAuthProvider] = useState("");
+  const [oAuthProvider, setOAuthProvider] = useState('');
   const { sessionDetails } = useSessionStore();
   const { setAlertDetails } = useAlertStore();
   const axiosPrivate = useAxiosPrivate();
@@ -62,7 +62,7 @@ function AddSource({
   let planType;
   if (unstractSubscriptionPlanStore?.useUnstractSubscriptionPlanStore) {
     planType = unstractSubscriptionPlanStore?.useUnstractSubscriptionPlanStore(
-      (state) => state?.unstractSubscriptionPlan?.planType
+      (state) => state?.unstractSubscriptionPlan?.planType,
     );
   }
 
@@ -95,7 +95,7 @@ function AddSource({
   useEffect(() => {
     if (!selectedSourceId) {
       setSpec({});
-      setOAuthProvider("");
+      setOAuthProvider('');
       return;
     }
 
@@ -107,7 +107,7 @@ function AddSource({
     }
 
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url,
     };
 
@@ -126,7 +126,7 @@ function AddSource({
         if (data?.oauth) {
           setOAuthProvider(data?.python_social_auth_backend);
         } else {
-          setOAuthProvider("");
+          setOAuthProvider('');
         }
       })
       .catch((err) => {
@@ -144,7 +144,7 @@ function AddSource({
     }
   }, [metadata]);
 
-  if (selectedSourceId.includes("pcs|")) {
+  if (selectedSourceId.includes('pcs|')) {
     return (
       <Typography.Text>
         Edit is not supported for this connector

@@ -1,8 +1,8 @@
-import PropTypes from "prop-types";
-import { createContext, useEffect, useState } from "react";
-import io from "socket.io-client";
+import PropTypes from 'prop-types';
+import { createContext, useEffect, useState } from 'react';
+import io from 'socket.io-client';
 
-import { getBaseUrl } from "./GetStaticData";
+import { getBaseUrl } from './GetStaticData';
 
 const SocketContext = createContext();
 
@@ -10,12 +10,12 @@ const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    let baseUrl = "";
+    let baseUrl = '';
     const body = {
-      transports: ["websocket"],
-      path: "/api/v1/socket",
+      transports: ['websocket'],
+      path: '/api/v1/socket',
     };
-    if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
       baseUrl = process.env.REACT_APP_BACKEND_URL;
     } else {
       baseUrl = getBaseUrl();

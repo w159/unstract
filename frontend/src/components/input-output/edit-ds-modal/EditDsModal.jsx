@@ -1,14 +1,14 @@
-import { Modal } from "antd";
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { Modal } from 'antd';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-import "./EditDsModal.css";
-import { ConfigureDs } from "../configure-ds/ConfigureDs.jsx";
-import { useSessionStore } from "../../../store/session-store";
-import { CONNECTOR_TYPE_MAP } from "../../../helpers/GetStaticData";
-import { useAlertStore } from "../../../store/alert-store";
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate.js";
+import './EditDsModal.css';
+import { ConfigureDs } from '../configure-ds/ConfigureDs.jsx';
+import { useSessionStore } from '../../../store/session-store';
+import { CONNECTOR_TYPE_MAP } from '../../../helpers/GetStaticData';
+import { useAlertStore } from '../../../store/alert-store';
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate.js';
 
 function EditDsModal({
   isOpen,
@@ -17,10 +17,10 @@ function EditDsModal({
   connectorType,
   setReloadList,
 }) {
-  const [dsSelected, setDsSelected] = useState("");
+  const [dsSelected, setDsSelected] = useState('');
   const [spec, setSpec] = useState({});
   const [isSpecLoading, setIsSpecLoading] = useState(false);
-  const [oAuthProvider, setOAuthProvider] = useState("");
+  const [oAuthProvider, setOAuthProvider] = useState('');
   const { sessionDetails } = useSessionStore();
   const { setAlertDetails } = useAlertStore();
   const axiosPrivate = useAxiosPrivate();
@@ -30,7 +30,7 @@ function EditDsModal({
 
   useEffect(() => {
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${orgId}/connector/${currentConnectorId}/`,
     };
 
@@ -41,8 +41,8 @@ function EditDsModal({
       })
       .catch((err) => {
         setAlertDetails({
-          type: "error",
-          content: "Failed to fetch the connector data.",
+          type: 'error',
+          content: 'Failed to fetch the connector data.',
         });
       });
   }, [currentConnectorId]);
@@ -50,7 +50,7 @@ function EditDsModal({
   useEffect(() => {
     if (dsSelected.length === 0) return;
     const requestOptions = {
-      method: "GET",
+      method: 'GET',
       url: `/api/v1/unstract/${orgId}/connector_schema/?id=${dsSelected}`,
     };
 
@@ -65,8 +65,8 @@ function EditDsModal({
       })
       .catch((err) => {
         setAlertDetails({
-          type: "error",
-          content: "Failed to fetch the data source details.",
+          type: 'error',
+          content: 'Failed to fetch the data source details.',
         });
       })
       .finally(() => {

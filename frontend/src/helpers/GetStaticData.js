@@ -1,19 +1,19 @@
-import moment from "moment";
-import momentTz from "moment-timezone";
-import { format, parseISO } from "date-fns";
-import { v4 as uuidv4 } from "uuid";
+import moment from 'moment';
+import momentTz from 'moment-timezone';
+import { format, parseISO } from 'date-fns';
+import { v4 as uuidv4 } from 'uuid';
 
 let cloudHomePagePath;
 try {
   cloudHomePagePath =
-    require("../plugins/unstract-subscription/helper/constants").cloudHomePagePath;
+    require('../plugins/unstract-subscription/helper/constants').cloudHomePagePath;
 } catch (err) {
   // Ignore if plugin not available
 }
 
 const THEME = {
-  DARK: "dark",
-  LIGHT: "light",
+  DARK: 'dark',
+  LIGHT: 'light',
 };
 
 const calculateDivHeight = (offset) => {
@@ -22,7 +22,7 @@ const calculateDivHeight = (offset) => {
   return calculatedHeight;
 };
 
-const publicRoutes = ["/landing"];
+const publicRoutes = ['/landing'];
 
 /*
   This function will return the url without the path/routes
@@ -45,9 +45,9 @@ const getOrgNameFromPathname = (pathname, isLlmWhisperer) => {
     return null;
   }
   if (isLlmWhisperer) {
-    return pathname?.split("/")[2];
+    return pathname?.split('/')[2];
   }
-  return pathname?.split("/")[1];
+  return pathname?.split('/')[1];
 };
 
 const replaceFirstRoute = (url, newRoute) => {
@@ -59,19 +59,19 @@ const replaceFirstRoute = (url, newRoute) => {
   if (match) {
     const oldRoute = match[1];
     const replacedUrl = url.replace(oldRoute, newRoute);
-    return "/" + replacedUrl;
+    return '/' + replacedUrl;
   }
 
   // Return the home page with the new route
-  return "/" + newRoute;
+  return '/' + newRoute;
 };
 
 const formatBytes = (bytes, decimals = 1) => {
-  if (!+bytes) return "0 B";
+  if (!+bytes) return '0 B';
 
   const k = 1000;
   const dm = decimals < 0 ? 0 : decimals;
-  const sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+  const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
 
   const i = Math.floor(Math.log(bytes) / Math.log(k));
 
@@ -81,18 +81,18 @@ const formatBytes = (bytes, decimals = 1) => {
 };
 
 const O_AUTH_PROVIDERS = {
-  GOOGLE: "google-oauth2",
+  GOOGLE: 'google-oauth2',
 };
 
 const CONNECTOR_TYPE_MAP = {
-  input: "Source",
-  output: "Destination",
+  input: 'Source',
+  output: 'Destination',
 };
 
 const workflowStatus = {
-  yet_to_start: "YET TO START",
-  in_progress: "IN PROGRESS",
-  generated: "GENERATED",
+  yet_to_start: 'YET TO START',
+  in_progress: 'IN PROGRESS',
+  generated: 'GENERATED',
 };
 
 const setInitialWorkflowInstance = (promptName, prompt) => {
@@ -104,70 +104,70 @@ const setInitialWorkflowInstance = (promptName, prompt) => {
   };
 };
 
-const wfExecutionTypes = ["START", "NEXT", "STOP", "CONTINUE", "RUN_WORKFLOW"];
+const wfExecutionTypes = ['START', 'NEXT', 'STOP', 'CONTINUE', 'RUN_WORKFLOW'];
 
 const toolIdeOutput = [
   {
-    company: "Apple Inc.",
-    stockholders_equity: "USD 33,400",
+    company: 'Apple Inc.',
+    stockholders_equity: 'USD 33,400',
   },
   {
-    company: "Apple Inc.",
-    stockholders_equity: "USD 33,400",
+    company: 'Apple Inc.',
+    stockholders_equity: 'USD 33,400',
   },
   {
-    company: "Apple Inc.",
-    stockholders_equity: "USD 33,400",
+    company: 'Apple Inc.',
+    stockholders_equity: 'USD 33,400',
   },
   {
-    company: "Apple Inc.",
-    stockholders_equity: "USD 33,400",
+    company: 'Apple Inc.',
+    stockholders_equity: 'USD 33,400',
   },
   {
-    company: "Apple Inc.",
-    stockholders_equity: "USD",
+    company: 'Apple Inc.',
+    stockholders_equity: 'USD',
   },
 ];
 
 // TODO: Remove this once the BE API for it is ready.
 const listOfAppDeployments = [
   {
-    id: "08a47c30-e2ec-48b3-be45-5b1f06639031",
-    pipeline_name: "Financial document Q&A",
+    id: '08a47c30-e2ec-48b3-be45-5b1f06639031',
+    pipeline_name: 'Financial document Q&A',
     app_id: null,
     active: true,
     scheduled: false,
-    pipeline_type: "ETL",
+    pipeline_type: 'ETL',
     run_count: 6,
-    last_run_time: "2023-07-28T08:09:31.045244Z",
-    last_run_status: "SUCCESS",
-    workflow: "73b57446-fafc-445e-96fe-f5d072044dcd",
+    last_run_time: '2023-07-28T08:09:31.045244Z',
+    last_run_status: 'SUCCESS',
+    workflow: '73b57446-fafc-445e-96fe-f5d072044dcd',
     cron: null,
-    workflow_name: "demo",
-    source_name: "MinioFS/S3",
-    source_icon: "/icons/connector-icons/S3.png",
-    destination_name: "Unstract Cloud Storage",
-    destination_icon: "/icons/connector-icons/Pandora%20Storage.png",
-    goto: "https://finance-qa.pandora-demo.zipstack.io/",
+    workflow_name: 'demo',
+    source_name: 'MinioFS/S3',
+    source_icon: '/icons/connector-icons/S3.png',
+    destination_name: 'Unstract Cloud Storage',
+    destination_icon: '/icons/connector-icons/Pandora%20Storage.png',
+    goto: 'https://finance-qa.pandora-demo.zipstack.io/',
   },
   {
-    id: "08a47c30-e2ec-48b3-be45-5b1f06639032",
-    pipeline_name: "Legal document Q&A",
+    id: '08a47c30-e2ec-48b3-be45-5b1f06639032',
+    pipeline_name: 'Legal document Q&A',
     app_id: null,
     active: true,
     scheduled: false,
-    pipeline_type: "ETL",
+    pipeline_type: 'ETL',
     run_count: 6,
-    last_run_time: "2023-07-28T08:09:31.045244Z",
-    last_run_status: "SUCCESS",
-    workflow: "73b57446-fafc-445e-96fe-f5d072044dcd",
+    last_run_time: '2023-07-28T08:09:31.045244Z',
+    last_run_status: 'SUCCESS',
+    workflow: '73b57446-fafc-445e-96fe-f5d072044dcd',
     cron: null,
-    workflow_name: "demo",
-    source_name: "MinioFS/S3",
-    source_icon: "/icons/connector-icons/S3.png",
-    destination_name: "Unstract Cloud Storage",
-    destination_icon: "/icons/connector-icons/Pandora%20Storage.png",
-    goto: "https://legal-qa.pandora-demo.zipstack.io/",
+    workflow_name: 'demo',
+    source_name: 'MinioFS/S3',
+    source_icon: '/icons/connector-icons/S3.png',
+    destination_name: 'Unstract Cloud Storage',
+    destination_icon: '/icons/connector-icons/Pandora%20Storage.png',
+    goto: 'https://legal-qa.pandora-demo.zipstack.io/',
   },
 ];
 
@@ -175,12 +175,12 @@ const getReadableDateAndTime = (timestamp, includeTime = true) => {
   const currentDate = new Date(timestamp);
 
   if (isNaN(currentDate)) {
-    return "Invalid date";
+    return 'Invalid date';
   }
 
   // Options for formatting the date
-  const dateOptions = { year: "numeric", month: "long", day: "numeric" };
-  const formattedDate = currentDate.toLocaleDateString("en-US", dateOptions);
+  const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+  const formattedDate = currentDate.toLocaleDateString('en-US', dateOptions);
 
   if (!includeTime) {
     return formattedDate;
@@ -188,24 +188,24 @@ const getReadableDateAndTime = (timestamp, includeTime = true) => {
 
   // Options for formatting the time
   const timeOptions = {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    timeZoneName: "short",
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    timeZoneName: 'short',
   };
-  const formattedTime = currentDate.toLocaleTimeString("en-US", timeOptions);
+  const formattedTime = currentDate.toLocaleTimeString('en-US', timeOptions);
 
-  return formattedDate + ", " + formattedTime;
+  return formattedDate + ', ' + formattedTime;
 };
 
 const promptType = {
-  prompt: "PROMPT",
-  notes: "NOTES",
+  prompt: 'PROMPT',
+  notes: 'NOTES',
 };
 
 const sourceTypes = {
-  connectors: ["input", "output"],
-  adapters: ["llm", "vector_db", "embedding"],
+  connectors: ['input', 'output'],
+  adapters: ['llm', 'vector_db', 'embedding'],
 };
 
 const getSequenceNumber = (listOfPrompts) => {
@@ -220,56 +220,56 @@ const getSequenceNumber = (listOfPrompts) => {
 };
 
 const deploymentTypes = {
-  etl: "etl",
-  task: "task",
-  api: "api",
-  app: "app",
+  etl: 'etl',
+  task: 'task',
+  api: 'api',
+  app: 'app',
 };
 
 const deploymentApiTypes = {
-  api: "api",
-  pipeline: "pipeline",
+  api: 'api',
+  pipeline: 'pipeline',
 };
 
 const deploymentsStaticContent = {
   etl: {
-    title: "Unstructured to Structured ETL Pipelines",
-    modalTitle: "Deploy ETL Pipeline",
-    addBtn: "ETL Pipeline",
+    title: 'Unstructured to Structured ETL Pipelines',
+    modalTitle: 'Deploy ETL Pipeline',
+    addBtn: 'ETL Pipeline',
   },
   task: {
-    title: "Unstructured to Structured Task Pipelines",
-    modalTitle: "Deploy Task Pipeline",
-    addBtn: "Task Pipeline",
+    title: 'Unstructured to Structured Task Pipelines',
+    modalTitle: 'Deploy Task Pipeline',
+    addBtn: 'Task Pipeline',
   },
   api: {
-    title: "API Deployments",
-    addBtn: "API Deployment",
+    title: 'API Deployments',
+    addBtn: 'API Deployment',
   },
   app: {
-    title: "App Deployments",
-    addBtn: "App Deployment",
+    title: 'App Deployments',
+    addBtn: 'App Deployment',
   },
 };
 
 const endpointType = {
-  input: "SOURCE",
-  output: "DESTINATION",
+  input: 'SOURCE',
+  output: 'DESTINATION',
 };
 
 const promptStudioUpdateStatus = {
-  isUpdating: "IS_UPDATING",
-  done: "DONE",
-  validationError: "VALIDATION_ERROR",
+  isUpdating: 'IS_UPDATING',
+  done: 'DONE',
+  validationError: 'VALIDATION_ERROR',
 };
 
 const getTimeForLogs = () => {
   const timestamp = Date.now();
   const date = new Date(timestamp);
 
-  const hours = ("0" + date.getHours()).slice(-2);
-  const minutes = ("0" + date.getMinutes()).slice(-2);
-  const seconds = ("0" + date.getSeconds()).slice(-2);
+  const hours = ('0' + date.getHours()).slice(-2);
+  const minutes = ('0' + date.getMinutes()).slice(-2);
+  const seconds = ('0' + date.getSeconds()).slice(-2);
 
   const formattedDate = `${hours}:${minutes}:${seconds}`;
   return formattedDate;
@@ -277,7 +277,7 @@ const getTimeForLogs = () => {
 
 const getDateTimeString = (timestamp) => {
   // Check if the timestamp is a valid number
-  if (typeof timestamp !== "number" || isNaN(timestamp) || timestamp <= 0) {
+  if (typeof timestamp !== 'number' || isNaN(timestamp) || timestamp <= 0) {
     return timestamp;
   }
 
@@ -290,12 +290,12 @@ const getDateTimeString = (timestamp) => {
   }
 
   const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-indexed
-  const day = date.getDate().toString().padStart(2, "0");
-  const hours = date.getHours().toString().padStart(2, "0");
-  const minutes = date.getMinutes().toString().padStart(2, "0");
-  const seconds = date.getSeconds().toString().padStart(2, "0");
-  const milliseconds = date.getMilliseconds().toString().padStart(3, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-indexed
+  const day = date.getDate().toString().padStart(2, '0');
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  const seconds = date.getSeconds().toString().padStart(2, '0');
+  const milliseconds = date.getMilliseconds().toString().padStart(3, '0');
 
   // Formatted date-time string
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}`;
@@ -310,28 +310,28 @@ const base64toBlob = (data, mimeType) => {
     out[length] = bytes.charCodeAt(length);
   }
 
-  return new Blob([out], { type: mimeType || "application/pdf" });
+  return new Blob([out], { type: mimeType || 'application/pdf' });
 };
 
 const removeFileExtension = (fileName) => {
   if (!fileName) {
-    return "";
+    return '';
   }
-  const fileNameSplit = fileName.split(".");
+  const fileNameSplit = fileName.split('.');
   const fileNameSplitLength = fileNameSplit.length;
   const modFileName = fileNameSplit.slice(0, fileNameSplitLength - 1);
-  return modFileName.join(".");
+  return modFileName.join('.');
 };
 
 const isJson = (text) => {
   try {
-    if (typeof text === "object") {
+    if (typeof text === 'object') {
       return true;
     }
 
-    if (typeof text === "string") {
+    if (typeof text === 'string') {
       const json = JSON.parse(text);
-      return typeof json === "object";
+      return typeof json === 'object';
     }
     return false;
   } catch (err) {
@@ -342,7 +342,7 @@ const isJson = (text) => {
 const displayPromptResult = (
   output,
   isFormat = false,
-  isHighlightEnabled = false
+  isHighlightEnabled = false,
 ) => {
   /*
     output: The data to be displayed or parsed
@@ -367,7 +367,7 @@ const displayPromptResult = (
   }
 
   // Check if the parsed data is an array or object and formatting is requested
-  if (Array.isArray(parsedData) || typeof parsedData === "object") {
+  if (Array.isArray(parsedData) || typeof parsedData === 'object') {
     // If formatting is requested, return the JSON string with indentation
     if (isHighlightEnabled) {
       return parsedData;
@@ -381,7 +381,7 @@ const onboardCompleted = (adaptersList) => {
   if (!Array.isArray(adaptersList)) {
     return false;
   }
-  const MANDATORY_ADAPTERS = ["llm", "vector_db", "embedding", "x2text"];
+  const MANDATORY_ADAPTERS = ['llm', 'vector_db', 'embedding', 'x2text'];
   adaptersList = adaptersList.map((element) => element.toLowerCase());
   return MANDATORY_ADAPTERS.every((value) => adaptersList.includes(value));
 };
@@ -393,9 +393,9 @@ const formattedDateTime = (ISOdateTime) => {
     const validIsoDate = moment.utc(ISOdateTime).toISOString();
     // eslint-disable-next-line new-cap
     const zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    return momentTz.tz(validIsoDate, zone).format("lll z");
+    return momentTz.tz(validIsoDate, zone).format('lll z');
   } else {
-    return "";
+    return '';
   }
 };
 
@@ -409,13 +409,13 @@ const getBackendErrorDetail = (attr, backendErrors) => {
 
 const titleCase = (str) => {
   if (str === null || str.length === 0) {
-    return "";
+    return '';
   }
-  const words = str.toLowerCase().split(" ");
+  const words = str.toLowerCase().split(' ');
   for (let i = 0; i < words.length; i++) {
     words[i] = words[i][0].toUpperCase() + words[i].slice(1);
   }
-  return words.join(" ");
+  return words.join(' ');
 };
 
 const getMenuItem = (label, key, icon, children, type, isDisabled) => {
@@ -430,13 +430,13 @@ const getMenuItem = (label, key, icon, children, type, isDisabled) => {
 };
 
 const docIndexStatus = {
-  yet_to_start: "YET_TO_START",
-  indexing: "INDEXING",
-  done: "DONE",
+  yet_to_start: 'YET_TO_START',
+  indexing: 'INDEXING',
+  done: 'DONE',
 };
 
 const isNonNegativeNumber = (value) => {
-  return typeof value === "number" && !isNaN(value) && value >= 0;
+  return typeof value === 'number' && !isNaN(value) && value >= 0;
 };
 
 // Default token usage object with all counts initialized to 0
@@ -482,23 +482,23 @@ const pollForCompletion = (
   requestOptions,
   maxWaitTime,
   pollingInterval,
-  makeApiRequest
+  makeApiRequest,
 ) => {
   const elapsedTime = Date.now() - startTime;
   if (elapsedTime >= maxWaitTime) {
     return Promise.reject(
       new Error(
-        "Unable to fetch results since there's an ongoing extraction, please try again later"
-      )
+        "Unable to fetch results since there's an ongoing extraction, please try again later",
+      ),
     );
   }
 
   const recursivePoll = () => {
     return makeApiRequest(requestOptions)
       .then((response) => {
-        if (response?.data?.status === "pending") {
+        if (response?.data?.status === 'pending') {
           return new Promise((resolve) =>
-            setTimeout(resolve, pollingInterval)
+            setTimeout(resolve, pollingInterval),
           ).then(recursivePoll);
         } else {
           return response;
@@ -514,7 +514,7 @@ const pollForCompletion = (
 
 function getDocIdFromKey(key) {
   // Split the key by '__'
-  const parts = key.split("__");
+  const parts = key.split('__');
 
   // Return the docId part, which is the second element in the array
   if (parts.length === 3) {
@@ -525,14 +525,14 @@ function getDocIdFromKey(key) {
 }
 
 const displayURL = (text) => {
-  return getBaseUrl() + "/" + text;
+  return getBaseUrl() + '/' + text;
 };
 
 const formatNumberWithCommas = (number) => {
   if (!number && number !== 0) return null;
 
   // Convert the number to a string and split into integer and decimal parts.
-  const [integerPart, decimalPart] = number.toString().split(".");
+  const [integerPart, decimalPart] = number.toString().split('.');
 
   // Add commas to the integer part.
   const formattedIntegerPart = Number(integerPart).toLocaleString();
@@ -552,17 +552,17 @@ const isValidJsonKey = (key) => {
 };
 
 const PROMPT_RUN_TYPES = {
-  RUN_ONE_PROMPT_ONE_LLM_ONE_DOC: "RUN_ONE_PROMPT_ONE_LLM_ONE_DOC",
-  RUN_ONE_PROMPT_ONE_LLM_ALL_DOCS: "RUN_ONE_PROMPT_ONE_LLM_ALL_DOCS",
-  RUN_ONE_PROMPT_ALL_LLMS_ONE_DOC: "RUN_ONE_PROMPT_ALL_LLMS_ONE_DOC",
-  RUN_ONE_PROMPT_ALL_LLMS_ALL_DOCS: "RUN_ONE_PROMPT_ALL_LLMS_ALL_DOCS",
-  RUN_ALL_PROMPTS_ALL_LLMS_ONE_DOC: "RUN_ALL_PROMPTS_ALL_LLMS_ONE_DOC",
-  RUN_ALL_PROMPTS_ALL_LLMS_ALL_DOCS: "RUN_ALL_PROMPTS_ALL_LLMS_ALL_DOCS",
+  RUN_ONE_PROMPT_ONE_LLM_ONE_DOC: 'RUN_ONE_PROMPT_ONE_LLM_ONE_DOC',
+  RUN_ONE_PROMPT_ONE_LLM_ALL_DOCS: 'RUN_ONE_PROMPT_ONE_LLM_ALL_DOCS',
+  RUN_ONE_PROMPT_ALL_LLMS_ONE_DOC: 'RUN_ONE_PROMPT_ALL_LLMS_ONE_DOC',
+  RUN_ONE_PROMPT_ALL_LLMS_ALL_DOCS: 'RUN_ONE_PROMPT_ALL_LLMS_ALL_DOCS',
+  RUN_ALL_PROMPTS_ALL_LLMS_ONE_DOC: 'RUN_ALL_PROMPTS_ALL_LLMS_ONE_DOC',
+  RUN_ALL_PROMPTS_ALL_LLMS_ALL_DOCS: 'RUN_ALL_PROMPTS_ALL_LLMS_ALL_DOCS',
 };
 
 const PROMPT_RUN_API_STATUSES = {
-  RUNNING: "RUNNING",
-  COMPLETED: "COMPLETED",
+  RUNNING: 'RUNNING',
+  COMPLETED: 'COMPLETED',
 };
 
 const generateApiRunStatusId = (docId, profileId) => {
@@ -591,15 +591,15 @@ const generateCoverageKey = (promptId, profileId) => {
 };
 
 function formatSecondsToHMS(seconds) {
-  if (isNaN(seconds) || seconds < 0) return "00:00:00";
+  if (isNaN(seconds) || seconds < 0) return '00:00:00';
 
   const hrs = Math.floor(seconds / 3600);
   const mins = Math.floor((seconds % 3600) / 60);
   const secs = Math.floor(seconds % 60);
 
   return [hrs, mins, secs]
-    .map((unit) => String(unit).padStart(2, "0"))
-    .join(":");
+    .map((unit) => String(unit).padStart(2, '0'))
+    .join(':');
 }
 
 const formattedDateTimeWithSeconds = (ISOdateTime) => {
@@ -607,15 +607,15 @@ const formattedDateTimeWithSeconds = (ISOdateTime) => {
     // eslint-disable-next-line new-cap
     const zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const zonedDate = parseISO(ISOdateTime);
-    return format(zonedDate, "MMM d, yyyy h:mm:ss a zzz", { timeZone: zone });
+    return format(zonedDate, 'MMM d, yyyy h:mm:ss a zzz', { timeZone: zone });
   } else {
-    return "";
+    return '';
   }
 };
 
-const TRIAL_PLAN = "TRIAL";
+const TRIAL_PLAN = 'TRIAL';
 
-const homePagePath = cloudHomePagePath || "tools";
+const homePagePath = cloudHomePagePath || 'tools';
 
 const convertTimestampToHHMMSS = (timestamp) => {
   // Convert the timestamp to milliseconds
@@ -626,29 +626,29 @@ const convertTimestampToHHMMSS = (timestamp) => {
     date.getUTCHours(),
     date.getUTCMinutes(),
     date.getUTCSeconds(),
-  ].map((unit) => unit.toString().padStart(2, "0"));
+  ].map((unit) => unit.toString().padStart(2, '0'));
   // Return the formatted time string
   return `${hours}:${minutes}:${seconds}`;
 };
 
-const UNSTRACT_ADMIN = "unstract_admin";
+const UNSTRACT_ADMIN = 'unstract_admin';
 
 const logsStaticContent = {
   ETL: {
-    addBtn: "ETL Pipeline",
-    route: "etl",
+    addBtn: 'ETL Pipeline',
+    route: 'etl',
   },
   TASK: {
-    addBtn: "Task Pipeline",
-    route: "task",
+    addBtn: 'Task Pipeline',
+    route: 'task',
   },
   API: {
-    addBtn: "API Deployment",
-    route: "api",
+    addBtn: 'API Deployment',
+    route: 'api',
   },
   WF: {
-    addBtn: "Workflow",
-    route: "workflows",
+    addBtn: 'Workflow',
+    route: 'workflows',
   },
 };
 

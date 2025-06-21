@@ -1,5 +1,5 @@
-import { Modal } from "antd";
-import PropTypes from "prop-types";
+import { Modal } from 'antd';
+import PropTypes from 'prop-types';
 
 const DeleteModal = ({ open, setOpen, deleteRecord }) => {
   return (

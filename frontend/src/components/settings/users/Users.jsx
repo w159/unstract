@@ -4,21 +4,21 @@ import {
   EllipsisOutlined,
   PlusOutlined,
   ReloadOutlined,
-} from "@ant-design/icons";
-import { Button, Dropdown, Modal, Space, Table, Typography } from "antd";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./Users.css";
+} from '@ant-design/icons';
+import { Button, Dropdown, Modal, Space, Table, Typography } from 'antd';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Users.css';
 
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate";
-import { IslandLayout } from "../../../layouts/island-layout/IslandLayout.jsx";
-import { useAlertStore } from "../../../store/alert-store";
-import { useSessionStore } from "../../../store/session-store";
-import { CustomButton } from "../../widgets/custom-button/CustomButton.jsx";
-import { SpinnerLoader } from "../../widgets/spinner-loader/SpinnerLoader.jsx";
-import { TopBar } from "../../widgets/top-bar/TopBar.jsx";
-import { useExceptionHandler } from "../../../hooks/useExceptionHandler.jsx";
-import usePostHogEvents from "../../../hooks/usePostHogEvents.js";
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate';
+import { IslandLayout } from '../../../layouts/island-layout/IslandLayout.jsx';
+import { useAlertStore } from '../../../store/alert-store';
+import { useSessionStore } from '../../../store/session-store';
+import { CustomButton } from '../../widgets/custom-button/CustomButton.jsx';
+import { SpinnerLoader } from '../../widgets/spinner-loader/SpinnerLoader.jsx';
+import { TopBar } from '../../widgets/top-bar/TopBar.jsx';
+import { useExceptionHandler } from '../../../hooks/useExceptionHandler.jsx';
+import usePostHogEvents from '../../../hooks/usePostHogEvents.js';
 
 function Users() {
   const axiosPrivate = useAxiosPrivate();
@@ -47,27 +47,27 @@ function Users() {
 
   const handleDelete = async () => {
     const requestOptions = {
-      method: "DELETE",
+      method: 'DELETE',
       url: `/api/v1/unstract/${sessionDetails?.orgId}/users/`,
       data: { emails: [selectedUserEmail?.email] },
       headers: {
-        "X-CSRFToken": sessionDetails?.csrfToken,
-        "Content-Type": "application/json",
+        'X-CSRFToken': sessionDetails?.csrfToken,
+        'Content-Type': 'application/json',
       },
     };
     setConfirmLoading(true);
     axiosPrivate(requestOptions)
       .then((res) => {
         setAlertDetails({
-          type: "success",
-          content: "User deleted successfully",
+          type: 'success',
+          content: 'User deleted successfully',
         });
         setConfirmLoading(false);
         setOpen(false);
         removeUser(selectedUserEmail.email);
       })
       .catch((err) => {
-        setAlertDetails(handleException(err, "Failed to delete user"));
+        setAlertDetails(handleException(err, 'Failed to delete user'));
         setConfirmLoading(false);
         setOpen(false);
       });
@@ -81,7 +81,7 @@ function Users() {
     try {
       setIsTableLoading(true);
       const requestOptions = {
-        method: "GET",
+        method: 'GET',
         url: `/api/v1/unstract/${sessionDetails?.orgId}/users/`,
       };
       const response = await axiosPrivate(requestOptions);
@@ -91,10 +91,10 @@ function Users() {
           key: user.id,
           email: user.email,
           role: user.role,
-        }))
+        })),
       );
     } catch (err) {
-      setAlertDetails(handleException(err, "Failed to load"));
+      setAlertDetails(handleException(err, 'Failed to load'));
     } finally {
       setIsTableLoading(false);
     }
@@ -102,7 +102,7 @@ function Users() {
 
   const actionItems = [
     {
-      key: "1",
+      key: '1',
       label: (
         <Space
           direction="horizontal"
@@ -123,7 +123,7 @@ function Users() {
       ),
     },
     {
-      key: "2",
+      key: '2',
       label: (
         <Space
           direction="horizontal"
@@ -142,27 +142,27 @@ function Users() {
   ];
   const baseColumns = [
     {
-      title: "Email",
-      dataIndex: "email",
+      title: 'Email',
+      dataIndex: 'email',
     },
     {
-      title: "Role",
-      dataIndex: "role",
+      title: 'Role',
+      dataIndex: 'role',
     },
   ];
 
   const actionColumn = {
-    title: "Actions",
-    align: "center",
+    title: 'Actions',
+    align: 'center',
     render: (_, record) => (
       <Dropdown
         menu={{ items: actionItems }}
-        trigger={["click"]}
+        trigger={['click']}
         placement="bottomLeft"
       >
         <EllipsisOutlined
           rotate={90}
-          style={{ cursor: "pointer" }}
+          style={{ cursor: 'pointer' }}
           onClick={() => setSelectedUserEmail(record)}
         />
       </Dropdown>
@@ -177,7 +177,7 @@ function Users() {
     navigate(`/${sessionDetails?.orgName}/users/invite`);
 
     try {
-      setPostHogCustomEvent("intent_add_user", {
+      setPostHogCustomEvent('intent_add_user', {
         info: "Clicked on '+ Invite User' button",
       });
     } catch (err) {

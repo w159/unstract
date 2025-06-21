@@ -1,7 +1,7 @@
-import { Modal } from "antd";
-import PropTypes from "prop-types";
+import { Modal } from 'antd';
+import PropTypes from 'prop-types';
 
-import { ManageLlmProfiles } from "../manage-llm-profiles/ManageLlmProfiles";
+import { ManageLlmProfiles } from '../manage-llm-profiles/ManageLlmProfiles';
 
 function ManageLlmProfilesModal({
   open,

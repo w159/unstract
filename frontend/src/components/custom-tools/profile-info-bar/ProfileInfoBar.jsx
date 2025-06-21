@@ -1,6 +1,6 @@
-import { Col, Row, Tag } from "antd";
-import PropTypes from "prop-types";
-import "./ProfileInfoBar.css";
+import { Col, Row, Tag } from 'antd';
+import PropTypes from 'prop-types';
+import './ProfileInfoBar.css';
 
 const ProfileInfoBar = ({ profiles, profileId }) => {
   const profile = profiles?.find((p) => p?.profile_id === profileId);
@@ -43,7 +43,7 @@ const ProfileInfoBar = ({ profiles, profileId }) => {
       </Col>
       <Col>
         <Tag>
-          <strong>Reindex:</strong> {profile?.reindex ? "Yes" : "No"}
+          <strong>Reindex:</strong> {profile?.reindex ? 'Yes' : 'No'}
         </Tag>
       </Col>
     </Row>

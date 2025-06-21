@@ -1,15 +1,15 @@
-import PropTypes from "prop-types";
-import { useState, useEffect, useRef, useCallback } from "react";
-import { Modal, Input, Button, Typography } from "antd";
-import "./PromptCard.css";
-import { uniqueId } from "lodash";
-import debounce from "lodash/debounce";
-import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
+import PropTypes from 'prop-types';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { Modal, Input, Button, Typography } from 'antd';
+import './PromptCard.css';
+import { uniqueId } from 'lodash';
+import debounce from 'lodash/debounce';
+import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
 
-import { TextViewerPre } from "../text-viewer-pre/TextViewerPre";
+import { TextViewerPre } from '../text-viewer-pre/TextViewerPre';
 
 function OutputForIndex({ chunkData, setIsIndexOpen, isIndexOpen }) {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [highlightedChunks, setHighlightedChunks] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [chunks, setChunks] = useState([]);
@@ -28,9 +28,9 @@ function OutputForIndex({ chunkData, setIsIndexOpen, isIndexOpen }) {
       }
       const allResults = [];
       chunks?.forEach((chunk, chunkIndex) => {
-        const lines = chunk?.split("\\n");
+        const lines = chunk?.split('\\n');
         lines.forEach((line, lineIndex) => {
-          const regex = new RegExp(`(${term})`, "gi");
+          const regex = new RegExp(`(${term})`, 'gi');
           let match;
           while ((match = regex.exec(line)) !== null) {
             allResults.push({
@@ -45,7 +45,7 @@ function OutputForIndex({ chunkData, setIsIndexOpen, isIndexOpen }) {
       setHighlightedChunks(allResults);
       setCurrentIndex(0);
     }, 300), // Debounce delay in milliseconds
-    [chunks]
+    [chunks],
   );
 
   useEffect(() => {
@@ -55,15 +55,15 @@ function OutputForIndex({ chunkData, setIsIndexOpen, isIndexOpen }) {
   useEffect(() => {
     if (activeRef.current) {
       activeRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
+        behavior: 'smooth',
+        block: 'center',
       });
     }
   }, [currentIndex]);
 
   const handleClose = () => {
     setIsIndexOpen(false);
-    setSearchTerm("");
+    setSearchTerm('');
     setHighlightedChunks([]);
     setCurrentIndex(0);
   };
@@ -78,7 +78,7 @@ function OutputForIndex({ chunkData, setIsIndexOpen, isIndexOpen }) {
 
   const handlePrev = () => {
     setCurrentIndex((prev) =>
-      prev === 0 ? highlightedChunks?.length - 1 : prev - 1
+      prev === 0 ? highlightedChunks?.length - 1 : prev - 1,
     );
   };
 
@@ -87,7 +87,7 @@ function OutputForIndex({ chunkData, setIsIndexOpen, isIndexOpen }) {
 
     const matchesInLine = highlightedChunks.filter(
       (chunk) =>
-        chunk.lineIndex === lineIndex && chunk.chunkIndex === chunkIndex
+        chunk.lineIndex === lineIndex && chunk.chunkIndex === chunkIndex,
     );
 
     if (!matchesInLine?.length) return line;
@@ -106,22 +106,22 @@ function OutputForIndex({ chunkData, setIsIndexOpen, isIndexOpen }) {
           (h) =>
             h.chunkIndex === chunkIndex &&
             h.lineIndex === lineIndex &&
-            h.startIndex === match.startIndex
+            h.startIndex === match.startIndex,
         );
 
       parts.push(
         <span
           key={uniqueId()}
           className={`chunk-highlight ${
-            isActive ? "active-chunk-highlight" : ""
+            isActive ? 'active-chunk-highlight' : ''
           }`}
           ref={isActive ? activeRef : null}
         >
           {line.substring(
             match.startIndex,
-            match.startIndex + match.matchLength
+            match.startIndex + match.matchLength,
           )}
-        </span>
+        </span>,
       );
 
       lastIndex = match.startIndex + match.matchLength;
@@ -160,7 +160,7 @@ function OutputForIndex({ chunkData, setIsIndexOpen, isIndexOpen }) {
             <ArrowUpOutlined />
           </Button>
           <span className="page-count-container">
-            {highlightedChunks.length > 0 ? currentIndex + 1 : 0}/{" "}
+            {highlightedChunks.length > 0 ? currentIndex + 1 : 0}/{' '}
             {highlightedChunks.length}
           </span>
           <Button
@@ -179,7 +179,7 @@ function OutputForIndex({ chunkData, setIsIndexOpen, isIndexOpen }) {
             <TextViewerPre
               text={
                 <>
-                  {chunk?.split("\\n")?.map((line, lineIndex) => (
+                  {chunk?.split('\\n')?.map((line, lineIndex) => (
                     <div key={uniqueId()}>
                       {renderHighlightedLine(line, lineIndex, chunkIndex)}
                       <br />

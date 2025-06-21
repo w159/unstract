@@ -1,10 +1,10 @@
-import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
-import { Button, Card } from "antd";
-import { useLocation, useNavigate } from "react-router-dom";
-import "./SetOrg.css"; // Import your CSS file for styling
-import axios from "axios";
-import Proptypes from "prop-types";
+import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
+import { Button, Card } from 'antd';
+import { useLocation, useNavigate } from 'react-router-dom';
+import './SetOrg.css'; // Import your CSS file for styling
+import axios from 'axios';
+import Proptypes from 'prop-types';
 
 import {
   OrgAvatar,
@@ -12,10 +12,10 @@ import {
   RedGradCircle,
   YellowGradCircle,
   UnstractBlackLogo,
-} from "../../assets/index";
-import { useExceptionHandler } from "../../hooks/useExceptionHandler";
-import { useAlertStore } from "../../store/alert-store";
-import { useUserSession } from "../../hooks/useUserSession.js";
+} from '../../assets/index';
+import { useExceptionHandler } from '../../hooks/useExceptionHandler';
+import { useAlertStore } from '../../store/alert-store';
+import { useUserSession } from '../../hooks/useUserSession.js';
 
 function SetOrg() {
   const { state } = useLocation();
@@ -31,10 +31,10 @@ function SetOrg() {
         const userSessionData = await userSession();
         const signedInOrgId = userSessionData?.organization_id;
         if (state === null || signedInOrgId) {
-          navigate("/");
+          navigate('/');
         }
       } catch (error) {
-        navigate("/");
+        navigate('/');
       } finally {
         setLoading(false);
       }
@@ -45,12 +45,12 @@ function SetOrg() {
   const handleContinue = (id) => {
     setLoading(true);
     setLoadingOrgId(id);
-    const csrfToken = Cookies.get("csrftoken");
+    const csrfToken = Cookies.get('csrftoken');
     const requestOptions = {
-      method: "POST",
+      method: 'POST',
       url: `/api/v1/organization/${id}/set`,
       headers: {
-        "X-CSRFToken": csrfToken,
+        'X-CSRFToken': csrfToken,
       },
     };
 

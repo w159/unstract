@@ -1,15 +1,15 @@
-import { Typography } from "antd";
-import PropTypes from "prop-types";
-import { useDrop } from "react-dnd";
+import { Typography } from 'antd';
+import PropTypes from 'prop-types';
+import { useDrop } from 'react-dnd';
 
-import { ListOfWfStepsPlaceholder } from "../../../assets";
-import { CardsList } from "../cards-list/CardsList.jsx";
-import "./StepCard.css";
-import SpaceWrapper from "../../widgets/space-wrapper/SpaceWrapper.jsx";
+import { ListOfWfStepsPlaceholder } from '../../../assets';
+import { CardsList } from '../cards-list/CardsList.jsx';
+import './StepCard.css';
+import SpaceWrapper from '../../widgets/space-wrapper/SpaceWrapper.jsx';
 
 const StepCard = ({ steps, activeTool, moveItem }) => {
   const [, drop] = useDrop({
-    accept: "STEP",
+    accept: 'STEP',
     drop: (draggedItem, indexNew) => {
       if (
         (steps.length === 0 || draggedItem?.function_name) &&

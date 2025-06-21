@@ -1,29 +1,26 @@
-import { useAxiosPrivate } from "../../../hooks/useAxiosPrivate.js";
-import { useSessionStore } from "../../../store/session-store.js";
+import { useAxiosPrivate } from '../../../hooks/useAxiosPrivate.js';
+import { useSessionStore } from '../../../store/session-store.js';
 
 let options = {};
 
 function useInputService() {
-	const axiosPrivate = useAxiosPrivate();
-	const { sessionDetails } = useSessionStore();
-	const path = `/api/v1/unstract/${sessionDetails.orgId.replaceAll(
-		'"',
-		""
-	)}`;
+  const axiosPrivate = useAxiosPrivate();
+  const { sessionDetails } = useSessionStore();
+  const path = `/api/v1/unstract/${sessionDetails.orgId.replaceAll('"', '')}`;
 
-	return {
-		getFileList: (storageId, filePath = "/") => {
-			options = {
-				url: `${path}/file`,
-				method: "GET",
-				params: {
-					connector_id: storageId,
-					path: filePath,
-				},
-			};
-			return axiosPrivate(options);
-		},
-	};
+  return {
+    getFileList: (storageId, filePath = '/') => {
+      options = {
+        url: `${path}/file`,
+        method: 'GET',
+        params: {
+          connector_id: storageId,
+          path: filePath,
+        },
+      };
+      return axiosPrivate(options);
+    },
+  };
 }
 
 export { useInputService };

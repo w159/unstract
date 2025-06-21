@@ -1,21 +1,21 @@
-import { Col, Menu, Modal, Row, Typography } from "antd";
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { Col, Menu, Modal, Row, Typography } from 'antd';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 import {
   CodeOutlined,
   DiffOutlined,
   FileTextOutlined,
   MessageOutlined,
-} from "@ant-design/icons";
+} from '@ant-design/icons';
 
-import SpaceWrapper from "../../widgets/space-wrapper/SpaceWrapper";
-import { getMenuItem } from "../../../helpers/GetStaticData";
-import { ManageLlmProfiles } from "../manage-llm-profiles/ManageLlmProfiles";
-import { useCustomToolStore } from "../../../store/custom-tool-store";
-import { CustomSynonyms } from "../custom-synonyms/CustomSynonyms";
-import { PreAndPostAmbleModal } from "../pre-and-post-amble-modal/PreAndPostAmbleModal";
+import SpaceWrapper from '../../widgets/space-wrapper/SpaceWrapper';
+import { getMenuItem } from '../../../helpers/GetStaticData';
+import { ManageLlmProfiles } from '../manage-llm-profiles/ManageLlmProfiles';
+import { useCustomToolStore } from '../../../store/custom-tool-store';
+import { CustomSynonyms } from '../custom-synonyms/CustomSynonyms';
+import { PreAndPostAmbleModal } from '../pre-and-post-amble-modal/PreAndPostAmbleModal';
 
-import "./SettingsModal.css";
+import './SettingsModal.css';
 
 let SummarizeManager = null;
 const EvaluationManager = null;
@@ -23,11 +23,11 @@ let ChallengeManager = null;
 let HighlightManager = null;
 try {
   SummarizeManager =
-    require("../../../plugins/summarize-manager/SummarizeManager").SummarizeManager;
+    require('../../../plugins/summarize-manager/SummarizeManager').SummarizeManager;
   ChallengeManager =
-    require("../../../plugins/challenge-manager/ChallengeManager").ChallengeManager;
+    require('../../../plugins/challenge-manager/ChallengeManager').ChallengeManager;
   HighlightManager =
-    require("../../../plugins/highlight-manager/HighlightManager").HighlightManager;
+    require('../../../plugins/highlight-manager/HighlightManager').HighlightManager;
 } catch {
   // Component will remain null if it is not present.
 }
@@ -40,10 +40,10 @@ function SettingsModal({ open, setOpen, handleUpdateTool }) {
 
   useEffect(() => {
     const items = [
-      getMenuItem("LLM Profiles", 1, <CodeOutlined />),
-      getMenuItem("Grammar", 5, <MessageOutlined />),
-      getMenuItem("Preamble", 6, <DiffOutlined />),
-      getMenuItem("Postamble", 7, <DiffOutlined />),
+      getMenuItem('LLM Profiles', 1, <CodeOutlined />),
+      getMenuItem('Grammar', 5, <MessageOutlined />),
+      getMenuItem('Preamble', 6, <DiffOutlined />),
+      getMenuItem('Postamble', 7, <DiffOutlined />),
     ];
 
     const listOfComponents = {
@@ -68,7 +68,7 @@ function SettingsModal({ open, setOpen, handleUpdateTool }) {
       items.splice(
         position,
         0,
-        getMenuItem("SummarizedExtraction", 2, <FileTextOutlined />)
+        getMenuItem('SummarizedExtraction', 2, <FileTextOutlined />),
       );
       listOfComponents[2] = (
         <SummarizeManager
@@ -83,7 +83,7 @@ function SettingsModal({ open, setOpen, handleUpdateTool }) {
       items.splice(
         position,
         0,
-        getMenuItem("Evaluation Manager", 3, <FileTextOutlined />)
+        getMenuItem('Evaluation Manager', 3, <FileTextOutlined />),
       );
       listOfComponents[3] = (
         <EvaluationManager handleUpdateTool={handleUpdateTool} />
@@ -95,7 +95,7 @@ function SettingsModal({ open, setOpen, handleUpdateTool }) {
       items.splice(
         position,
         0,
-        getMenuItem("LLMChallenge", 4, <FileTextOutlined />)
+        getMenuItem('LLMChallenge', 4, <FileTextOutlined />),
       );
       listOfComponents[4] = (
         <ChallengeManager
@@ -106,7 +106,7 @@ function SettingsModal({ open, setOpen, handleUpdateTool }) {
       position++;
     }
     if (HighlightManager) {
-      items.push(getMenuItem("Highlighting", 8, <FileTextOutlined />));
+      items.push(getMenuItem('Highlighting', 8, <FileTextOutlined />));
       listOfComponents[8] = (
         <HighlightManager
           handleUpdateTool={handleUpdateTool}
@@ -152,7 +152,7 @@ function SettingsModal({ open, setOpen, handleUpdateTool }) {
             Settings
           </Typography.Text>
         </div>
-        <Row className="conn-modal-row" style={{ height: "800px" }}>
+        <Row className="conn-modal-row" style={{ height: '800px' }}>
           <Col span={4} className="conn-modal-col conn-modal-col-left">
             <div className="conn-modal-menu conn-modal-form-pad-right">
               <Menu

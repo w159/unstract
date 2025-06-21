@@ -1,5 +1,5 @@
-import { InfoCircleOutlined } from "@ant-design/icons";
-import { Space, Tooltip, Typography } from "antd";
+import { InfoCircleOutlined } from '@ant-design/icons';
+import { Space, Tooltip, Typography } from 'antd';
 
 function PromptsReorderTitle() {
   return (
