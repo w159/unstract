@@ -15,7 +15,6 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-from django.conf.urls import *  # noqa: F401, F403
 from django.urls import include, path
 
 from backend.constants import UrlPathConstants

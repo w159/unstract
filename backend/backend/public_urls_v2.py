@@ -17,7 +17,6 @@ Including another URLconf
 
 from account_v2.admin import admin
 from django.conf import settings
-from django.conf.urls import *  # noqa: F401, F403
 from django.conf.urls.static import static
 from django.urls import include, path
 

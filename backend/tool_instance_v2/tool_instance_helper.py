@@ -386,38 +386,20 @@ class ToolInstanceHelper:
     def validate_adapter_permissions(
         user: User, tool_uid: str, tool_meta: dict[str, Any]
     ) -> None:
-        tool: Tool = ToolProcessor.get_tool_by_uid(tool_uid=tool_uid)
-        adapter_ids: set[str] = set()
-
-        for llm in tool.properties.adapter.language_models:
-            if llm.is_enabled and llm.adapter_id:
-                adapter_id = tool_meta[llm.adapter_id]
-            elif llm.is_enabled:
-                adapter_id = tool_meta[AdapterPropertyKey.DEFAULT_LLM_ADAPTER_ID]
-
-            adapter_ids.add(adapter_id)
-        for vdb in tool.properties.adapter.vector_stores:
-            if vdb.is_enabled and vdb.adapter_id:
-                adapter_id = tool_meta[vdb.adapter_id]
-            elif vdb.is_enabled:
-                adapter_id = tool_meta[AdapterPropertyKey.DEFAULT_VECTOR_DB_ADAPTER_ID]
-
-            adapter_ids.add(adapter_id)
-        for embedding in tool.properties.adapter.embedding_services:
-            if embedding.is_enabled and embedding.adapter_id:
-                adapter_id = tool_meta[embedding.adapter_id]
-            elif embedding.is_enabled:
-                adapter_id = tool_meta[AdapterPropertyKey.DEFAULT_EMBEDDING_ADAPTER_ID]
-
-            adapter_ids.add(adapter_id)
-        for text_extractor in tool.properties.adapter.text_extractors:
-            if text_extractor.is_enabled and text_extractor.adapter_id:
-                adapter_id = tool_meta[text_extractor.adapter_id]
-            elif text_extractor.is_enabled:
-                adapter_id = tool_meta[AdapterPropertyKey.DEFAULT_X2TEXT_ADAPTER_ID]
-
-            adapter_ids.add(adapter_id)
-
+        """Validate adapter permissions with reduced complexity.
+        
+        Args:
+            user: User to validate permissions for
+            tool_uid: Unique identifier for the tool
+            tool_meta: Metadata containing adapter IDs
+        """
+        from tool_instance_v2.tool_instance_helper_refactored import (
+            AdapterPermissionValidator
+        )
+        
+        validator = AdapterPermissionValidator(tool_uid, tool_meta)
+        adapter_ids = validator.collect_all_adapter_ids()
+        
         ToolInstanceHelper.validate_adapter_access(user=user, adapter_ids=adapter_ids)
 
     @staticmethod

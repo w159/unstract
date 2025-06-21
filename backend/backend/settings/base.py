@@ -109,15 +109,16 @@ DB_PORT = os.environ.get("DB_PORT", 5432)
 DB_SCHEMA = os.environ.get("DB_SCHEMA", "unstract")
 
 DEFAULT_ORGANIZATION = "default_org"
-FLIPT_BASE_URL = os.environ.get("FLIPT_BASE_URL", "http://localhost:9005")
-PLATFORM_HOST = os.environ.get("PLATFORM_SERVICE_HOST", "http://localhost")
+DEFAULT_LOCALHOST_URL = "http://localhost"
+FLIPT_BASE_URL = os.environ.get("FLIPT_BASE_URL", f"{DEFAULT_LOCALHOST_URL}:9005")
+PLATFORM_HOST = os.environ.get("PLATFORM_SERVICE_HOST", DEFAULT_LOCALHOST_URL)
 PLATFORM_PORT = os.environ.get("PLATFORM_SERVICE_PORT", 3001)
-PROMPT_HOST = os.environ.get("PROMPT_HOST", "http://localhost")
+PROMPT_HOST = os.environ.get("PROMPT_HOST", DEFAULT_LOCALHOST_URL)
 PROMPT_PORT = os.environ.get("PROMPT_PORT", 3003)
 PROMPT_STUDIO_FILE_PATH = os.environ.get(
     "PROMPT_STUDIO_FILE_PATH", "/app/prompt-studio-data"
 )
-X2TEXT_HOST = os.environ.get("X2TEXT_HOST", "http://localhost")
+X2TEXT_HOST = os.environ.get("X2TEXT_HOST", DEFAULT_LOCALHOST_URL)
 X2TEXT_PORT = os.environ.get("X2TEXT_PORT", 3004)
 STRUCTURE_TOOL_IMAGE_URL = get_required_setting("STRUCTURE_TOOL_IMAGE_URL")
 STRUCTURE_TOOL_IMAGE_NAME = get_required_setting("STRUCTURE_TOOL_IMAGE_NAME")

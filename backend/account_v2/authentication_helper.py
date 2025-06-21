@@ -13,6 +13,11 @@ logger = logging.getLogger(__name__)
 
 class AuthenticationHelper:
     def __init__(self) -> None:
+        """Initialize AuthenticationHelper.
+        
+        This class uses static methods and doesn't require initialization
+        of instance variables, hence the empty constructor.
+        """
         pass
 
     def list_of_members_from_user_model(self, model_data: list[Any]) -> list[MemberData]:

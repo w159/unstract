@@ -174,7 +174,7 @@ class AuthenticationService:
         )
 
     def handle_invited_user_while_callback(
-        self, request: Request, user: User
+        self, user: User
     ) -> MemberData:
         member_data: MemberData = MemberData(
             user_id=user.user_id,
@@ -189,9 +189,7 @@ class AuthenticationService:
 
     def add_to_organization(
         self,
-        request: Request,
-        user: User,
-        data: dict[str, Any] | None = None,
+        user: User
     ) -> MemberData:
         member_data: MemberData = MemberData(
             user_id=user.user_id,
@@ -209,24 +207,23 @@ class AuthenticationService:
     ) -> bool:
         raise MethodNotImplemented()
 
-    def user_organizations(self, request: Request) -> list[OrganizationData]:
-        organizationData: OrganizationData = OrganizationData(
+    def _get_default_organization_data(self) -> OrganizationData:
+        """Helper method to create default organization data."""
+        return OrganizationData(
             id=self.default_organization.organization_id,
             display_name=self.default_organization.display_name,
             name=self.default_organization.name,
         )
-        return [organizationData]
+
+    def user_organizations(self) -> list[OrganizationData]:
+        return [self._get_default_organization_data()]
 
     def get_organizations_by_user_id(self, id: str) -> list[OrganizationData]:
-        organizationData: OrganizationData = OrganizationData(
-            id=self.default_organization.organization_id,
-            display_name=self.default_organization.display_name,
-            name=self.default_organization.name,
-        )
-        return [organizationData]
+        # Note: 'id' parameter is ignored in this default implementation
+        return [self._get_default_organization_data()]
 
     def get_organization_role_of_user(
-        self, user_id: str, organization_id: str
+        self
     ) -> list[str]:
         return [UserRole.ADMIN.value]
 
@@ -245,7 +242,7 @@ class AuthenticationService:
         except ValueError:
             return False
 
-    def check_user_organization_association(self, user_email: str) -> None:
+    def check_user_organization_association(self) -> None:
         """Check if the user is already associated with any organizations.
 
         Raises:
@@ -272,37 +269,33 @@ class AuthenticationService:
     def delete_invitation(self, organization_id: str, invitation_id: str) -> bool:
         raise MethodNotImplemented()
 
-    def add_organization_user_role(
-        self,
-        admin: User,
-        organization_id: str,
-        user_id: str,
-        role_ids: list[str],
-        request: Request,
-    ) -> list[str]:
+    def _validate_admin_and_return_roles(self, admin: User, role_ids: list[str]) -> list[str]:
+        """Helper method to validate admin role and return role_ids."""
         if admin.role == UserRole.ADMIN.value:
             return role_ids
         raise Forbidden
+
+    def add_organization_user_role(
+        self,
+        admin: User,
+        role_ids: list[str]
+    ) -> list[str]:
+        return self._validate_admin_and_return_roles(admin, role_ids)
 
     def remove_organization_user_role(
         self,
         admin: User,
-        organization_id: str,
-        user_id: str,
-        role_ids: list[str],
-        request: Request,
+        role_ids: list[str]
     ) -> list[str]:
-        if admin.role == UserRole.ADMIN.value:
-            return role_ids
-        raise Forbidden
+        return self._validate_admin_and_return_roles(admin, role_ids)
 
-    def get_organization_by_org_id(self, id: str) -> OrganizationData:
-        organizationData: OrganizationData = OrganizationData(
+    def get_organization_by_org_id(self) -> OrganizationData:
+        organization_data: OrganizationData = OrganizationData(
             id=DefaultOrg.ORGANIZATION_NAME,
             display_name=DefaultOrg.ORGANIZATION_NAME,
             name=DefaultOrg.ORGANIZATION_NAME,
         )
-        return organizationData
+        return organization_data
 
     def _set_default_user(self) -> bool:
         """Set the default user for authentication.
@@ -424,11 +417,7 @@ class AuthenticationService:
         return OrganizationService.get_organization_by_org_id(org_id=org_id)
 
     def make_organization_and_add_member(
-        self,
-        user_id: str,
-        user_name: str,
-        organization_name: str | None = None,
-        display_name: str | None = None,
+        self
     ) -> OrganizationData | None:
         organization: OrganizationData = OrganizationData(
             id=str(uuid.uuid4()),
@@ -440,9 +429,8 @@ class AuthenticationService:
     def make_user_organization_name(self) -> str:
         return str(uuid.uuid4())
 
-    def make_user_organization_display_name(self, user_name: str) -> str:
-        name = f"{user_name}'s" if user_name else "Your"
-        return f"{name} organization"
+    def make_user_organization_display_name(self) -> str:
+        return "Your organization"
 
     def user_logout(self, request: HttpRequest) -> Response:
         """Log out the user.
@@ -457,7 +445,7 @@ class AuthenticationService:
         return redirect(settings.WEB_APP_ORIGIN_URL)
 
     def get_organization_members_by_org_id(
-        self, organization_id: str
+        self
     ) -> list[MemberData]:
         users: list[OrganizationMember] = OrganizationMemberService.get_members()
         return self.authentication_helper.list_of_members_from_user_model(users)

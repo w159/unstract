@@ -157,82 +157,110 @@ class AuthenticationController:
 
         return response
 
-    def set_user_organization(self, request: Request, organization_id: str) -> Response:
-        user: User = request.user
-        new_organization = False
-        organization_ids = CacheService.get_user_organizations(user.user_id)
+    def _get_user_organization_ids(self, user_id: str) -> set[str]:
+        """Get organization IDs for a user from cache or service."""
+        organization_ids = CacheService.get_user_organizations(user_id)
         if not organization_ids:
             z_organizations: list[OrganizationData] = (
-                self.auth_service.get_organizations_by_user_id(user.user_id)
+                self.auth_service.get_organizations_by_user_id(user_id)
             )
             organization_ids = {org.id for org in z_organizations}
-        if organization_id and organization_id in organization_ids:
-            # Set organization in user context
-            UserContext.set_organization_identifier(organization_id)
-            organization = OrganizationService.get_organization_by_org_id(organization_id)
-            if not organization:
-                try:
-                    organization_data: OrganizationData = (
-                        self.auth_service.get_organization_by_org_id(organization_id)
-                    )
-                except ValueError:
-                    raise OrganizationNotExist()
-                try:
-                    organization = OrganizationService.create_organization(
-                        organization_data.name,
-                        organization_data.display_name,
-                        organization_data.id,
-                    )
-                    new_organization = True
-                except IntegrityError:
-                    raise DuplicateData(
-                        f"{ErrorMessage.ORGANIZATION_EXIST}, \
-                            {ErrorMessage.DUPLICATE_API}"
-                    )
-            organization_member = self.create_tenant_user(
+        return organization_ids
+
+    def _get_or_create_organization(self, organization_id: str) -> tuple[Organization, bool]:
+        """Get existing organization or create new one."""
+        organization = OrganizationService.get_organization_by_org_id(organization_id)
+        if organization:
+            return organization, False
+            
+        try:
+            organization_data: OrganizationData = (
+                self.auth_service.get_organization_by_org_id(organization_id)
+            )
+        except ValueError:
+            raise OrganizationNotExist()
+            
+        try:
+            organization = OrganizationService.create_organization(
+                organization_data.name,
+                organization_data.display_name,
+                organization_data.id,
+            )
+            return organization, True
+        except IntegrityError:
+            raise DuplicateData(
+                f"{ErrorMessage.ORGANIZATION_EXIST}, {ErrorMessage.DUPLICATE_API}"
+            )
+
+    def _handle_new_organization(self, organization: Organization, user: User) -> None:
+        """Handle setup for newly created organization."""
+        try:
+            self.auth_service.frictionless_onboarding(
                 organization=organization, user=user
             )
+        except MethodNotImplemented:
+            logger.info("frictionless_onboarding not implemented")
 
-            if new_organization:
-                try:
-                    self.auth_service.frictionless_onboarding(
-                        organization=organization, user=user
-                    )
-                except MethodNotImplemented:
-                    logger.info("frictionless_onboarding not implemented")
+        self.authentication_helper.create_initial_platform_key(
+            user=user, organization=organization
+        )
+        logger.info(f"New organization created with Id {organization.organization_id}")
 
-                self.authentication_helper.create_initial_platform_key(
-                    user=user, organization=organization
-                )
-                logger.info(
-                    f"New organization created with Id {organization_id}",
-                )
-
-            user_info: UserInfo | None = self.get_user_info(request)
-            serialized_user_info = SetOrganizationsResponseSerializer(user_info).data
-            organization_info = OrganizationSerializer(organization).data
-            response: Response = Response(
-                status=status.HTTP_200_OK,
-                data={
-                    "is_new_org": new_organization,
-                    "user": serialized_user_info,
-                    "organization": organization_info,
-                    f"{Common.LOG_EVENTS_ID}": StateStore.get(Common.LOG_EVENTS_ID),
-                },
+    def _update_user_session(self, request: Request, user: User, 
+                           organization_id: str, organization_member: OrganizationMember) -> None:
+        """Update user session with new organization."""
+        current_organization_id = UserSessionUtils.get_organization_id(request)
+        if current_organization_id:
+            OrganizationMemberService.remove_user_membership_in_organization_cache(
+                user_id=user.user_id,
+                organization_id=current_organization_id,
             )
-            current_organization_id = UserSessionUtils.get_organization_id(request)
-            if current_organization_id:
-                OrganizationMemberService.remove_user_membership_in_organization_cache(
-                    user_id=user.user_id,
-                    organization_id=current_organization_id,
-                )
-            UserSessionUtils.set_organization_id(request, organization_id)
-            UserSessionUtils.set_organization_member_role(request, organization_member)
-            OrganizationMemberService.set_user_membership_in_organization_cache(
-                user_id=user.user_id, organization_id=organization_id
-            )
-            return response
-        return Response(status=status.HTTP_403_FORBIDDEN)
+        UserSessionUtils.set_organization_id(request, organization_id)
+        UserSessionUtils.set_organization_member_role(request, organization_member)
+        OrganizationMemberService.set_user_membership_in_organization_cache(
+            user_id=user.user_id, organization_id=organization_id
+        )
+
+    def set_user_organization(self, request: Request, organization_id: str) -> Response:
+        user: User = request.user
+        organization_ids = self._get_user_organization_ids(user.user_id)
+        
+        if not (organization_id and organization_id in organization_ids):
+            return Response(status=status.HTTP_403_FORBIDDEN)
+            
+        # Set organization in user context
+        UserContext.set_organization_identifier(organization_id)
+        
+        # Get or create organization
+        organization, new_organization = self._get_or_create_organization(organization_id)
+        
+        # Create tenant user
+        organization_member = self.create_tenant_user(
+            organization=organization, user=user
+        )
+        
+        # Handle new organization setup
+        if new_organization:
+            self._handle_new_organization(organization, user)
+        
+        # Prepare response
+        user_info: UserInfo | None = self.get_user_info(request)
+        serialized_user_info = SetOrganizationsResponseSerializer(user_info).data
+        organization_info = OrganizationSerializer(organization).data
+        response: Response = Response(
+            status=status.HTTP_200_OK,
+            data={
+                "is_new_org": new_organization,
+                "user": serialized_user_info,
+                "organization": organization_info,
+                f"{Common.LOG_EVENTS_ID}": StateStore.get(Common.LOG_EVENTS_ID),
+            },
+        )
+        
+        # Update user session
+        self._update_user_session(request, user, organization_id, organization_member)
+        
+        return response
 
     def get_user_info(self, request: Request) -> UserInfo | None:
         return self.auth_service.get_user_info(request)
@@ -284,7 +312,7 @@ class AuthenticationController:
         return response
 
     def get_organization_members_by_org_id(
-        self, organization_id: str | None = None
+        self
     ) -> list[OrganizationMember]:
         members: list[OrganizationMember] = OrganizationMemberService.get_members()
         return members

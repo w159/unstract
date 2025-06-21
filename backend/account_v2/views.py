@@ -29,12 +29,12 @@ def create_organization(request: Request) -> Response:
     serializer = OrganizationSignupSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     try:
-        requestBody: OrganizationSignupRequestBody = makeSignupRequestParams(serializer)
+        request_body: OrganizationSignupRequestBody = make_signup_request_params(serializer)
 
         organization: Organization = OrganizationService.create_organization(
-            requestBody.name,
-            requestBody.display_name,
-            requestBody.organization_id,
+            request_body.name,
+            request_body.display_name,
+            request_body.organization_id,
         )
         response = make_signup_response(organization)
         return Response(
@@ -154,7 +154,7 @@ def make_session_response(
     ).data
 
 
-def makeSignupRequestParams(
+def make_signup_request_params(
     serializer: OrganizationSignupSerializer,
 ) -> OrganizationSignupRequestBody:
     return OrganizationSignupRequestBody(

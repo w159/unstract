@@ -12,6 +12,11 @@ class UserService:
     def __init__(
         self,
     ) -> None:
+        """Initialize UserService.
+        
+        This service class manages User model operations and doesn't require
+        any initialization parameters or instance variables.
+        """
         pass
 
     def create_or_update_user(self, email: str, user_id: str, provider: str) -> Any:
