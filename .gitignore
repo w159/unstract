@@ -1,0 +1,101 @@
+# Node modules
+node_modules/
+*/node_modules/
+**/node_modules/
+
+# Build outputs
+build/
+dist/
+*/build/
+*/dist/
+frontend/build/
+frontend-build/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+!sample.env
+!backend/sample.env
+
+# OS files
+.DS_Store
+*/.DS_Store
+**/.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.pytest_cache/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+.hypothesis/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Package manager files
+.npm
+.yarn-integrity
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+pnpm-lock.yaml
+package-lock.json
+
+# Testing
+coverage/
+.nyc_output/
+
+# Production files
+docker/essentials.env
+docker/proxy_overrides.yaml
+backend/backend/settings/production.py
+
+# Static files
+frontend-build/static/media/
+
+# Cache
+.cache/
+*.cache
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Local configuration
+.claude/settings.local.json
+settings.local.json
