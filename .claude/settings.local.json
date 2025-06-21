@@ -5,7 +5,9 @@
       "Bash(docker logs:*)",
       "Bash(git push:*)",
       "Bash(git rm:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(ls:*)"
     ],
     "deny": []
   }
