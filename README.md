@@ -25,7 +25,6 @@
 
 Prompt Studio's primary reason for existence is so you can develop the necessary prompts for document data extraction super efficiently. It is a purpose-built environment that makes this not just easy for you—but, lot of fun! The document sample, its variants, the prompts you're developing, outputs from different LLMs, the schema you're developing, costing details of the extraction and various tools that let you measure the effectiveness of your prompts are just a click away and easily accessible. Prompt Studio is designed for effective and high speed development and iteration of prompts for document data extraction. Welcome to IDP 2.0!
 
-
 ![img Prompt Studio](docs/assets/prompt_studio.png)
 
 ## 🧘‍♀️ Three step nirvana with Workflow Studio
@@ -57,7 +56,6 @@ Next, either download a release or clone this repo and do the following:
 ✅ Now visit [http://frontend.unstract.localhost](http://frontend.unstract.localhost) in your browser <br>
 ✅ Use username and password `unstract` to login
 
-
 That's all there is to it!
 
 Follow [these steps](backend/README.md#authentication) to change the default username and password.
@@ -85,7 +83,6 @@ Unstract comes well documented. You can get introduced to the [basics of Unstrac
 | <img src="docs/assets/3rd_party/anyscale.png" width="32"/>     | Anyscale                    | ✅ Working |
 | <img src="docs/assets/3rd_party/mistral_ai.png" width="32"/>   | Mistral AI                  | ✅ Working |
 
-
 ### Vector Databases
 
 || Provider | Status |
@@ -95,8 +92,6 @@ Unstract comes well documented. You can get introduced to the [basics of Unstrac
 |<img src="docs/assets/3rd_party/pinecone.png" width="32"/>| Pinecone | ✅ Working |
 |<img src="docs/assets/3rd_party/postgres.png" width="32"/>| PostgreSQL | ✅ Working |
 |<img src="docs/assets/3rd_party/milvus.png" width="32"/>| Milvus | ✅ Working |
-
-
 
 ### Embeddings
 
@@ -148,6 +143,7 @@ Unstract comes well documented. You can get introduced to the [basics of Unstrac
 ## 🏗️ Architecture
 
 ### Service Architecture
+
 - **Backend** (`/backend/`): Django REST API with multi-tenant support
 - **Frontend** (`/frontend/`): React SPA with Ant Design
 - **Platform Service** (`/platform-service/`): Flask API for SDK communication
@@ -156,6 +152,7 @@ Unstract comes well documented. You can get introduced to the [basics of Unstrac
 - **Runner** (`/runner/`): Workflow execution engine
 
 ### Key Django Apps
+
 - `workflow_manager`: Core workflow execution logic
 - `prompt_studio`: Prompt engineering interface
 - `api_v2`: API deployment functionality
@@ -165,6 +162,7 @@ Unstract comes well documented. You can get introduced to the [basics of Unstrac
 - `file_management`: Document handling
 
 ### Document Processing Pipeline
+
 1. Documents uploaded to MinIO (S3-compatible storage)
 2. Text extraction via X2Text service or LLMWhisperer
 3. Vector embeddings stored in Qdrant
@@ -172,7 +170,9 @@ Unstract comes well documented. You can get introduced to the [basics of Unstrac
 5. Results structured and returned/stored
 
 ### Async Processing
+
 Celery with RabbitMQ, using multiple queues:
+
 - `celery`: Default queue
 - `celery_api_deployments`: API deployment tasks
 - `file_processing`: Document processing
