@@ -5,12 +5,13 @@
 Total Issues Identified: **588**
 
 - 🔴 **Security Issues**: 2 (✅ 2 Fixed)
-- 🟠 **Reliability Issues**: 10 (✅ 3 Fixed) 
+- 🟠 **Reliability Issues**: 10 (✅ 3 Fixed)
 - 🟡 **Maintainability Issues**: 557 (✅ 85+ Fixed)
 - ✅ **Accepted Issues**: 3
 - 🔥 **Security Hotspots**: 16 (✅ 4 Fixed)
 
 ## Recent Progress (2025-06-21)
+
 - ✅ Fixed Kubernetes YAML security issues (6 issues)
 - ✅ Fixed hard-coded RabbitMQ credentials
 - ✅ Fixed cognitive complexity in authentication_controller.py
@@ -27,7 +28,8 @@ Total Issues Identified: **588**
 
 ### 1. **Hard-coded Credentials** - Critical ✅ FIXED
 
-**Files**: 
+**Files**:
+
 - `backend/.env.production` - ✅ Fixed RabbitMQ credentials
 - `backend/sample.env` - ✅ Fixed RabbitMQ credentials
 **Issue**: Hard-coded API keys and secrets in source code
@@ -35,7 +37,9 @@ Total Issues Identified: **588**
 **Fix Applied**:
 - ✅ Replaced hard-coded RabbitMQ credentials with environment variables
 - ✅ Updated sample.env with secure placeholders
-- ✅ Fixed line 49 in .env.production: `CELERY_BROKER_URL="amqp://RABBITMQ_USER:RABBITMQ_PASSWORD@unstract-rabbitmq:5672/"`
+- ✅ Fixed .env.production to use proper environment variable interpolation:
+  - Added `RABBITMQ_USER=""` and `RABBITMQ_PASSWORD=""`
+  - Updated CELERY_BROKER_URL to: `"amqp://${RABBITMQ_USER}:${RABBITMQ_PASSWORD}@unstract-rabbitmq:5672/"`
 
 **Link**: [View Issue](https://sonarcloud.io/project/issues?id=Zipstack_unstract&open=AZC2LpiaT-VwoAeRMAST)
 
@@ -277,8 +281,10 @@ These are issues that have been reviewed and accepted as intentional:
 ## ✅ Completed Fixes (2025-06-21)
 
 ### Kubernetes YAML Security Issues (6 issues) ✅
+
 **File**: `add-logo-job.yaml`
 **Issues Fixed**:
+
 - ✅ Added memory limits and requests (64Mi/128Mi)
 - ✅ Added CPU limits and requests (100m/200m)
 - ✅ Added storage limits and requests (100Mi/200Mi)
@@ -287,44 +293,57 @@ These are issues that have been reviewed and accepted as intentional:
 - ✅ Updated to specific image version (busybox:1.36.1)
 
 ### Cognitive Complexity Fixes ✅
+
 **File**: `backend/account_v2/authentication_controller.py`
 **Method**: `set_user_organization` (reduced from 18 to under 15)
 **Fix Applied**:
+
 - Extracted helper methods: `_get_user_organization_ids`, `_get_or_create_organization`, `_handle_new_organization`, `_update_user_session`
 
 ### Python Naming Convention Fixes ✅
+
 **Files Fixed**:
+
 - `backend/account_v2/authentication_service.py` - Fixed camelCase variables (organizationData → organization_data)
 - `backend/account_v2/views.py` - Fixed function name (makeSignupRequestParams → make_signup_request_params)
 
 ### Duplicate Code Elimination ✅
+
 **File**: `backend/account_v2/authentication_service.py`
 **Fixes**:
+
 - Created `_get_default_organization_data()` helper method
 - Created `_validate_admin_and_return_roles()` helper method
 - Eliminated duplication between `user_organizations` and `get_organizations_by_user_id`
 - Eliminated duplication between `add_organization_user_role` and `remove_organization_user_role`
 
 ### Import Statement Fixes ✅
+
 **Files Fixed**:
+
 - `backend/backend/public_urls.py` - Removed wildcard import
 - `backend/backend/public_urls_v2.py` - Removed wildcard import
 - `backend/backend/urls.py` - Removed wildcard import
 - `backend/backend/urls_v2.py` - Removed wildcard import
 
 ### Literal Duplication Fixes ✅
+
 **File**: `backend/backend/settings/base.py`
-**Fix**: Created `DEFAULT_LOCALHOST_URL` constant to replace repeated "http://localhost"
+**Fix**: Created `DEFAULT_LOCALHOST_URL` constant to replace repeated "<http://localhost>"
 
 ### Empty Method Implementation Fixes ✅
+
 **Files Fixed**:
-- `backend/account_v2/authentication_helper.py` - Added docstring explaining empty __init__
-- `backend/account_v2/user.py` - Added docstring explaining empty __init__
+
+- `backend/account_v2/authentication_helper.py` - Added docstring explaining empty **init**
+- `backend/account_v2/user.py` - Added docstring explaining empty **init**
 
 ### Unused Parameter Removal ✅
+
 **Files and Methods Fixed**:
+
 - `authentication_controller.py`: `get_organization_members_by_org_id` - removed unused organization_id
-- `authentication_service.py`: 
+- `authentication_service.py`:
   - `handle_invited_user_while_callback` - removed unused request
   - `add_to_organization` - removed unused request and data
   - `user_organizations` - removed unused request
