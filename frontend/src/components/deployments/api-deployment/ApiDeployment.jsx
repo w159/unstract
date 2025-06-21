@@ -24,7 +24,7 @@ import { DisplayCode } from '../display-code/DisplayCode';
 import { Layout } from '../layout/Layout';
 import { ManageKeys } from '../manage-keys/ManageKeys';
 import { PromptStudioModal } from '../../common/PromptStudioModal';
-import { apiDeploymentsService } from './api-deployments-service';
+import { useApiDeploymentsService } from './api-deployments-service';
 import { useExceptionHandler } from '../../../hooks/useExceptionHandler.jsx';
 import { LogsModal } from '../../pipelines-or-deployments/log-modal/LogsModal.jsx';
 import { fetchExecutionLogs } from '../../pipelines-or-deployments/log-modal/fetchExecutionLogs';
@@ -37,7 +37,7 @@ function ApiDeployment() {
   const { sessionDetails } = useSessionStore();
   const { setAlertDetails } = useAlertStore();
   const navigate = useNavigate();
-  const apiDeploymentsApiService = apiDeploymentsService();
+  const apiDeploymentsApiService = useApiDeploymentsService();
   const workflowApiService = workflowService();
   const [isTableLoading, setIsTableLoading] = useState(true);
   const [openAddApiModal, setOpenAddApiModal] = useState(false);
