@@ -21,6 +21,11 @@ frontend-build/
 !sample.env
 !backend/sample.env
 
+# My Ass is lost and stuck files
+.roomodes
+CLAUDE.md
+
+
 # OS files
 .DS_Store
 */.DS_Store

@@ -41,12 +41,9 @@ COPY ${BUILD_CONTEXT_PATH} /app/
 RUN uv sync --frozen \
     && uv sync --group deploy \
     && .venv/bin/python3 -m ensurepip --upgrade \
-    && uv run opentelemetry-bootstrap -a install
-
-RUN \
-    uv pip install --system; \
-    \
-    if [ -f cloud_requirements.txt ]; then \
+    && uv run opentelemetry-bootstrap -a install \
+    && uv pip install --system \
+    && if [ -f cloud_requirements.txt ]; then \
     uv pip install --no-cache-dir -r cloud_requirements.txt; \
     else \
     echo "cloud_requirements.txt does not exist"; \

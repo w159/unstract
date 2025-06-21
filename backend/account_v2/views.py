@@ -36,7 +36,7 @@ def create_organization(request: Request) -> Response:
             requestBody.display_name,
             requestBody.organization_id,
         )
-        response = makeSignupResponse(organization)
+        response = make_signup_response(organization)
         return Response(
             status=status.HTTP_201_CREATED,
             data={"message": "success", "tenant": response},
@@ -164,7 +164,7 @@ def makeSignupRequestParams(
     )
 
 
-def makeSignupResponse(
+def make_signup_response(
     organization: Organization,
 ) -> Any:
     return OrganizationSignupResponseSerializer(

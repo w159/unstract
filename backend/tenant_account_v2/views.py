@@ -77,7 +77,7 @@ def get_organization(request: Request) -> Response:
         )
 
 
-def makeSignupResponse(
+def make_signup_response(
     organization: Organization,
 ) -> Any:
     return OrganizationLoginResponseSerializer(
