@@ -1,0 +1,45 @@
+{
+  "title": "MySQL Database",
+  "type": "object",
+  "required": [
+    "connectorName",
+    "host",
+    "port",
+    "database",
+    "user",
+    "password"
+  ],
+  "properties": {
+    "connectorName": {
+      "type": "string",
+      "title": "Name of the connector",
+      "default": "Unstract's MySQL connector"
+    },
+    "host": {
+      "type": "string",
+      "title": "Host",
+      "default": "localhost"
+    },
+    "port": {
+      "type": "string",
+      "title": "Port",
+      "default": "3306"
+    },
+    "database": {
+      "type": "string",
+      "title": "Database",
+      "default": ""
+    },
+    "user": {
+      "type": "string",
+      "title": "User",
+      "default": "root"
+    },
+    "password": {
+      "type": "string",
+      "title": "Password",
+      "format": "password",
+      "default": ""
+    }
+  }
+}

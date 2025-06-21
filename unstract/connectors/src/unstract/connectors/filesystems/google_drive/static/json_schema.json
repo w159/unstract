@@ -1,0 +1,14 @@
+{
+  "title": "Google Drive",
+  "type": "object",
+  "required": [
+    "connectorName"
+  ],
+  "properties": {
+    "connectorName": {
+      "type": "string",
+      "title": "Name of the connector",
+      "default": "Unstract's google drive"
+    }
+  }
+}

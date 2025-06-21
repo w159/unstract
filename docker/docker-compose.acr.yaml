@@ -1,0 +1,57 @@
+# ACR Override for Unstract
+version: '3.8'
+
+services:
+  backend:
+    image: acrunstract21468.azurecr.io/unstract/backend:${VERSION:-latest}
+  
+  worker:
+    image: acrunstract21468.azurecr.io/unstract/backend:${VERSION:-latest}
+  
+  worker-logging:
+    image: acrunstract21468.azurecr.io/unstract/backend:${VERSION:-latest}
+  
+  worker-file-processing:
+    image: acrunstract21468.azurecr.io/unstract/backend:${VERSION:-latest}
+  
+  worker-file-processing-callback:
+    image: acrunstract21468.azurecr.io/unstract/backend:${VERSION:-latest}
+  
+  celery-flower:
+    image: acrunstract21468.azurecr.io/unstract/backend:${VERSION:-latest}
+  
+  celery-beat:
+    image: acrunstract21468.azurecr.io/unstract/backend:${VERSION:-latest}
+  
+  frontend:
+    image: acrunstract21468.azurecr.io/unstract/frontend:${VERSION:-latest}
+  
+  platform-service:
+    image: acrunstract21468.azurecr.io/unstract/platform-service:${VERSION:-latest}
+  
+  prompt-service:
+    image: acrunstract21468.azurecr.io/unstract/prompt-service:${VERSION:-latest}
+  
+  x2text-service:
+    image: acrunstract21468.azurecr.io/unstract/x2text-service:${VERSION:-latest}
+  
+  runner:
+    image: acrunstract21468.azurecr.io/unstract/runner:${VERSION:-latest}
+  
+  db:
+    image: acrunstract21468.azurecr.io/postgres:16-alpine
+  
+  redis:
+    image: acrunstract21468.azurecr.io/redis:7.2-alpine
+  
+  rabbitmq:
+    image: acrunstract21468.azurecr.io/rabbitmq:3.13-management-alpine
+  
+  minio:
+    image: acrunstract21468.azurecr.io/minio/minio:latest
+  
+  createbuckets:
+    image: acrunstract21468.azurecr.io/minio/mc:latest
+  
+  reverse-proxy:
+    image: acrunstract21468.azurecr.io/traefik:3.0

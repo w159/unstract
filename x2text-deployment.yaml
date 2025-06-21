@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: x2text-service
+  namespace: unstract
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: x2text-service
+  template:
+    metadata:
+      labels:
+        app: x2text-service
+    spec:
+      containers:
+      - name: x2text-service
+        image: acrunstract21468.azurecr.io/unstract/x2text-service:latest
+        ports:
+        - containerPort: 3004
+        env:
+        - name: DEBUG_LEVEL
+          value: "INFO"
+        - name: LOG_FILE_PATH
+          value: "/var/log/unstract/x2text-service.log"
+        - name: FLASK_RUN_PORT
+          value: "3004"
+        - name: PG_BE_HOST
+          value: postgres
+        - name: PG_BE_PORT
+          value: "5432"
+        - name: PG_BE_USERNAME
+          value: unstract_dev
+        - name: PG_BE_PASSWORD
+          value: unstract123
+        - name: PG_BE_DATABASE
+          value: unstract_db
+        - name: DB_SCHEMA
+          value: unstract
+        - name: WEB_APP_ORIGIN_URL
+          value: http://51.8.250.98
+        - name: PLATFORM_SERVICE_API_KEY
+          value: unstract-platform-key
+        - name: BACKEND_SERVICE_API_KEY
+          value: unstract-backend-key
+      imagePullSecrets:
+      - name: acr-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: x2text-service
+  namespace: unstract
+spec:
+  selector:
+    app: x2text-service
+  ports:
+  - protocol: TCP
+    port: 3004
+    targetPort: 3004

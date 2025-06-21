@@ -1,0 +1,57 @@
+# ACR Override for Unstract
+version: '3.8'
+
+services:
+  backend:
+    image: ${ACR_LOGIN_SERVER}/unstract/backend:${VERSION:-latest}
+  
+  worker:
+    image: ${ACR_LOGIN_SERVER}/unstract/backend:${VERSION:-latest}
+  
+  worker-logging:
+    image: ${ACR_LOGIN_SERVER}/unstract/backend:${VERSION:-latest}
+  
+  worker-file-processing:
+    image: ${ACR_LOGIN_SERVER}/unstract/backend:${VERSION:-latest}
+  
+  worker-file-processing-callback:
+    image: ${ACR_LOGIN_SERVER}/unstract/backend:${VERSION:-latest}
+  
+  celery-flower:
+    image: ${ACR_LOGIN_SERVER}/unstract/backend:${VERSION:-latest}
+  
+  celery-beat:
+    image: ${ACR_LOGIN_SERVER}/unstract/backend:${VERSION:-latest}
+  
+  frontend:
+    image: ${ACR_LOGIN_SERVER}/unstract/frontend:${VERSION:-latest}
+  
+  platform-service:
+    image: ${ACR_LOGIN_SERVER}/unstract/platform-service:${VERSION:-latest}
+  
+  prompt-service:
+    image: ${ACR_LOGIN_SERVER}/unstract/prompt-service:${VERSION:-latest}
+  
+  x2text-service:
+    image: ${ACR_LOGIN_SERVER}/unstract/x2text-service:${VERSION:-latest}
+  
+  runner:
+    image: ${ACR_LOGIN_SERVER}/unstract/runner:${VERSION:-latest}
+  
+  db:
+    image: ${ACR_LOGIN_SERVER}/postgres:16-alpine
+  
+  redis:
+    image: ${ACR_LOGIN_SERVER}/redis:7.2-alpine
+  
+  rabbitmq:
+    image: ${ACR_LOGIN_SERVER}/rabbitmq:3.13-management-alpine
+  
+  minio:
+    image: ${ACR_LOGIN_SERVER}/minio/minio:latest
+  
+  createbuckets:
+    image: ${ACR_LOGIN_SERVER}/minio/mc:latest
+  
+  reverse-proxy:
+    image: ${ACR_LOGIN_SERVER}/traefik:3.0

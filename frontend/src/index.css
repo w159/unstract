@@ -1,0 +1,237 @@
+@import "variables.css";
+
+html,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-family) !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  height: 100%;
+  background-color: var(--page-bg-2);
+  min-width: 1024px;
+}
+
+.page-bg-2 {
+  background-color: var(--page-bg-2);
+}
+
+.center {
+  display: grid;
+  width: inherit;
+  height: inherit;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Custom scroll bar css starts */
+::-webkit-scrollbar {
+  width: 3px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 6px;
+  background: none;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: #e2e2e2;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #b3b3b3;
+}
+
+/* Corner where both X and Y scroll bar meets */
+::-webkit-scrollbar-corner {
+  background: none;
+}
+
+/* Custom scroll bar css ends */
+
+/* Justify content to the right */
+.display-flex-right {
+  display: flex;
+  justify-content: right;
+}
+
+/* Justify content to the left */
+.display-flex-left {
+  display: flex;
+  justify-content: left;
+}
+
+/* Justify content to the center */
+.display-flex-center {
+  display: flex;
+  justify-content: center;
+}
+
+/* Align content to the center */
+.display-flex-align-center {
+  display: flex;
+  align-items: center;
+}
+
+.font-size-12 {
+  font-size: 12px;
+}
+
+.font-size-16 {
+  font-size: 16px;
+}
+
+.font-weight-600 {
+  font-weight: 600px;
+}
+
+.display-flex-center-h-and-v {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.display-flex-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* RJSF style */
+.rjsf fieldset {
+  border: unset !important;
+  padding: 0;
+}
+
+/* Sets the position of the loader in the center */
+.loader-position {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+.height-100 {
+  height: 100%;
+}
+
+.height-20 {
+  height: 20px;
+}
+
+.height-40 {
+  height: 40px;
+}
+
+.height-50 {
+  height: 50px;
+}
+
+.pad-right-6 {
+  padding-right: 6px;
+}
+
+.pad-left-6 {
+  padding-left: 6px;
+}
+
+.pad-top-20 {
+  padding-top: 20px;
+}
+
+.pad-bottom-20 {
+  padding-bottom: 20px;
+}
+
+.cur-pointer {
+  cursor: pointer;
+}
+
+.modal-header {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.flex-dir-col {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.border {
+  border-style: solid;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.action-items {
+  display: flex;
+}
+
+.ant-tabs-nav-operations {
+  display: none !important;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.mar-24 {
+  margin: 24px;
+}
+
+.mar-16 {
+  margin: 16px;
+}
+
+.pad-24 {
+  padding: 24px;
+}
+
+.mar-bottom-16 {
+  margin-bottom: 16px;
+}
+
+.mar-top-24 {
+  margin-top: 24px;
+}
+
+.height-100vh {
+  height: 100vh;
+}
+
+.mar-bottom-12{
+  margin-bottom: 12px;
+}
+
+.mar-0{
+  margin: 0;
+}

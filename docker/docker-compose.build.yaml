@@ -1,0 +1,41 @@
+services:
+  frontend:
+    image: unstract/frontend:${VERSION}
+    build:
+      dockerfile: docker/dockerfiles/frontend.Dockerfile
+      context: ..
+  backend:
+    image: unstract/backend:${VERSION}
+    build:
+      dockerfile: docker/dockerfiles/backend.Dockerfile
+      context: ..
+  runner:
+    image: unstract/runner:${VERSION}
+    build:
+      dockerfile: docker/dockerfiles/runner.Dockerfile
+      context: ..
+  tool-sidecar:
+    image: unstract/tool-sidecar:${VERSION}
+    build:
+      dockerfile: docker/dockerfiles/tool-sidecar.Dockerfile
+      context: ..
+  tool-structure:
+    image: unstract/tool-structure:${VERSION}
+    build:
+      dockerfile: ./Dockerfile
+      context: ../tools/structure/
+  platform-service:
+    image: unstract/platform-service:${VERSION}
+    build:
+      dockerfile: docker/dockerfiles/platform.Dockerfile
+      context: ..
+  prompt-service:
+    image: unstract/prompt-service:${VERSION}
+    build:
+      dockerfile: docker/dockerfiles/prompt.Dockerfile
+      context: ..
+  x2text-service:
+    image: unstract/x2text-service:${VERSION}
+    build:
+      dockerfile: docker/dockerfiles/x2text.Dockerfile
+      context: ..

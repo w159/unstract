@@ -1,0 +1,79 @@
+{
+  "title": "PostgreSQL Database",
+  "type": "object",
+  "allOf": [
+    {
+      "required": [
+        "connectorName"
+      ],
+      "properties": {
+        "connectorName": {
+          "type": "string",
+          "title": "Name of the connector",
+          "default": "Unstract's PostgreSQL connector"
+        }
+      }
+    },
+    {
+      "oneOf": [
+        {
+          "title": "Postgres URL",
+          "properties": {
+            "connection_url": {
+              "type": "string",
+              "title": "Connection URL",
+              "description": "postgresql://username:password@localhost:5432/mydatabase",
+              "default": ""
+            }
+          },
+          "required": [
+            "connection_url"
+          ]
+        },
+        {
+          "title": "Postgres Params",
+          "properties": {
+            "host": {
+              "type": "string",
+              "title": "Host"
+            },
+            "port": {
+              "type": "string",
+              "title": "Port",
+              "default": "5432"
+            },
+            "database": {
+              "type": "string",
+              "title": "Database",
+              "default": "postgres"
+            },
+            "schema": {
+              "type": "string",
+              "title": "Schema",
+              "description": "Default schema: public (optional)",
+              "placeholder": "Enter schema (optional)"
+            },
+            "user": {
+              "type": "string",
+              "title": "User",
+              "default": "postgres"
+            },
+            "password": {
+              "type": "string",
+              "title": "Password",
+              "format": "password",
+              "default": ""
+            }
+          },
+          "required": [
+            "host",
+            "port",
+            "database",
+            "user",
+            "password"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "title": "MSSQL Database",
+  "type": "object",
+  "required": [
+    "connectorName",
+    "server",
+    "port",
+    "database",
+    "user",
+    "password"
+  ],
+  "properties": {
+    "connectorName": {
+      "type": "string",
+      "title": "Name of the connector",
+      "default": "Unstract's MSSQL connector"
+    },
+    "server": {
+      "type": "string",
+      "title": "Server"
+    },
+    "port": {
+      "type": "string",
+      "title": "Port",
+      "default": "1433",
+      "description": "default port: 1433"
+    },
+    "database": {
+      "type": "string",
+      "title": "Database",
+      "default": ""
+    },
+    "user": {
+      "type": "string",
+      "title": "User"
+    },
+    "password": {
+      "type": "string",
+      "title": "Password",
+      "format": "password",
+      "default": ""
+    }
+  }
+}

@@ -1,0 +1,174 @@
+.onboard-content {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+@media screen and (max-height: 900px) {
+  .onboard-content {
+    margin-top: 30px;
+  }
+}
+
+.uppercase-text {
+  text-transform: uppercase;
+  color: #0C355A;
+  font-family: 'SF Pro Text', sans-serif;
+  margin-bottom: 20px;
+}
+
+@media screen and (max-height: 900px) {
+  .uppercase-text {
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (max-height: 900px) {
+  h1 {
+    font-size: 1.2rem;
+  }
+}
+
+.text-title-style {
+  color: #0C355A;
+  font-family: 'SF Pro Text', sans-serif;
+  font-weight: 700;
+  margin-block-end: 0em;
+  margin-block-start: 0em;
+}
+
+.text-description-style {
+    font-family: 'SF Pro Text', sans-serif;
+    color: #3D6182;
+    font-weight: 400;
+}
+
+.card-style {
+    width: 1000px;
+    background: #FFFFFF;
+    box-shadow: 0px 6px 16px 0px #00000014;
+    margin-bottom: 10px;
+    border-radius: 35px;
+}
+
+.button-style {
+    background: #FF4D6D;
+    border: 1px solid #FF4D6D;
+    box-shadow: 0px 2px 0px 0px #00000005;
+    color: #FFFFFF;
+}
+
+.landing-logo {
+    height: 40px;
+    margin-bottom: 20px;
+}
+
+@media screen and (max-height: 900px) {
+  .landing-logo {
+    height: 30px;
+    margin-bottom: 10px;
+  }
+}
+
+.circle {
+  position: absolute;
+  left: 0%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #90a4b7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle-number {
+  color: white;
+  font-family: 'SF Pro Text', sans-serif;
+}
+
+.later-div-style {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+
+@media screen and (max-height: 900px) {
+  .later-div-style {
+    margin-top: 10px;
+  }
+}
+
+.svg-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.icon-overlay {
+  height: 90px;
+}
+
+.configured-icon {
+  color: #52C41A;
+  font-size: 24px;
+  vertical-align: middle;
+}
+
+.configured-text {
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+@media screen and (max-height: 900px) {
+  .ant-space .ant-space-item .ant-card {
+    padding: 6px;
+  }
+}
+
+@media screen and (max-height: 900px) {
+  .card-style {
+    width: 940px;
+    margin-bottom: 5px;
+    border-radius: 35px;
+  }
+}
+
+@media screen and (max-height: 720px) and (max-width: 1280px){
+  .card-style {
+    width: 1200px;
+    margin-bottom: 5px;
+    border-radius: 35px;
+  }
+}
+
+@media screen and (max-height: 780px) and (max-width: 1024px){
+  .card-style {
+    width: 940px;
+    margin-bottom: 5px;
+    border-radius: 35px;
+  }
+}
+
+@media screen and (max-height: 800px) {
+  .ant-space .ant-space-item .ant-card .ant-card-body {
+    padding: 5px;
+  }
+}
+
+.ant-card .ant-card-body {
+  padding: 6px;
+}
+
+.help-text {
+  flex: 1;
+  color: #3D6182;
+  font-family: 'SF Pro Text', sans-serif;
+}
+
+.link-color {
+  color: #00A6ED;
+}

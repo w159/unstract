@@ -1,0 +1,71 @@
+http:
+  routers:
+    # Dashboard router (secure it in production!)
+    dashboard:
+      rule: Host(`traefik.${DOMAIN:-unstract.localhost}`)
+      service: api@internal
+      middlewares:
+        - auth
+      tls: {}
+
+  middlewares:
+    # Basic auth for dashboard (change credentials!)
+    auth:
+      basicAuth:
+        users:
+          - "admin:$2y$10$YourHashedPasswordHere"
+    
+    # Security headers
+    security-headers:
+      headers:
+        frameDeny: true
+        sslRedirect: true
+        browserXssFilter: true
+        contentTypeNosniff: true
+        stsIncludeSubdomains: true
+        stsPreload: true
+        stsSeconds: 31536000
+        customFrameOptionsValue: "SAMEORIGIN"
+        referrerPolicy: "strict-origin-when-cross-origin"
+    
+    # CORS middleware
+    cors:
+      headers:
+        accessControlAllowMethods:
+          - GET
+          - OPTIONS
+          - PUT
+          - POST
+          - DELETE
+          - PATCH
+        accessControlAllowOriginList:
+          - "https://${DOMAIN:-unstract.localhost}"
+          - "http://localhost:3000"  # For development
+        accessControlAllowHeaders:
+          - "*"
+        accessControlExposeHeaders:
+          - "*"
+        accessControlAllowCredentials: true
+        accessControlMaxAge: 100
+    
+    # Rate limiting
+    rate-limit:
+      rateLimit:
+        average: 100
+        burst: 50
+        period: 1m
+    
+    # Compress responses
+    compress:
+      compress: {}
+
+# TLS configuration
+tls:
+  options:
+    default:
+      minVersion: VersionTLS12
+      cipherSuites:
+        - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
+      sniStrict: true

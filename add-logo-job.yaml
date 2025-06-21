@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: add-logo-to-backend
+  namespace: unstract
+spec:
+  template:
+    spec:
+      containers:
+      - name: copy-logo
+        image: busybox
+        command: 
+        - sh
+        - -c
+        - |
+          echo "Creating logo.svg in backend pod..."
+          cat > /tmp/logo.svg << 'EOF'
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50">
+            <text x="10" y="35" font-family="Arial, sans-serif" font-size="24" fill="#2F93F6">Henssler Financial</text>
+          </svg>
+          EOF
+          echo "Logo created successfully"
+        volumeMounts:
+        - name: backend-static
+          mountPath: /tmp
+      restartPolicy: Never
+      volumes:
+      - name: backend-static
+        emptyDir: {}

@@ -1,0 +1,17 @@
+/* Styles for SpinnerLoader */
+
+.spinner-loader-layout .ant-spin-dot-item {
+  background-color: #ffb400 !important; /* Change the color of the first dot */
+}
+
+.spinner-loader-layout .ant-spin-dot-item:nth-child(2) {
+  background-color: #00a6ed !important; /* Change the color of the second dot */
+}
+
+.spinner-loader-layout .ant-spin-dot-item:nth-child(3) {
+  background-color: #7fb800 !important; /* Change the color of the third dot */
+}
+
+.spinner-loader-layout .ant-spin-dot-item:nth-child(4) {
+  background-color: #ff4d6d !important; /* Change the color of the fourth dot */
+}

@@ -1,0 +1,18 @@
+{
+    "title": "File Destination Settings",
+    "type": "object",
+    "required": [
+        "outputFolder"
+    ],
+    "properties": {
+        "outputFolder": {
+            "type": "string",
+            "title": "Output folder",
+            "default": "output",
+            "description": "Folder to store the output",
+            "minLength": 1,
+            "maxLength": 100,
+            "format": "file-path"
+        }
+    }
+}

@@ -1,0 +1,22 @@
+{
+  "title": "BigQuery Database",
+  "type": "object",
+  "required": [
+    "connectorName",
+    "json_credentials"
+  ],
+  "properties": {
+    "connectorName": {
+      "type": "string",
+      "title": "Name of the connector",
+      "default": "Unstract's BigQuery connector"
+    },
+    "json_credentials": {
+      "type": "string",
+      "format": "password",
+      "title": "Credentials",
+      "default": "",
+      "description": "Refer [GCloud docs](https://developers.google.com/workspace/guides/create-credentials#create_credentials_for_a_service_account) on adding keys for service account"
+    }
+  }
+}

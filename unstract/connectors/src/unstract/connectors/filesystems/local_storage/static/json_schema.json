@@ -1,0 +1,21 @@
+{
+    "title": "Local File Storage",
+    "type": "object",
+    "required": [
+      "connectorName",
+      "path"
+    ],
+    "properties": {
+      "connectorName": {
+        "type": "string",
+        "title": "Name of the connector",
+        "default": "Unstract's Local file connector"
+      },
+      "path": {
+        "type": "string",
+        "title": "Path",
+        "default": "",
+        "description": "Path to restrict to. (example `/path/to/restrict/to`)"
+      }
+    }
+  }
