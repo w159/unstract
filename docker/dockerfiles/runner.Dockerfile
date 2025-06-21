@@ -44,9 +44,9 @@ RUN uv sync --frozen \
     && uv run opentelemetry-bootstrap -a install \
     && uv pip install --system \
     && if [ -f cloud_requirements.txt ]; then \
-    uv pip install --no-cache-dir -r cloud_requirements.txt; \
+        uv pip install --no-cache-dir -r cloud_requirements.txt; \
     else \
-    echo "cloud_requirements.txt does not exist"; \
+        echo "cloud_requirements.txt does not exist"; \
     fi
 
 EXPOSE 5002

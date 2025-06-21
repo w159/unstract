@@ -1,0 +1,21 @@
+Metadata-Version: 2.4
+Name: unstract-core
+Version: 0.0.1
+Summary: Core library that helps with executing workflows.
+Author-email: "Zipstack Inc." <devsupport@zipstack.com>
+License: AGPL v3
+Classifier: Programming Language :: Python
+Requires-Python: <3.13,>=3.12
+Description-Content-Type: text/markdown
+Requires-Dist: redis~=5.2.1
+Requires-Dist: requests==2.31.0
+Requires-Dist: kombu~=5.5.3
+Requires-Dist: httpx>=0.27.0
+Provides-Extra: flask
+Requires-Dist: flask~=3.1.0; extra == "flask"
+
+# unstract-core
+
+Package that contains modules and utilities that can be used across packages and services.
+
+Houses a log publisher helper which helps push log messages to a queue that eventually gets consumed by celery.

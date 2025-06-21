@@ -4,6 +4,10 @@
 
 set -e
 
+# Get the directory of the script and the project root
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+PROJECT_ROOT=$(dirname -- "$(dirname -- "$SCRIPT_DIR")")
+
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -47,16 +51,17 @@ fix_mac_docker_dns() {
 # Setup environment files
 setup_env_files() {
     print_status "Setting up environment files..."
+    cd "$PROJECT_ROOT"
 
     # Backend env
-    if [ ! -f backend/.env ]; then
-        cp backend/sample.env backend/.env
+    if [ -f "backend/sample.env" ] && [ ! -f "backend/.env" ]; then
+        cp "backend/sample.env" "backend/.env"
         print_status "Created backend/.env from sample"
     fi
 
     # Frontend env
-    if [ ! -f frontend/.env ]; then
-        cp frontend/sample.env frontend/.env
+    if [ -f "frontend/sample.env" ] && [ ! -f "frontend/.env" ]; then
+        cp "frontend/sample.env" "frontend/.env"
         print_status "Created frontend/.env from sample"
     fi
 
@@ -125,11 +130,12 @@ fix_docker_networking() {
 # Setup required directories
 setup_directories() {
     print_status "Creating required directories..."
+    cd "$PROJECT_ROOT"
     mkdir -p workflow_data logs data
 
     # Set permissions for Docker volumes
-    if [ -d workflow_data ]; then
-        chmod -R 777 workflow_data
+    if [ -d "workflow_data" ]; then
+        chmod -R 777 "workflow_data"
     fi
 }
 

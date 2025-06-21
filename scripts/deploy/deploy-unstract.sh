@@ -4,6 +4,18 @@
 
 set -e
 
+# Define SCRIPT_DIR and PROJECT_ROOT
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+PROJECT_ROOT=$(dirname "$(dirname "$SCRIPT_DIR")")
+
+# Load environment variables from .env file
+if [ -f "$PROJECT_ROOT/.env" ]; then
+    echo "Loading environment variables from $PROJECT_ROOT/.env"
+    set -o allexport
+    source "$PROJECT_ROOT/.env"
+    set +o allexport
+fi
+
 # Default values
 DEPLOYMENT_TYPE="local"
 COMPOSE_FILE="docker/docker-compose.yaml"
@@ -64,19 +76,21 @@ print_error() {
 # Pre-deployment checks
 pre_deployment_checks() {
     print_status "Running pre-deployment checks..."
-    
+
+    cd "$PROJECT_ROOT"
+
     # Check if setup has been run
     if [ ! -f backend/.env ]; then
         print_warning "Environment not set up. Running setup first..."
-        ./scripts/setup/setup-environment.sh
+        "$PROJECT_ROOT/scripts/setup/setup-environment.sh"
     fi
-    
+
     # Verify compose file exists
     if [ ! -f "$COMPOSE_FILE" ]; then
         print_error "Compose file not found: $COMPOSE_FILE"
         exit 1
     fi
-    
+
     # Check Docker daemon
     if ! docker info >/dev/null 2>&1; then
         print_error "Docker daemon is not running"
@@ -95,25 +109,25 @@ stop_existing() {
 # Deploy services
 deploy_services() {
     print_status "Deploying Unstract ($DEPLOYMENT_TYPE)..."
-    
+
     # Set environment variables
     export COMPOSE_PROJECT_NAME="unstract"
     export ENVIRONMENT="$ENVIRONMENT"
-    
+
     # Pull latest images if using ACR
     if [ "$DEPLOYMENT_TYPE" = "acr" ]; then
         print_status "Pulling images from ACR..."
         docker compose -f "$COMPOSE_FILE" pull
     fi
-    
+
     # Start services
     print_status "Starting services..."
     docker compose -f "$COMPOSE_FILE" up -d
-    
+
     # Wait for services to be healthy
     print_status "Waiting for services to be healthy..."
     sleep 10
-    
+
     # Check service health
     check_service_health
 }
@@ -121,10 +135,10 @@ deploy_services() {
 # Check service health
 check_service_health() {
     print_status "Checking service health..."
-    
+
     local unhealthy=0
     local services=$(docker compose -f "$COMPOSE_FILE" ps --format json | jq -r '.Service')
-    
+
     for service in $services; do
         local status=$(docker compose -f "$COMPOSE_FILE" ps --format json | jq -r "select(.Service==\"$service\") | .State")
         if [ "$status" = "running" ]; then
@@ -134,7 +148,7 @@ check_service_health() {
             unhealthy=$((unhealthy + 1))
         fi
     done
-    
+
     if [ $unhealthy -gt 0 ]; then
         print_warning "$unhealthy services are not healthy"
         print_warning "Check logs with: docker compose -f $COMPOSE_FILE logs"
@@ -146,13 +160,13 @@ check_service_health() {
 # Post-deployment tasks
 post_deployment() {
     print_status "Running post-deployment tasks..."
-    
+
     # Run database migrations
     if [ "$DEPLOYMENT_TYPE" != "acr" ]; then
         print_status "Running database migrations..."
         docker compose -f "$COMPOSE_FILE" exec -T backend python manage.py migrate || print_warning "Migration failed or already applied"
     fi
-    
+
     # Create superuser if needed
     if [ "$ENVIRONMENT" = "development" ]; then
         print_status "Creating default superuser (if not exists)..."
@@ -178,13 +192,13 @@ show_access_info() {
     echo "Access URLs:"
     echo "  Frontend: http://localhost:3000"
     echo "  Backend API: http://localhost:8000/api/v1"
-    
+
     if [ "$ENVIRONMENT" = "development" ]; then
         echo "  Django Admin: http://localhost:8000/admin"
         echo "    Username: admin"
         echo "    Password: admin"
     fi
-    
+
     echo
     echo "Useful commands:"
     echo "  View logs: docker compose -f $COMPOSE_FILE logs -f"
@@ -199,7 +213,7 @@ main() {
     echo "Deployment Type: $DEPLOYMENT_TYPE"
     echo "Environment: $ENVIRONMENT"
     echo
-    
+
     pre_deployment_checks
     stop_existing
     deploy_services
