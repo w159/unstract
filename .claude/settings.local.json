@@ -17,7 +17,8 @@
       "Bash(python3 -m ruff check:*)",
       "Bash(npm run build:*)",
       "Bash(npx eslint:*)",
-      "Bash(rg:*)"
+      "Bash(rg:*)",
+      "WebFetch(domain:learn.microsoft.com)"
     ],
     "deny": []
   }
