@@ -11,7 +11,13 @@
       "Bash(chmod:*)",
       "Bash(cat:*)",
       "Bash(rm:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(pre-commit run:*)",
+      "Bash(ruff check:*)",
+      "Bash(python3 -m ruff check:*)",
+      "Bash(npm run build:*)",
+      "Bash(npx eslint:*)",
+      "Bash(rg:*)"
     ],
     "deny": []
   }
