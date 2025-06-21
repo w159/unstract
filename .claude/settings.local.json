@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(grep:*)",
-      "Bash(docker logs:*)"
+      "Bash(docker logs:*)",
+      "Bash(git push:*)",
+      "Bash(git rm:*)"
     ],
     "deny": []
   }
