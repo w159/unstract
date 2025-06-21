@@ -1,3 +1,3 @@
 # Contributing
 
-See [docs.unstract.com](https://docs.unstract.com/unstract/contributing/unstract).
+See [kb.henssler.com](https://kb.henssler.com/unstract/contributing/unstract).

@@ -1,5 +1,25 @@
-blank_issues_enabled: false
+name: Bug report
+description: Create a report to help us improve
+body:
+     - type: markdown
+       attributes:
+            value: |
+                 Thanks for taking the time to fill out this bug report!
+     - type: input
+       id: title
+       attributes:
+            label: Bug Title
+            description: Short and descriptive title for the bug.
+       validations:
+            required: true
+     - type: textarea
+       id: description
+       attributes:
+            label: Description
+            description: Please describe the bug in detail.
+       validations:
+            required: true
 contact_links:
-  - name: 📖 Documentation
-    url: https://docs.unstract.com/unstract/index.html
-    about: Check our documentation before creating an issue.
+     - name: 📖 Documentation
+       url: https://kb.henssler.com/unstract/index.html
+       about: Check our documentation before creating an issue.

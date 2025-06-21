@@ -132,7 +132,7 @@ function OnBoard() {
             <div className="help-text">
               Need help? Here&apos;s our&nbsp;
               <a
-                href="https://docs.unstract.com/"
+                href="https://kb.henssler.com/"
                 target="_blank"
                 rel="noreferrer"
                 className="link-color"

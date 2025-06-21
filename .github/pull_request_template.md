@@ -16,11 +16,11 @@
 
 ## Database Migrations
 
-- 
+-
 
 ## Env Config
 
-- 
+-
 
 ## Relevant Docs
 
@@ -42,4 +42,4 @@
 
 ## Checklist
 
-I have read and understood the [Contribution Guidelines](https://docs.unstract.com/unstract/contributing/unstract/).
+I have read and understood the [Contribution Guidelines](https://kb.henssler.com/unstract/contributing/unstract/).

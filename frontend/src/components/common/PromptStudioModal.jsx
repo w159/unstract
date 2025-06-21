@@ -43,7 +43,7 @@ export function PromptStudioModal({ onClose, showModal }) {
         </Button>
         <Button
           type="link"
-          href="https://docs.unstract.com/unstract/unstract_platform/quick_start/"
+          href="https://kb.henssler.com/unstract/unstract_platform/quick_start/"
           target="_blank"
           className="prompt-studio-guide-btn"
         >

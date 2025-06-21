@@ -387,7 +387,7 @@ class ToolInstanceHelper:
         user: User, tool_uid: str, tool_meta: dict[str, Any]
     ) -> None:
         """Validate adapter permissions with reduced complexity.
-        
+
         Args:
             user: User to validate permissions for
             tool_uid: Unique identifier for the tool
@@ -396,10 +396,10 @@ class ToolInstanceHelper:
         from tool_instance_v2.tool_instance_helper_refactored import (
             AdapterPermissionValidator
         )
-        
+
         validator = AdapterPermissionValidator(tool_uid, tool_meta)
         adapter_ids = validator.collect_all_adapter_ids()
-        
+
         ToolInstanceHelper.validate_adapter_access(user=user, adapter_ids=adapter_ids)
 
     @staticmethod
@@ -415,7 +415,7 @@ class ToolInstanceHelper:
                     "Free usage for the configured sample adapter %s exhausted",
                     adapter_instance.id,
                 )
-                error_msg = "Permission Error: Free usage for the configured trial adapter exhausted.Please connect your own service accounts to continue.Please see our documentation for more details:https://docs.unstract.com/unstract_platform/setup_accounts/whats_needed"  # noqa: E501
+                error_msg = "Permission Error: Free usage for the configured trial adapter exhausted.Please connect your own service accounts to continue.Please see our documentation for more details:https://kb.henssler.com/unstract_platform/setup_accounts/whats_needed"  # noqa: E501
 
                 raise PermissionDenied(error_msg)
 

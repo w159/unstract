@@ -41,24 +41,25 @@ Automate critical business processes that involve complex documents with a human
 
 ### System Requirements
 
-- 8GB RAM (recommended)
+-    8GB RAM (recommended)
 
 ### Prerequisites
 
-- Linux or MacOS (Intel or M-series)
-- Docker
-- Docker Compose (if you need to install it separately)
-- Git
+-    Linux or MacOS (Intel or M-series)
+-    Docker
+-    Docker Compose (if you need to install it separately)
+-    Git
 
 Next, either download a release or clone this repo and run:
 
 ✅ `./quick-start.sh`
 
 This single command will:
-- Set up all environment files
-- Verify your system is ready
-- Start all services
-- Provide you with access information
+
+-    Set up all environment files
+-    Verify your system is ready
+-    Start all services
+-    Provide you with access information
 
 Once services are running (30-60 seconds), visit [http://frontend.unstract.localhost](http://frontend.unstract.localhost) in your browser and use username/password `unstract` to login.
 
@@ -67,20 +68,20 @@ For manual setup or troubleshooting, see [DOCKER-SETUP-GUIDE.md](DOCKER-SETUP-GU
 That's all there is to it!
 
 Follow [these steps](backend/README.md#authentication) to change the default username and password.
-See [user guide](https://docs.unstract.com/unstract/unstract_platform/user_guides/run_platform) for more details on managing the platform.
+See [user guide](https://kb.henssler.com/unstract/unstract_platform/user_guides/run_platform) for more details on managing the platform.
 
 Another really quick way to experience Unstract is by signing up for our [hosted version](https://us-central.unstract.com/). It comes with a 14 day free trial!
 
 ## ⏩ Quick Start Guide
 
-Unstract comes well documented. You can get introduced to the [basics of Unstract](https://docs.unstract.com/unstract/), and [learn how to connect](https://docs.unstract.com/unstract/unstract_platform/setup_accounts/whats_needed) various systems like LLMs, Vector Databases, Embedding Models and Text Extractors to it. The easiest way to wet your feet is to go through our [Quick Start Guide](https://docs.unstract.com/unstract/unstract_platform/quick_start) where you actually get to do some prompt engineering in Prompt Studio and launch an API to structure varied credit card statements!
+Unstract comes well documented. You can get introduced to the [basics of Unstract](https://kb.henssler.com/unstract/), and [learn how to connect](https://kb.henssler.com/unstract/unstract_platform/setup_accounts/whats_needed) various systems like LLMs, Vector Databases, Embedding Models and Text Extractors to it. The easiest way to wet your feet is to go through our [Quick Start Guide](https://kb.henssler.com/unstract/unstract_platform/quick_start) where you actually get to do some prompt engineering in Prompt Studio and launch an API to structure varied credit card statements!
 
 ## 🤝 Ecosystem support
 
 ### LLM Providers
 
-|| Provider                                                       | Status                      |
-|----------------------------------------------------------------|-----------------------------|---|
+|                                                                | Provider                    | Status     |
+| -------------------------------------------------------------- | --------------------------- | ---------- |
 | <img src="docs/assets/3rd_party/openai.png" width="32"/>       | OpenAI                      | ✅ Working |
 | <img src="docs/assets/3rd_party/vertex_ai.png" width="32"/>    | Google VertexAI, Gemini Pro | ✅ Working |
 | <img src="docs/assets/3rd_party/azure_openai.png" width="32"/> | Azure OpenAI                | ✅ Working |
@@ -93,52 +94,52 @@ Unstract comes well documented. You can get introduced to the [basics of Unstrac
 
 ### Vector Databases
 
-|| Provider | Status |
-|---|---|---|
-|<img src="docs/assets/3rd_party/qdrant.png" width="32"/>| Qdrant | ✅ Working |
-|<img src="docs/assets/3rd_party/weaviate.png" width="32"/>| Weaviate | ✅ Working |
-|<img src="docs/assets/3rd_party/pinecone.png" width="32"/>| Pinecone | ✅ Working |
-|<img src="docs/assets/3rd_party/postgres.png" width="32"/>| PostgreSQL | ✅ Working |
-|<img src="docs/assets/3rd_party/milvus.png" width="32"/>| Milvus | ✅ Working |
+|                                                            | Provider   | Status     |
+| ---------------------------------------------------------- | ---------- | ---------- |
+| <img src="docs/assets/3rd_party/qdrant.png" width="32"/>   | Qdrant     | ✅ Working |
+| <img src="docs/assets/3rd_party/weaviate.png" width="32"/> | Weaviate   | ✅ Working |
+| <img src="docs/assets/3rd_party/pinecone.png" width="32"/> | Pinecone   | ✅ Working |
+| <img src="docs/assets/3rd_party/postgres.png" width="32"/> | PostgreSQL | ✅ Working |
+| <img src="docs/assets/3rd_party/milvus.png" width="32"/>   | Milvus     | ✅ Working |
 
 ### Embeddings
 
-|| Provider | Status |
-|---|---|---|
-|<img src="docs/assets/3rd_party/openai.png" width="32"/>| OpenAI | ✅ Working |
-|<img src="docs/assets/3rd_party/azure_openai.png" width="32"/>| Azure OpenAI | ✅ Working  |
-|<img src="docs/assets/3rd_party/palm.png" width="32"/>| Google PaLM | ✅ Working  |
-|<img src="docs/assets/3rd_party/ollama.png" width="32"/>| Ollama | ✅ Working |
-|<img src="docs/assets/3rd_party/vertex_ai.png" width="32"/>    | VertexAI | ✅ Working |
-| <img src="docs/assets/3rd_party/bedrock.png" width="32"/>      | Bedrock                     | ✅ Working |
+|                                                                | Provider     | Status     |
+| -------------------------------------------------------------- | ------------ | ---------- |
+| <img src="docs/assets/3rd_party/openai.png" width="32"/>       | OpenAI       | ✅ Working |
+| <img src="docs/assets/3rd_party/azure_openai.png" width="32"/> | Azure OpenAI | ✅ Working |
+| <img src="docs/assets/3rd_party/palm.png" width="32"/>         | Google PaLM  | ✅ Working |
+| <img src="docs/assets/3rd_party/ollama.png" width="32"/>       | Ollama       | ✅ Working |
+| <img src="docs/assets/3rd_party/vertex_ai.png" width="32"/>    | VertexAI     | ✅ Working |
+| <img src="docs/assets/3rd_party/bedrock.png" width="32"/>      | Bedrock      | ✅ Working |
 
 ### Text Extractors
 
-|| Provider                   | Status |
-|---|----------------------------|---|
-|<img src="docs/assets/unstract_u_logo.png" width="32"/>| Unstract LLMWhisperer V2   | ✅ Working |
-|<img src="docs/assets/3rd_party/unstructured_io.png" width="32"/>| Unstructured.io Community  | ✅ Working |
-|<img src="docs/assets/3rd_party/unstructured_io.png" width="32"/>| Unstructured.io Enterprise | ✅ Working |
-|<img src="docs/assets/3rd_party/llamaindex.png" width="32"/>| LlamaIndex Parse           | ✅ Working |
+|                                                                   | Provider                   | Status     |
+| ----------------------------------------------------------------- | -------------------------- | ---------- |
+| <img src="docs/assets/unstract_u_logo.png" width="32"/>           | Unstract LLMWhisperer V2   | ✅ Working |
+| <img src="docs/assets/3rd_party/unstructured_io.png" width="32"/> | Unstructured.io Community  | ✅ Working |
+| <img src="docs/assets/3rd_party/unstructured_io.png" width="32"/> | Unstructured.io Enterprise | ✅ Working |
+| <img src="docs/assets/3rd_party/llamaindex.png" width="32"/>      | LlamaIndex Parse           | ✅ Working |
 
 ### ETL Sources
 
-|| Provider | Status |
-|---|---|---|
-|<img src="docs/assets/3rd_party/s3.png" width="32"/>| AWS S3 | ✅ Working |
-|<img src="docs/assets/3rd_party/minio.png" width="32"/>| MinIO | ✅ Working |
-|<img src="docs/assets/3rd_party/gcp.png" width="32"/>| Google Cloud Storage | ✅ Working |
-|<img src="docs/assets/3rd_party/azure_openai.png" width="32"/>| Azure Cloud Storage | ✅ Working |
-|<img src="docs/assets/3rd_party/google_drive.png" width="32"/>| Google Drive | ✅ Working |
-|<img src="docs/assets/3rd_party/dropbox.png" width="32"/>| Dropbox | ✅ Working |
-|<img src="docs/assets/3rd_party/sftp.png" width="32"/>| SFTP | ✅ Working |
-|<img src="docs/assets/3rd_party/box.png" width="32"/>| Box | 🗓️ Coming soon! |
-|<img src="docs/assets/3rd_party/http.png" width="32"/>| HTTP/HTTPS | 🗓️ Coming soon! |
+|                                                                | Provider             | Status          |
+| -------------------------------------------------------------- | -------------------- | --------------- |
+| <img src="docs/assets/3rd_party/s3.png" width="32"/>           | AWS S3               | ✅ Working      |
+| <img src="docs/assets/3rd_party/minio.png" width="32"/>        | MinIO                | ✅ Working      |
+| <img src="docs/assets/3rd_party/gcp.png" width="32"/>          | Google Cloud Storage | ✅ Working      |
+| <img src="docs/assets/3rd_party/azure_openai.png" width="32"/> | Azure Cloud Storage  | ✅ Working      |
+| <img src="docs/assets/3rd_party/google_drive.png" width="32"/> | Google Drive         | ✅ Working      |
+| <img src="docs/assets/3rd_party/dropbox.png" width="32"/>      | Dropbox              | ✅ Working      |
+| <img src="docs/assets/3rd_party/sftp.png" width="32"/>         | SFTP                 | ✅ Working      |
+| <img src="docs/assets/3rd_party/box.png" width="32"/>          | Box                  | 🗓️ Coming soon! |
+| <img src="docs/assets/3rd_party/http.png" width="32"/>         | HTTP/HTTPS           | 🗓️ Coming soon! |
 
 ### ETL Destinations
 
-|                                                                   | Provider             | Status |
-|-------------------------------------------------------------------|----------------------|---|
+|                                                                   | Provider             | Status     |
+| ----------------------------------------------------------------- | -------------------- | ---------- |
 | <img src="docs/assets/3rd_party/snowflake.png" width="32"/>       | Snowflake            | ✅ Working |
 | <img src="docs/assets/3rd_party/amazon_redshift.png" width="32"/> | Amazon Redshift      | ✅ Working |
 | <img src="docs/assets/3rd_party/google_bigquery.png" width="32"/> | Google BigQuery      | ✅ Working |
@@ -152,22 +153,22 @@ Unstract comes well documented. You can get introduced to the [basics of Unstrac
 
 ### Service Architecture
 
-- **Backend** (`/backend/`): Django REST API with multi-tenant support
-- **Frontend** (`/frontend/`): React SPA with Ant Design
-- **Platform Service** (`/platform-service/`): Flask API for SDK communication
-- **Prompt Service** (`/prompt-service/`): Prompt management
-- **X2Text Service** (`/x2text-service/`): Text extraction
-- **Runner** (`/runner/`): Workflow execution engine
+-    **Backend** (`/backend/`): Django REST API with multi-tenant support
+-    **Frontend** (`/frontend/`): React SPA with Ant Design
+-    **Platform Service** (`/platform-service/`): Flask API for SDK communication
+-    **Prompt Service** (`/prompt-service/`): Prompt management
+-    **X2Text Service** (`/x2text-service/`): Text extraction
+-    **Runner** (`/runner/`): Workflow execution engine
 
 ### Key Django Apps
 
-- `workflow_manager`: Core workflow execution logic
-- `prompt_studio`: Prompt engineering interface
-- `api_v2`: API deployment functionality
-- `pipeline_v2`: ETL pipeline management
-- `connector_v2`: External service integrations
-- `tool_instance_v2`: Tool management
-- `file_management`: Document handling
+-    `workflow_manager`: Core workflow execution logic
+-    `prompt_studio`: Prompt engineering interface
+-    `api_v2`: API deployment functionality
+-    `pipeline_v2`: ETL pipeline management
+-    `connector_v2`: External service integrations
+-    `tool_instance_v2`: Tool management
+-    `file_management`: Document handling
 
 ### Document Processing Pipeline
 
@@ -181,10 +182,10 @@ Unstract comes well documented. You can get introduced to the [basics of Unstrac
 
 Celery with RabbitMQ, using multiple queues:
 
-- `celery`: Default queue
-- `celery_api_deployments`: API deployment tasks
-- `file_processing`: Document processing
-- `celery_periodic_logs`: Log persistence
+-    `celery`: Default queue
+-    `celery_api_deployments`: API deployment tasks
+-    `file_processing`: Document processing
+-    `celery_periodic_logs`: Log persistence
 
 ## 🙌 Contributing
 
@@ -192,9 +193,9 @@ Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for fur
 
 ## 👋 Join the LLM-powered automation community
 
-- On Slack, [join great conversations](https://join-slack.unstract.com) around LLMs, their ecosystem and leveraging them to automate the previously unautomatable!
-- [Follow us on X/Twitter](https://twitter.com/GetUnstract)
-- [Follow us on LinkedIn](https://www.linkedin.com/showcase/unstract/)
+-    On Slack, [join great conversations](https://join-slack.unstract.com) around LLMs, their ecosystem and leveraging them to automate the previously unautomatable!
+-    [Follow us on X/Twitter](https://twitter.com/GetUnstract)
+-    [Follow us on LinkedIn](https://www.linkedin.com/showcase/unstract/)
 
 ## 🚨 Backup encryption key
 
