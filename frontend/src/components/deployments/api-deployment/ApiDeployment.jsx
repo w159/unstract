@@ -17,7 +17,7 @@ import { deploymentApiTypes, displayURL } from '../../../helpers/GetStaticData';
 import { useAlertStore } from '../../../store/alert-store';
 import { useSessionStore } from '../../../store/session-store';
 import { usePromptStudioStore } from '../../../store/prompt-studio-store';
-import { workflowService } from '../../workflows/workflow/workflow-service.js';
+import { useWorkflowService } from '../../workflows/workflow/workflow-service.js';
 import { CreateApiDeploymentModal } from '../create-api-deployment-modal/CreateApiDeploymentModal';
 import { DeleteModal } from '../delete-modal/DeleteModal';
 import { DisplayCode } from '../display-code/DisplayCode';
@@ -38,7 +38,7 @@ function ApiDeployment() {
   const { setAlertDetails } = useAlertStore();
   const navigate = useNavigate();
   const apiDeploymentsApiService = useApiDeploymentsService();
-  const workflowApiService = workflowService();
+  const workflowApiService = useWorkflowService();
   const [isTableLoading, setIsTableLoading] = useState(true);
   const [openAddApiModal, setOpenAddApiModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);

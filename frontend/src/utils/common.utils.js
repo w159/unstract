@@ -43,6 +43,10 @@ export const safeJsonParse = (str, fallback = null) => {
  */
 export const debounce = (func, wait = 300) => {
   let timeout;
+  /**
+   * Debounced function execution
+   * @param {...*} args - Arguments to pass to the debounced function
+   */
   return function executedFunction(...args) {
     const later = () => {
       clearTimeout(timeout);
@@ -87,11 +91,17 @@ export const generateUniqueId = () => {
 export const deepClone = (obj) => {
   if (obj === null || typeof obj !== 'object') return obj;
   if (obj instanceof Date) return new Date(obj.getTime());
-  if (obj instanceof Array) return obj.map((item) => deepClone(item));
+  if (obj instanceof Array) return obj.map(
+    /**
+     * @param {*} item - Array item to clone
+     * @return {*} - Cloned item
+     */
+    (item) => deepClone(item)
+  );
   if (obj instanceof Object) {
     const clonedObj = {};
     for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
         clonedObj[key] = deepClone(obj[key]);
       }
     }
@@ -123,8 +133,11 @@ export const retryWithBackoff = async (fn, maxRetries = 3, delay = 1000) => {
       return await fn();
     } catch (error) {
       if (i === maxRetries - 1) throw error;
-      await new Promise((resolve) =>
-        setTimeout(resolve, delay * Math.pow(2, i)),
+      await new Promise(
+        /**
+         * @param {Function} resolve - Promise resolve function
+         */
+        (resolve) => setTimeout(resolve, delay * Math.pow(2, i))
       );
     }
   }
@@ -138,7 +151,15 @@ export const retryWithBackoff = async (fn, maxRetries = 3, delay = 1000) => {
  * @return {*} - Value or default
  */
 export const getNestedValue = (obj, path, defaultValue = undefined) => {
-  const value = path.split('.').reduce((acc, part) => acc && acc[part], obj);
+  const value = path.split('.').reduce(
+    /**
+     * @param {*} acc - Accumulator (current nested object)
+     * @param {string} part - Current path part
+     * @return {*} - Next nested value or undefined
+     */
+    (acc, part) => acc && acc[part],
+    obj
+  );
   return value === undefined ? defaultValue : value;
 };
 
@@ -152,7 +173,11 @@ export const deepMerge = (target, source) => {
   const output = { ...target };
   if (isObjectEmpty(source)) return output;
 
-  Object.keys(source).forEach((key) => {
+  Object.keys(source).forEach(
+    /**
+     * @param {string} key - Object key to process
+     */
+    (key) => {
     if (source[key] instanceof Object && key in target) {
       output[key] = deepMerge(target[key], source[key]);
     } else {

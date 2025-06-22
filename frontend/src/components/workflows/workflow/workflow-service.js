@@ -88,4 +88,7 @@ function useWorkflowService() {
   };
 }
 
-export { useWorkflowService };
+// Export for components that need the service directly
+const workflowService = useWorkflowService;
+
+export { useWorkflowService, workflowService };

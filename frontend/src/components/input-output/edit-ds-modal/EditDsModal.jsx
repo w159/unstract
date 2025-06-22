@@ -1,7 +1,6 @@
 import { Modal } from 'antd';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 
 import './EditDsModal.css';
 import { ConfigureDs } from '../configure-ds/ConfigureDs.jsx';
@@ -55,7 +54,7 @@ function EditDsModal({
     };
 
     setIsSpecLoading(true);
-    axios(requestOptions)
+    axiosPrivate(requestOptions)
       .then((res) => {
         const data = res?.data;
         setSpec(data?.json_schema);

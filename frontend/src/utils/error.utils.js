@@ -155,6 +155,7 @@ export const logError = (error, context, additionalInfo = {}) => {
  * @param {Error} error - Error object
  * @param {Function} setAlertDetails - Alert setter function
  * @param {string} customMessage - Custom error message
+ * @return {Object} - Standardized error object
  */
 export const handleApiError = (error, setAlertDetails, customMessage) => {
   const errorObj = createErrorObject(error, customMessage);

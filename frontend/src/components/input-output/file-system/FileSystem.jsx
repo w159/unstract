@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { Document, Folder } from '../../../assets';
 import { formatBytes } from '../../../helpers/GetStaticData';
-import { inputService } from '../../input-output/input-output/input-service.js';
+import { useInputService } from '../../input-output/input-output/input-service.js';
 import { SpinnerLoader } from '../../widgets/spinner-loader/SpinnerLoader.jsx';
 
 import './FileSystem.css';
@@ -14,7 +14,7 @@ const { DirectoryTree } = Tree;
 const { Text } = Typography;
 
 function FileExplorer({ selectedItem = '', data = [], loadingData, error }) {
-  const inpService = inputService();
+  const inpService = useInputService();
 
   const [tree, setTree] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState([]);

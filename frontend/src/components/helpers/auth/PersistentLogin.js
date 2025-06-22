@@ -5,7 +5,7 @@ import useSessionValid from '../../../hooks/useSessionValid';
 import { useSessionStore } from '../../../store/session-store';
 import { SocketMessages } from '../socket-messages/SocketMessages';
 import { GenericLoader } from '../../generic-loader/GenericLoader';
-import { PromptRun } from '../../custom-tools/prompt-card/PromptRun';
+import { PromptRun } from '../../custom-tools/prompt-card/PromptRun.jsx';
 
 let selectedProductStore;
 let setSelectedProduct;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { getBackendErrorDetail } from '../../../helpers/GetStaticData.js';
 import { useAlertStore } from '../../../store/alert-store';
-import { apiDeploymentsService } from '../../deployments/api-deployment/api-deployments-service.js';
+import { useApiDeploymentsService } from '../../deployments/api-deployment/api-deployments-service.js';
 import { useExceptionHandler } from '../../../hooks/useExceptionHandler.jsx';
 import { useWorkflowStore } from '../../../store/workflow-store.js';
 import usePostHogEvents from '../../../hooks/usePostHogEvents.js';
@@ -29,7 +29,7 @@ const CreateApiDeploymentModal = ({
 }) => {
   const workflowStore = useWorkflowStore();
   const { updateWorkflow } = workflowStore;
-  const apiDeploymentsApiService = apiDeploymentsService();
+  const apiDeploymentsApiService = useApiDeploymentsService();
   const { setAlertDetails } = useAlertStore();
   const handleException = useExceptionHandler();
   const { Option } = Select;

@@ -74,7 +74,8 @@ logger = logging.getLogger(__name__)
 CHOICES_JSON = "/static/select_choices.json"
 ERROR_MSG = "User %s doesn't have access to adapter %s"
 
-logger = logging.getLogger(__name__)
+# If LogPublisher is required elsewhere in the code, you need to implement or import it from the correct location.
+# logger = logging.getLogger(__name__)
 
 modifier_plugins = load_modifier_plugins()
 
