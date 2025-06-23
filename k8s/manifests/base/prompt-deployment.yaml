@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prompt-service
+  labels:
+    app: unstract
+    component: prompt-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: unstract
+      component: prompt-service
+  template:
+    metadata:
+      labels:
+        app: unstract
+        component: prompt-service
+    spec:
+      containers:
+      - name: prompt-service
+        image: ${ACR_LOGIN_SERVER}/unstract/prompt-service:IMAGE_TAG
+        ports:
+        - containerPort: 5000
+          name: http
+        envFrom:
+        - configMapRef:
+            name: unstract-config
+        - secretRef:
+            name: unstract-secrets
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "2000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 60
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 5

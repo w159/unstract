@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: x2text-service
+  labels:
+    app: unstract
+    component: x2text-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: unstract
+      component: x2text-service
+  template:
+    metadata:
+      labels:
+        app: unstract
+        component: x2text-service
+    spec:
+      containers:
+      - name: x2text-service
+        image: ${ACR_LOGIN_SERVER}/unstract/x2text-service:IMAGE_TAG
+        ports:
+        - containerPort: 5000
+          name: http
+        envFrom:
+        - configMapRef:
+            name: unstract-config
+        - secretRef:
+            name: unstract-secrets
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "2000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 60
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 5

@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-file-processing
+  labels:
+    app: unstract
+    component: worker-file-processing
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: unstract
+      component: worker-file-processing
+  template:
+    metadata:
+      labels:
+        app: unstract
+        component: worker-file-processing
+    spec:
+      serviceAccountName: unstract-worker
+      containers:
+      - name: worker-file-processing
+        image: ${ACR_LOGIN_SERVER}/unstract/backend:IMAGE_TAG
+        command: [".venv/bin/celery", "worker", "-A", "backend.workers.file_processing", "--loglevel=info", "-Q", "file_processing,api_file_processing", "--autoscale=5,2"]
+        envFrom:
+        - configMapRef:
+            name: unstract-config
+        - secretRef:
+            name: unstract-secrets
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        livenessProbe:
+          exec:
+            command: ["sh", "-c", ".venv/bin/celery inspect ping -d file_processing@$(hostname)"]
+          initialDelaySeconds: 60
+          periodSeconds: 30
+        readinessProbe:
+          exec:
+            command: ["sh", "-c", ".venv/bin/celery inspect ping -d file_processing@$(hostname)"]
+          initialDelaySeconds: 10
+          periodSeconds: 10

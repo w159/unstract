@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+  labels:
+    app: unstract
+    component: worker
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: unstract
+      component: worker
+  template:
+    metadata:
+      labels:
+        app: unstract
+        component: worker
+    spec:
+      serviceAccountName: unstract-worker
+      containers:
+      - name: worker
+        image: ${ACR_LOGIN_SERVER}/unstract/backend:IMAGE_TAG
+        command: [".venv/bin/celery", "worker", "-A", "backend", "--loglevel=info", "-Q", "celery,celery_api_deployments", "--autoscale=10,3"]
+        envFrom:
+        - configMapRef:
+            name: unstract-config
+        - secretRef:
+            name: unstract-secrets
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          exec:
+            command: ["sh", "-c", ".venv/bin/celery inspect ping -d celery@$(hostname)"]
+          initialDelaySeconds: 60
+          periodSeconds: 30
+        readinessProbe:
+          exec:
+            command: ["sh", "-c", ".venv/bin/celery inspect ping -d celery@$(hostname)"]
+          initialDelaySeconds: 10
+          periodSeconds: 10
