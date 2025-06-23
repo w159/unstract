@@ -1,7 +1,27 @@
 services:
+<<<<<<< HEAD
      frontend:
           labels:
                - traefik.enable=true
                - traefik.http.routers.frontend.rule=Host(`frontend.unstract.localhost`) && !PathPrefix(`/api/v1`, `/deployment`)
                - traefik.http.services.frontend.loadbalancer.server.port=80
                - traefik.docker.network=unstract-network
+=======
+  frontend:
+    ports:
+      - "3000:80"  # Map host 3000 to container port 80 where nginx listens
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.frontend.rule=Host(`frontend.unstract.localhost`)
+      - traefik.http.services.frontend.loadbalancer.server.port=80
+
+  backend:
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.backend.rule=Host(`frontend.unstract.localhost`) && PathPrefix(`/api/v1`, `/deployment`)
+      - traefik.http.services.backend.loadbalancer.server.port=8000
+
+  reverse-proxy:
+    labels:
+      - traefik.enable=true
+>>>>>>> 3bfcdd9b ([UPDATE] Refactor docker-compose configuration and update caniuse-lite version)
